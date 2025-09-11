@@ -42,4 +42,4 @@ Route::put('/buku/{id}/update', [BukuController::class, 'update'])->name('buku.u
 Route::delete('/buku/{id}/delete', [BukuController::class, 'destroy'])->name('buku.delete');
 
 
-Route::get('dasboard',[DashboardController::class,'index'])->name('dashboard.index');
+Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard.index');
