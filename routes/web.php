@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\HaloController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -39,3 +40,6 @@ Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
 Route::get('/buku/{id}/edit', [BukuController::class, 'edit'])->name('buku.edit');
 Route::put('/buku/{id}/update', [BukuController::class, 'update'])->name('buku.update');
 Route::delete('/buku/{id}/delete', [BukuController::class, 'destroy'])->name('buku.delete');
+
+
+Route::get('dasboard',[DashboardController::class,'index'])->name('dashboard.index');
