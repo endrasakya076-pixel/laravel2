@@ -75,13 +75,7 @@
                 MENU KARYAWAN
             </div>
 
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-user"></i>
-                    <span>Data user</span></a>
-            </li>
+            
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
