@@ -61,7 +61,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-user"></i>
-                    <span>Data user</span></a>
+                    <span>Data users</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
