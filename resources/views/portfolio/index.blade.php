@@ -424,7 +424,7 @@
                                     <div class="col-md-6">
                                         <div class="form-floating">
                                             <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                                            <label for="email">Email</label>
+                                            <label for="email">Emaill</label>
                                         </div>
                                     </div>
                                     
