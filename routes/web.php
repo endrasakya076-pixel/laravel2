@@ -43,6 +43,6 @@ use App\Http\Controllers\PortfolioController;
 // Route::delete('/buku/{id}/delete', [BukuController::class, 'destroy'])->name('buku.delete');
 
 
-Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard.index');
+//Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard.index');
 Route::get('/', [PortfolioController::class, 'index'])->name('portfolio.index');
 Route::post('/send-message', [PortfolioController::class, 'sendMessage'])->name('portfolio.send-message');
