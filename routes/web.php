@@ -44,5 +44,5 @@ use App\Http\Controllers\PortfolioController;
 
 
 //Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard.index');
-Route::get('portogolio/index', [PortfolioController::class, 'index'])->name('portfolio.index');
+Route::get('portofolio/index', [PortfolioController::class, 'index'])->name('portfolio.index');
 Route::post('/send-message', [PortfolioController::class, 'sendMessage'])->name('portfolio.send-message');
