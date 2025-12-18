@@ -1,3 +1,3 @@
-@extends('portofolio/index')
+@extends('portfolio/index')
 @section('content')
     <!-- Dashboard Content -->  
