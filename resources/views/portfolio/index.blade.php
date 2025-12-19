@@ -14,7 +14,7 @@
         <div class="container position-relative z-2">
             <div class="row align-items-center">
                 <div class="col-lg-8 mx-auto text-center hero-content">
-                    <h1 class="fade-in">Hendra Sakya Permana</h1>
+                    <h1 class="fade-in">Hendra Sakya Permanaphp artisan make:migration create_products_table</h1>
                     <p class="lead fade-in" style="animation-delay: 0.2s">Desainer Grafis | Video Editor | Excel Specialist</p>
                     <p class="mb-4 fade-in" style="animation-delay: 0.4s">Mengubah ide menjadi visual yang memukau, cerita yang menarik, dan data yang bermakna</p>
                     <a href="#projects" class="btn btn-primary-custom fade-in" style="animation-delay: 0.6s">Lihat Karya Saya</a>
