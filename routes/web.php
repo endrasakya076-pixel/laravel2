@@ -3,6 +3,7 @@ use App\Http\Controllers\BukuController;
 use App\Http\Controllers\HaloController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PortfolioController;
 
 // Route::get('/', function () {
 //     //return view('welcome');
@@ -43,3 +44,5 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard.index');
+Route::get('/', [PortfolioController::class, 'index'])->name('portfolio.index');
+Route::post('/send-message', [PortfolioController::class, 'sendMessage'])->name('portfolio.send-message');
