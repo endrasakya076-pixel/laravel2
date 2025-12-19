@@ -415,3 +415,182 @@ h1, h2, h3, h4, h5, h6 {
         height: 200px;
     }
 }
+/* ============================== */
+/* PERFORMANCE OPTIMIZATIONS */
+/* ============================== */
+
+/* 1. HARDWARE ACCELERATION & WILL-CHANGE */
+.navbar,
+.navbar-collapse,
+.navbar-nav,
+.dropdown-menu,
+.skill-card,
+.project-card,
+.testimonial-card,
+.ebook-card,
+.btn-primary-custom,
+.btn-secondary-custom,
+.project-img img,
+.ebook-img img {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+}
+
+/* 2. OPTIMIZE TRANSITIONS - Gunakan hanya properti yang diperlukan */
+.navbar {
+    transition: background-color 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.navbar-scrolled {
+    animation: navbarSlideDown 0.3s ease forwards;
+}
+
+@keyframes navbarSlideDown {
+    from {
+        transform: translateY(-10px);
+        opacity: 0.9;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 3. SMOOTH SCROLL BEHAVIOR */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Untuk kompensasi fixed navbar */
+}
+
+/* 4. OPTIMIZE IMAGE LOADING */
+.project-img img,
+.ebook-img img {
+    content-visibility: auto;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* 5. REDUCE ANIMATION ON MOBILE & FOR PREFERS-REDUCED-MOTION */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* 6. OPTIMIZE MOBILE TOUCH INTERACTIONS */
+@media (max-width: 768px) {
+    .btn,
+    .nav-link,
+    [data-bs-toggle="collapse"],
+    [data-bs-toggle="tab"] {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    /* Optimize mobile navbar */
+    .navbar-collapse {
+        max-height: 75vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+    }
+    
+    /* Reduce animation intensity on mobile */
+    .skill-card:hover,
+    .project-card:hover,
+    .testimonial-card:hover,
+    .ebook-card:hover {
+        transform: translateY(-5px) !important;
+    }
+}
+
+/* 7. IMPROVE FADE-IN PERFORMANCE */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 
+        opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 8. LAZY LOAD IMAGE STYLES */
+.lazy {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lazy.loaded {
+    opacity: 1;
+}
+
+/* 9. PREVENT LAYOUT SHIFTS */
+.project-img,
+.ebook-img {
+    position: relative;
+    overflow: hidden;
+}
+
+.project-img::before,
+.ebook-img::before {
+    content: '';
+    display: block;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.project-img img,
+.ebook-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 10. OPTIMIZE FLOATING ELEMENTS */
+.floating-circle {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* 11. FIX FOR SMOOTH SCROLL JUMP */
+section[id] {
+    scroll-margin-top: 80px;
+}
+
+/* 12. OPTIMIZE BOOTSTRAP COMPONENTS */
+.nav-pills .nav-link {
+    transition: all 0.2s ease !important;
+}
+
+/* 13. REDUCE PAINT AREAS */
+.navbar-scrolled {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* 14. IMPROVE SCROLLING PERFORMANCE */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* 15. OPTIMIZE FORM CONTROLS */
+.form-control:focus {
+    transform: translateZ(0);
+    will-change: transform, box-shadow;
+}
