@@ -31,7 +31,7 @@
     <section id="skills" class="py-5">
         <div class="container">
             <div class="section-title text-center">
-                <h2>Keahlian Saya</h2>
+                <h2>Keahlian Saya Permana</h2>
                 <p class="lead">Kombinasi kreativitas dan keahlian teknis untuk menghasilkan karya terbaik</p>
             </div>
             
