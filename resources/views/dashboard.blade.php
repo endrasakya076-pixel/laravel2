@@ -1,1 +1,1 @@
-@extends('portfolio/app')
+@extends('portfolio/index')
