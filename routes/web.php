@@ -10,6 +10,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\EbookController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminContentController;
+use App\Http\Controllers\Admin\AdminSalesController;
+use App\Http\Controllers\Admin\AdminReportController;
 
 
 // Route::get('/', function () {
@@ -53,3 +57,18 @@ use App\Http\Controllers\CheckoutController;
 Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard.index');
 Route::get('/', [PortfolioController::class, 'index'])->name('portfolio.index');
 Route::post('/send-message', [PortfolioController::class, 'sendMessage'])->name('portfolio.send-message');
+
+
+// Admin routes
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    // Content Management
+    Route::resource('content', AdminContentController::class);
+
+    // Sales Management
+    Route::resource('sales', AdminSalesController::class);
+
+    // Reporting
+    Route::get('reports', [AdminReportController::class, 'index'])->name('admin.reports');
+});

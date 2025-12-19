@@ -486,4 +486,15 @@
             </div>
         </div>
     </section>
+
+    <!-- Admin Navigation (Visible only to admin users) -->
+    @auth
+        @if(auth()->user()->is_admin)
+            <nav>
+                <ul>
+                    <li><a href="{{ route('admin.dashboard') }}">Admin Panel</a></li>
+                </ul>
+            </nav>
+        @endif
+    @endauth
 @endsection
