@@ -42,18 +42,12 @@
                                    <tbody>
                                         <tr>
                                             <td class="text-center">1</td>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td class="text-center">
-                                                <span class="badge badge-info badge-pill"> 
-                                                    21-12-2025
-                                                </span>
-                                            </td>
-                                            <td class="text-center">
-                                                <span class="badge badge-info badge-pill"> 
-                                                    21-12-2025
-                                                </span>
-                                            </td>
+                                            <td>Gambar</td>
+                                            <td>0465758795</td>
+                                            <td>Hendra Sakya Permana</td>
+                                            <td>Jl. Merdeka No. 45</td>
+                                            <td>Siti Aminah</td>    
+                                            <td>Jl. Merdeka No. 45</td>    
                                             <td class="text-center">
                                                 <a href="#" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-edit"></i>
