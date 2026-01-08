@@ -11,7 +11,7 @@
                 <i class="fas fa-plus mr-2"></i>
                 Tambah Spesimen</a>
         </div>
-        <div>
+        {{-- <div>
             <a href="#" class="btn btn-sm btn-success">
                 <i class="fas fa-file-excel mr-2"></i>
                 File Excel
@@ -20,7 +20,7 @@
                 <i class="fas fa-file-excel mr-2"></i>
                 PDF
             </a>
-        </div>
+        </div> --}}
     </div>
     <div class="card-body">
         <div class="table-responsive">
