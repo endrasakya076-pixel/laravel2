@@ -68,4 +68,5 @@ use App\Http\Controllers\TugasController;
      Route::delete('user/destroy/{id}',[UserController::class,'destroy'])->name('userDestroy');
 //tugas
     Route::get('tugas',[TugasController::class,'index'])->name('tugas');
+    Route::get('tugas/spesimen',[TugasController::class,'spesimen'])->name('tugasSpesimen');
  });
