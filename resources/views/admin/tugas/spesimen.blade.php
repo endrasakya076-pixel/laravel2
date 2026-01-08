@@ -38,29 +38,6 @@
             </div>
         </div>
         <div class="row mb-4">
-            <div class="col-xl-12">
-                <label class="form-label">
-                   <span class="text-danger">*</span>
-                    Jabatan :</label>
-                @error('jabatan')
-                <small class="text-danger">
-                    {{ $message }}   
-                </small>
-                @enderror
-            </div>            
-        </div>
-        <div class="row mb-4">
-            <div class="c ol-xl-6 mb-2">
-                <label class="form-label">
-                    <span class="text-danger">*</span>
-                    Password :</label>
-                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
-                @error('password')
-                <small class="text-danger">
-                    {{ $message }}   
-                </small>
-                @enderror
-            </div>
             <div class="col-xl-6">
                 <label class="form-label">
                     <span class="text-danger">*</span>
