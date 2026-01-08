@@ -37,17 +37,37 @@
                 @enderror
             </div>
         </div>
-        <div class="col-xl-6 mb-1">
+        <div class="row mb-4">
+            <div class="col-xl-12">
+                <label class="form-label">
+                   <span class="text-danger">*</span>
+                    Jabatan :</label>
+                @error('jabatan')
+                <small class="text-danger">
+                    {{ $message }}   
+                </small>
+                @enderror
+            </div>            
+        </div>
+        <div class="row mb-4">
+            <div class="c ol-xl-6 mb-2">
                 <label class="form-label">
                     <span class="text-danger">*</span>
-                    Nama:</label>
-                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
-                    @error('email')
+                    Password :</label>
+                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
+                @error('password')
                 <small class="text-danger">
                     {{ $message }}   
                 </small>
                 @enderror
             </div>
+            <div class="col-xl-6">
+                <label class="form-label">
+                    <span class="text-danger">*</span>
+                    Password Konfirmasi :</label>
+                <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror">
+            </div>
+        </div>
         <div>
             <button type="submit" class="btn btn-sm btn-primary">
                 <i class="fas fa-save mr-2"></i>
