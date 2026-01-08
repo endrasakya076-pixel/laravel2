@@ -18,7 +18,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Foto Spesimen :</label>
-                <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}">
+                <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" value="#">
                     @error('nama')
                 <small class="text-danger">
                     {{ $message }}   
@@ -29,7 +29,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Cif:</label>
-                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
+                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="#">
                     @error('email')
                 <small class="text-danger">
                     {{ $message }}   
@@ -42,7 +42,7 @@
                 <label class="form-label">
                    <span class="text-danger">*</span>
                     Nama :</label>
-                <input type="text" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ old('alamat') }}">   
+                <input type="text" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="#">   
                 </small>
                 @enderror
             </div>            
