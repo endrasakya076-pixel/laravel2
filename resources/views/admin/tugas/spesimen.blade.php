@@ -18,7 +18,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Foto Spesimen :</label>
-                <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" value="#">
+                <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}">
                     @error('nama')
                 <small class="text-danger">
                     {{ $message }}   
@@ -29,7 +29,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Cif:</label>
-                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="#">
+                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
                     @error('email')
                 <small class="text-danger">
                     {{ $message }}   
@@ -41,8 +41,15 @@
             <div class="col-xl-12">
                 <label class="form-label">
                    <span class="text-danger">*</span>
-                    Nama :</label>
-                <input type="text" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="#">   
+                    Jabatan :</label>
+                <select name="jabatan" class="form-control @error('jabatan') is-invalid @enderror">
+                    <option selected disabled>--Pilih Jabatan--</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Karyawan">Karyawan</option>
+                </select>
+                @error('jabatan')
+                <small class="text-danger">
+                    {{ $message }}   
                 </small>
                 @enderror
             </div>            
