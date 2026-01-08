@@ -39,21 +39,21 @@
             <li class="nav-item {{ $menuTugas ?? '' }}">
                 <a class="nav-link" href="{{ route('tugas') }}">
                     <i class="fas fa-tasks"></i>
-                    <span>Data tugas</span></a>
+                    <span>Data Spesimen</span></a>
             </li>
 <!-- Heading -->
-            <div class="sidebar-heading">
+            {{-- <div class="sidebar-heading">
                 MENU KARYAWAN
-            </div>
+            </div> --}}
 
             
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="">
                     <i class="fas fa-tasks"></i>
                     <span>Data tugas</span></a>
-            </li>
+            </li> --}}
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
