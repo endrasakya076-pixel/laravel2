@@ -4,7 +4,7 @@
 <h1 class="h3 mb-4 text-gray-800">
     <i class="fas fa-tasks mr-2"></i>
     {{ $title }}</h1>
-<div class="card">
+<div class="card mb-5">
     <div class="card-header d-flex flex-wrap justify-content-center justify-content-xl-between">
         <div class="mb-1 mr-1">
             <a href="{{ route('tugasSpesimen') }}" class="btn btn-sm btn-primary">
