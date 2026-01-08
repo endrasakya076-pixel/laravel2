@@ -45,6 +45,14 @@
                 <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror">
             </div>
         </div>
+        <div class="row mb-4">
+            <div class="col-xl-6">
+                <label class="form-label">
+                    <span class="text-danger">*</span>
+                    Alamat :</label>
+                <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror">
+            </div>
+        </div>
         <div>
             <button type="submit" class="btn btn-sm btn-primary">
                 <i class="fas fa-save mr-2"></i>
