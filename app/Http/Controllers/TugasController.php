@@ -15,4 +15,13 @@ class TugasController extends Controller
         );
         return view('admin/tugas/index', $data);
     }
+    public function spesimen()
+    {
+        $data = array(
+
+            'title' => 'Tambah Spesimen',
+            'menuTugas' => 'active',
+        );
+        return view('admin/tugas/spesimen', $data);
+    }
 }
