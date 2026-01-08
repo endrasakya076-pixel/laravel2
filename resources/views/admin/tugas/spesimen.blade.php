@@ -6,7 +6,7 @@
     {{ $title }}</h1>
 <div class="card">
     <div class="card-header bg-primary">
-            <a href="{{ route('user')  }}" class="btn btn-sm btn-success">
+            <a href="{{ route('tugas')  }}" class="btn btn-sm btn-success">
                 <i class="fas fa-arrow-left mr-2"></i>
                 Kembali</a>
     </div>
