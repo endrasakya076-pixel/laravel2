@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>M Tugas | {{ $title }}</title>
+    <title>Spesimen | {{ $title }}</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('sbadmn2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">

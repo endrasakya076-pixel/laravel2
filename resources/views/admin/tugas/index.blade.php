@@ -9,7 +9,7 @@
         <div class="mb-1 mr-1">
             <a href="#" class="btn btn-sm btn-primary">
                 <i class="fas fa-plus mr-2"></i>
-                Tambah Data</a>
+                Tambah Spesimen</a>
         </div>
         <div>
             <a href="#" class="btn btn-sm btn-success">
