@@ -24,7 +24,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                MENU ADMIN
+                MENU
             </div>
 
 
