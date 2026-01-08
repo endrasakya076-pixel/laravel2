@@ -17,7 +17,7 @@
             <div class="col-xl-6 mb-2">
                 <label class="form-label">
                     <span class="text-danger">*</span>
-                    Nama :</label>
+                    Foto Spesimen :</label>
                 <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}">
                     @error('nama')
                 <small class="text-danger">
@@ -28,7 +28,7 @@
             <div class="col-xl-6 mb-1">
                 <label class="form-label">
                     <span class="text-danger">*</span>
-                    Email :</label>
+                    Cif:</label>
                 <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
                     @error('email')
                 <small class="text-danger">
@@ -40,22 +40,15 @@
         <div class="row mb-4">
             <div class="col-xl-12">
                 <label class="form-label">
-                    <span class="text-danger">*</span>
-                    Jabatan :</label>
-                <select name="jabatan" class="form-control @error('jabatan') is-invalid @enderror">
-                    <option selected disabled>--Pilih Jabatan--</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Karyawan">Karyawan</option>
-                </select>
-                @error('jabatan')
-                <small class="text-danger">
-                    {{ $message }}   
+                   <span class="text-danger">*</span>
+                    Nama :</label>
+                <input type="text" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ old('alamat') }}">   
                 </small>
                 @enderror
             </div>            
         </div>
         <div class="row mb-4">
-            <div class="col-xl-6 mb-2">
+            <div class="c ol-xl-6 mb-2">
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Password :</label>
