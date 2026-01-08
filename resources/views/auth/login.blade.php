@@ -1,100 +1,137 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Portfolio Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .login-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            padding: 40px;
-            width: 100%;
-            max-width: 400px;
-        }
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .login-header h2 {
-            color: #333;
-            font-weight: bold;
-        }
-        .form-control {
-            border-radius: 10px;
-            padding: 12px 20px;
-            border: 2px solid #e0e0e0;
-            transition: all 0.3s;
-        }
-        .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        .btn-login {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 12px;
-            font-weight: bold;
-            width: 100%;
-            transition: all 0.3s;
-        }
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        .register-link {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-card">
-        <div class="login-header">
-            <h2>Login Admin</h2>
-            <p class="text-muted">Masuk ke dashboard admin</p>
-        </div>
-        
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                @foreach ($errors->all() as $error)
-                    <p class="mb-0">{{ $error }}</p>
-                @endforeach
-            </div>
-        @endif
+<html lang="en">
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Login</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{{ asset('sbadmn2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{{ asset('sbadmn2/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-6 col-lg-7 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">
+                                            <i class="fas fa-book-reader"></i> Welcome Back!
+                                        </h1>
+                                    </div>
+                                    <form class="user" method="POST" action="{{ route('loginProses') }}">
+                                        @csrf
+                                        <div class="form-group">
+                                            <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror"
+                                                placeholder="Masukkan Email" name="email" value="{{ old('email') }}">
+                                                @error('email')
+                                                    <small class="text-danger">
+                                                        {{ $message }}
+                                                    </small>
+                                                @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user @error('password') is-invalid @enderror"
+                                                placeholder="Masukkan Password" name="password">
+                                                @error('password')
+                                                    <small class="text-danger">
+                                                        {{ $message }}
+                                                    </small>
+                                                @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                <label class="custom-control-label" for="customCheck">Remember
+                                                    Me</label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            Login
+                                        </button>
+                                        <hr>
+                                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                                            <i class="fab fa-google fa-fw"></i> Login with Google
+                                        </a>
+                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                        </a>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small" href="register.html">Create an Account!</a> <hr>
+                                    <small>
+                                        Kembali keberanda
+                                        <a href="{{ route('welcome') }}">Dashboard</a>
+                                    </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                <label class="form-check-label" for="remember">Ingat saya</label>
-            </div>
-            <button type="submit" class="btn btn-login">Login</button>
-        </form>
-        
-        <div class="register-link">
-            <p class="mb-0">Kembali ke <a href="{{ url('/') }}">Portfolio</a></p>
+
         </div>
+
     </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ asset('sbadmn2/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('sbadmn2/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{ asset('sbadmn2/vendor/jquery-easing/jquery.easing.min.js') }}"></script>   
+    <!-- Custom scripts for all pages-->
+    <script src="{{ asset('sbadmn2/js/sb-admin-2.min.js') }}"></script>
+    <script src="{{ asset('sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+    
+    @session('success')
+    <script>
+        Swal.fire({
+        title: "Sukses",
+        text: "{{ session('success') }}",
+        icon: "success"
+        });
+    </script>
+    @endsession
+    @session('error')
+    <script>
+        Swal.fire({
+        title: "Gagal",
+        text: "{{ session('error') }}",
+        icon: "error"
+        });
+    </script>
+    @endsession
+
 </body>
+
 </html>

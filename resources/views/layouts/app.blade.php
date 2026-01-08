@@ -1,110 +1,108 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Portfolio Profesional')</title>
-    
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/portfolio.css') }}">
-    
-    @stack('styles')
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('portfolio.index') }}">Portfolio</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#skills">Keahlian</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#projects">Proyek</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#testimonials">Testimoni</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#ebooks">E-Book</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Kontak</a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="btn btn-primary-custom" href="#contact">Hubungi Saya</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Main Content -->
-    @yield('content')
+@include("layouts/header")
+<body id="page-top">
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <h3 class="mb-3">Portfolio</h3>
-                    <p class="mb-0">Mengubah ide menjadi visual yang memukau, cerita yang menarik, dan data yang bermakna</p>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        @include("layouts/sidebar")
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->nama }}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="{{ asset('sbadmn2/img/undraw_profile.svg') }}">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                   <div class="badge badge-success justify-content-center d-flex">
+                                    {{ auth()->user()->jabatan }}
+                                    </div>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Pengaturan
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('logout') }}">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    @yield('content')
                 </div>
-                
-                <div class="col-lg-6 text-lg-end">
-                    <div class="social-links">
-                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-2x"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin fa-2x"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-behance fa-2x"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-youtube fa-2x"></i></a>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
-            </div>
-            
-            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="mb-0">&copy; {{ date('Y') }} Portfolio Profesional. All rights reserved.</p>
-                </div>
-                
-                <div class="col-md-6 text-md-end">
-                    <p class="mb-0">Designed with <i class="fas fa-heart" style="color: #FF6B6B;"></i> by Nama Anda</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+            </footer>
+            <!-- End of Footer -->
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- jQuery (optional, untuk AJAX) -->
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ asset('sbadmn2/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('sbadmn2/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('sbadmn2/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('sbadmn2/js/sb-admin-2.min.js') }}"></script>
+     <!-- Page level plugins -->
+    <script src="{{ asset('sbadmn2/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('sbadmn2/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{ asset('sbadmn2/js/demo/datatables-demo.js') }}"></script>
+    <script src="{{ asset('sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+
+    <!-- Ensure proper dropdown functionality -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <!-- Custom JavaScript -->
-    <script src="{{ asset('js/portfolio.js') }}"></script>
-    
-    @stack('scripts')
-</body>
-</html>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    @include("layouts/footer")

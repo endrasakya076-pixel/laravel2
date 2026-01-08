@@ -1,20 +1,10 @@
 <?php
-use App\Http\Controllers\BukuController;
-use App\Http\Controllers\HaloController;
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PortfolioController;
-
-
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\EbookController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AdminContentController;
-use App\Http\Controllers\Admin\AdminSalesController;
-use App\Http\Controllers\Admin\AdminReportController;
-
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HaloController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TugasController;
 
 // Route::get('/', function () {
 //     //return view('welcome');
@@ -54,21 +44,28 @@ use App\Http\Controllers\Admin\AdminReportController;
 // Route::delete('/buku/{id}/delete', [BukuController::class, 'destroy'])->name('buku.delete');
 
 
-Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard.index');
-Route::get('/', [PortfolioController::class, 'index'])->name('portfolio.index');
-Route::post('/send-message', [PortfolioController::class, 'sendMessage'])->name('portfolio.send-message');
+ Route::get('/', function () {
+     return view('welcome');
+ })->name('welcome');
 
+ //login 
+    Route::get('login',[AuthController::class,'login'])->name('login');
+    Route::post('login',[AuthController::class,'loginProses'])->name('loginProses');
 
-// Admin routes
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+    //logout
+    Route::get('logout',[AuthController::class,'logout'])->name('logout');
 
-    // Content Management
-    Route::resource('content', AdminContentController::class);
-
-    // Sales Management
-    Route::resource('sales', AdminSalesController::class);
-
-    // Reporting
-    Route::get('reports', [AdminReportController::class, 'index'])->name('admin.reports');
-});
+    Route::middleware('checkLogin')->group(function () {
+    // Protected routes go here
+ //dashboard
+    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard.index');
+//user
+    Route::get('user',[UserController::class,'index'])->name('user');
+    Route::get('user/create',[UserController::class,'create'])->name('userCreate');
+    Route::post('user/store',[UserController::class,'store'])->name('userStore');
+     Route::get('user/edit/{id}',[UserController::class,'edit'])->name('userEdit');
+     Route::post('user/update/{id}',[UserController::class,'update'])->name('userUpdate');
+     Route::delete('user/destroy/{id}',[UserController::class,'destroy'])->name('userDestroy');
+//tugas
+    Route::get('tugas',[TugasController::class,'index'])->name('tugas');
+ });
