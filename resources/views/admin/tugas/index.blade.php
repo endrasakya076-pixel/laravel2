@@ -28,10 +28,12 @@
                                     <thead class="bg-primary text-white">
                                         <tr class="text-center">
                                             <th>No</th>
+                                            <th>Foto Spesimen</th>
+                                            <th>CIF</th>
                                             <th>Nama</th>
-                                            <th>Tugas</th>
-                                            <th>Tanggal Mulai</th>
-                                            <th>Tanggal Selesai</th>
+                                            <th>Alamat</th>
+                                            <th>Nama Ibu Kandung</th>
+                                            <th>Alamat</th>
                                             <th>
                                                 <i class="fas fa-cog"></i>
                                             </th>

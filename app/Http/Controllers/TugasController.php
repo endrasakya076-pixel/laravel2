@@ -10,7 +10,7 @@ class TugasController extends Controller
     {
         $data = array(
 
-            'title' => 'Data Tugas',
+            'title' => 'Data Spesimen',
             'menuTugas' => 'active',
         );
         return view('admin/tugas/index', $data);
