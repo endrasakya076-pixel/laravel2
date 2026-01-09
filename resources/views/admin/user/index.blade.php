@@ -38,7 +38,7 @@
                                         </tr>
                                     </thead>
                                    <tbody>
-                                    @foreach ($user as $item)
+                                    @foreach ($spesimen as $item)
                                     <tr>
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $item->nama }}</td>
