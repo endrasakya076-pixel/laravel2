@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('sbadmn2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -72,7 +72,7 @@
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </button>
-                                        <hr>
+                                        {{-- <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
                                         </a>
@@ -83,9 +83,9 @@
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
+                                    </div> --}}
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a> <hr>
+                                        {{-- <a class="small" href="register.html">Create an Account!</a> <hr> --}}
                                     <small>
                                         Kembali keberanda
                                         <a href="{{ route('welcome') }}">Dashboard</a>
