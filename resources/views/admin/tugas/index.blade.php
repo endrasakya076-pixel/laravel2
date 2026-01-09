@@ -52,15 +52,14 @@
                                         </tr>
                                     </thead>
                                    <tbody>
-                                    @foreach ($spesimen as $item)
                                         <tr>
-                                            <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td><img src="{{ $item->foto }}" alt="Foto" width="50"></td>
-                                            <td>{{ $item->cif }}</td>
-                                            <td>{{ $item->nama }}</td>
-                                            <td>{{ $item->alamat }}</td>
-                                            <td>{{ $item->nama_ibu }}</td>    
-                                            <td>{{ $item->alamat_ibu }}</td>    
+                                            <td class="text-center">1</td>
+                                            <td>Gambar</td>
+                                            <td>0465758795</td>
+                                            <td>Hendra Sakya Permana</td>
+                                            <td>Jl. Merdeka No. 45</td>
+                                            <td>Siti Aminah</td>    
+                                            <td>Jl. Merdeka No. 45</td>    
                                             <td class="text-center">
                                                 <a href="#" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-edit"></i>
@@ -70,7 +69,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                        @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
