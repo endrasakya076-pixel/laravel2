@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Spesimen extends Model
 {
+    protected $table = 'spesimen';
     protected $fillable = [
         'foto',
         'cif',
