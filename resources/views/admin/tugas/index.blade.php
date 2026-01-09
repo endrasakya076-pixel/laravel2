@@ -52,6 +52,7 @@
                                         </tr>
                                     </thead>
                                    <tbody>
+                                    @foreach ($spesimen as $item)
                                         <tr>
                                             {{-- 1. Menampilkan nomor urut otomatis --}}
                                              <td class="text-center">{{ $loop->iteration }}</td>
@@ -80,7 +81,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
