@@ -62,7 +62,7 @@
                                                     </small>
                                                 @enderror
                                         </div>
-                                        <div class="form-group md-4">
+                                        <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck">
                                                 <label class="custom-control-label" for="customCheck">Remember
@@ -84,7 +84,7 @@
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
                                     </div> --}}
-                                    <div class="text-center">
+                                    <div class="text-center md-4">
                                         {{-- <a class="small" href="register.html">Create an Account!</a> <hr> --}}
                                     <small>
                                         Kembali keberanda
