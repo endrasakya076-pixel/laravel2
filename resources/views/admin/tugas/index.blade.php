@@ -53,13 +53,24 @@
                                     </thead>
                                    <tbody>
                                         <tr>
-                                            <td class="text-center">1</td>
-                                            <td>Gambar</td>
-                                            <td>Cif</td>
-                                            <td>Hendra Sakya Permana</td>
-                                            <td>Jl. Merdeka No. 45</td>
-                                            <td>Siti Aminah</td>    
-                                            <td>Jl. Merdeka No. 45</td>    
+                                            {{-- 1. Menampilkan nomor urut otomatis --}}
+                                             <td class="text-center">{{ $loop->iteration }}</td>
+
+                                            {{-- 2. Menampilkan foto (asumsi folder ada di public/storage) --}}
+                                            <td class="text-center">
+                                             @if($item->foto)
+                                            <img src="{{ asset('storage/' . $item->foto) }}" alt="Foto" width="50" class="img-thumbnail">
+                                            @else
+                                            <span class="badge badge-secondary">No Photo</span>
+                                                @endif
+                                            </td>
+
+                                            {{-- 3. Menampilkan data teks dari kolom database --}}
+                                            <td>{{ $item->cif }}</td>
+                                            <td>{{ $item->nama }}</td>
+                                            <td>{{ $item->alamat }}</td>
+                                            <td>{{ $item->nama_ibu }}</td>    
+                                            <td>{{ $item->alamat_ibu }}</td>    
                                             <td class="text-center">
                                                 <a href="#" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-edit"></i>
