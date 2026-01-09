@@ -52,6 +52,7 @@
                                         </tr>
                                     </thead>
                                    <tbody>
+                                    @foreach ($user as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td><img src="{{ $item->foto }}" alt="Foto" width="50"></td>
@@ -69,7 +70,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
