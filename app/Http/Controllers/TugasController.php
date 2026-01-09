@@ -12,6 +12,7 @@ class TugasController extends Controller
 
             'title' => 'Data Spesimen',
             'menuTugas' => 'active',
+            'spesimen' => \App\Models\Spesimen::all()
         );
         return view('admin/tugas/index', $data);
     }
