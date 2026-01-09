@@ -55,7 +55,7 @@
                                         <tr>
                                             <td class="text-center">1</td>
                                             <td>Gambar</td>
-                                            <td>0465758795</td>
+                                            <td>{{ $item->cif }}</td>
                                             <td>Hendra Sakya Permana</td>
                                             <td>Jl. Merdeka No. 45</td>
                                             <td>Siti Aminah</td>    
