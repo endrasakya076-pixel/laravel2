@@ -53,7 +53,7 @@
                                     </thead>
                                    <tbody>
                                         <tr>
-                                            <td class="text-center">{{ $item->id }}</td>
+                                            <td class="text-center">#</td>
                                             <td><img src="{{ $item->foto }}" alt="Foto" width="50"></td>
                                             <td>{{ $item->cif }}</td>
                                             <td>{{ $item->nama }}</td>
