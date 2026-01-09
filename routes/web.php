@@ -69,4 +69,5 @@ use App\Http\Controllers\TugasController;
 //tugas
     Route::get('tugas',[TugasController::class,'index'])->name('tugas');
     Route::get('tugas/spesimen',[TugasController::class,'spesimen'])->name('tugasSpesimen');
+    Route::post('tugas/store',[TugasController::class,'store'])->name('tugasStore');
  });
