@@ -25,7 +25,7 @@
                 </small>
                 @enderror
             </div> --}}
-            {{-- <div class="row mb-4">
+            <div class="row mb-4">
     <div class="col-xl-6 mb-2">
         <label class="form-label">
             <span class="text-danger">*</span>
@@ -48,22 +48,6 @@
         </div>
         <div class="mt-2">
             <img id="img-preview" class="img-fluid img-thumbnail" style="max-height: 200px; display: none;">
-        </div> --}}
-        <div class="form-group">
-            <label>Nama :</label>
-            <input type="text" id="nama" name="nama" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label>Foto Spesimen :</label>
-            <div class="custom-file">
-                <input type="file" name="gambar" class="custom-file-input" id="gambar" accept="image/*">
-                <label class="custom-file-label" for="gambar">Pilih file...</label>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <img id="preview-img" src="#" alt="Preview" class="img-fluid img-thumbnail" style="display: none; max-height: 200px;">
         </div>
     </div>
             <div class="col-xl-6 mb-1">
