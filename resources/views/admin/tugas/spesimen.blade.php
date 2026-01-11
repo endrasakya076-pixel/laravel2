@@ -27,10 +27,10 @@
             </div> --}}
     <div class="row mb-4">
     <div class="col-xl-6 mb-2">
-        <label class="form-label">
+        {{-- <label class="form-label">
             <span class="text-danger">*</span>
             Foto Spesimen :
-        </label>
+        </label> --}}
         <div class="custom-file">
             <div class="form-group">
                 <input type="text" id="nama" class="form-control">
