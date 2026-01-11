@@ -21,7 +21,7 @@
         </label>
         <div class="custom-file">
                 <div class="form-group">
-                <input type="file" name="foto" id="foto" class="foto">
+                <input type="file" name="foto" id="foto" class="foto" value="{{ $spesimen->foto }}">
                 </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Cif:</label>
-                <input type="cif" name="cif" class="form-control @error('cif') is-invalid @enderror" value="{{ old('cif') }}">
+                <input type="cif" name="cif" class="form-control @error('cif') is-invalid @enderror" value="{{ $spesimen->cif }}">
                     @error('cif')
                 @enderror
             </div>
@@ -39,7 +39,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Nama :</label>
-                <input type="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}">
+                <input type="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ $spesimen->nama }}">
             </div>
         </div>
         <div class="row mb-4">
@@ -47,7 +47,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Alamat :</label>
-                <input type="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ old('alamat') }}">
+                <input type="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ $spesimen->alamat }}">
             </div>
         </div>
         <div class="row mb-4">
@@ -55,7 +55,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Nama Ibu Kandung :</label>
-                <input type="nama_ibu" name="nama_ibu" class="form-control @error('nama_ibu') is-invalid @enderror" value="{{ old('nama_ibu') }}">
+                <input type="nama_ibu" name="nama_ibu" class="form-control @error('nama_ibu') is-invalid @enderror" value="{{ $spesimen->nama_ibu }}">
             </div>
         </div>
         <div class="row mb-4">
@@ -63,7 +63,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Alamat :</label>
-                <input type="alamat_ibu" name="alamat_ibu" class="form-control @error('alamat_ibu') is-invalid @enderror" value="{{ old('alamat_ibu') }}">
+                <input type="alamat_ibu" name="alamat_ibu" class="form-control @error('alamat_ibu') is-invalid @enderror" value="{{ $spesimen->alamat_ibu }}">
             </div>
         </div>
         <div>
