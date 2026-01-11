@@ -11,7 +11,7 @@
                 Kembali</a>
     </div>
     <div class="card-body">
-        <form action="{{ route('tugasUpdate') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('tugasUpdate', $spesimen->id) }}" method="post" enctype="multipart/form-data">
             @csrf
     <div class="row mb-4">
     <div class="col-xl-6">
