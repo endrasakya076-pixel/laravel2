@@ -60,7 +60,7 @@
                 @enderror
             </div>
         </div>
-        <div class="row mb-8">
+        <div class="row mb-6">
             <div class="col-xl-6">
                 <label class="form-label">
                     <span class="text-danger">*</span>
