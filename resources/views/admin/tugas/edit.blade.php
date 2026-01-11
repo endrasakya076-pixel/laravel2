@@ -28,7 +28,8 @@
                 </div>
         </div>
     </div>
-        <div class="col-xl-6 mb-1">
+        <div class="row mb-4">
+             <div class="col-xl-6 mb-1">
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Cif:</label>
