@@ -70,12 +70,13 @@
                                             <td>{{ $item->nama_ibu }}</td>    
                                             <td>{{ $item->alamat_ibu }}</td>    
                                             <td class="text-center">
-                                                <a href="#" class="btn btn-warning btn-sm">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                            <a href="{{ route('tugasEdit', $item->id) }}" class="btn btn-sm btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button  class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{ $item->id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            @include('admin/tugas/modal')
                                             </td>
                                         </tr>
                                     @endforeach

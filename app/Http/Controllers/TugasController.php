@@ -43,39 +43,15 @@ class TugasController extends Controller
         $spesimen->save();
 
 return redirect()->route('tugas')->with('success','Data user berhasil ditambahkan');
-
-        // $request->validate([
-        //     'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        //     'cif' => 'required|unique:spesimen,cif',
-        //     'nama' => 'required',
-        //     'alamat' => 'required',
-        //     'nama_ibu' => 'required',
-        //     'alamat_ibu' => 'required',
-        // ],[
-        //     'foto.required' => 'Foto wajib diisi',
-        //     'foto.image' => 'File harus berupa gambar',
-        //     'foto.mimes' => 'Format foto harus jpeg, png, jpg, gif, atau svg',
-        //     'foto.max' => 'Ukuran foto maksimal 2MB',
-        //     'cif.required' => 'CIF wajib diisi',
-        //     'cif.unique' => 'CIF sudah terdaftar',
-        //     'nama.required' => 'Nama wajib diisi',
-        //     'alamat.required' => 'Alamat wajib diisi',
-        //     'nama_ibu.required' => 'Nama ibu wajib diisi',
-        //     'alamat_ibu.required' => 'Alamat ibu wajib diisi',
-        // ]);
-
-        // $fotoName = time().'.'.$request->foto->extension();  
-        // $request->foto->move(public_path('images'), $fotoName);
-
-        // $spesimen= new Spesimen;
-        // $spesimen->foto =$fotoName;
-        // $spesimen->cif =$request->cif;
-        // $spesimen->nama =$request->nama;
-        // $spesimen->alamat =$request->alamat;
-        // $spesimen->nama_ibu =$request->nama_ibu;
-        // $spesimen->alamat_ibu =$request->alamat_ibu;
-        // $spesimen->save();
-
-        // return redirect()->route('spesimen')->with('success','Data user berhasil diedit');
+    }
+    public function edit($id)
+    {
+        $spesimen = Spesimen::find($id);
+        $data = array(
+            'title' => 'Edit Spesimen',
+            'menuTugas' => 'active',
+            'spesimen' => Spesimen::findOrFail($id),
+        );
+        return view('admin/tugas/edit', $data);
     }
 }
