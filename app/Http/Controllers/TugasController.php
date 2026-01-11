@@ -29,12 +29,12 @@ class TugasController extends Controller
         return view('admin/tugas/spesimen', $data);
     }
     public function store(Request $request){
-        $nm = $request->gambar;
+        $nm = $request->foto;
         $namaFile = $nm->getClientOriginalName();
 
         $spesimen = new Spesimen();
         $spesimen->nama = $request->nama;
-        $spesimen->gambar = $namaFile;
+        $spesimen->foto = $namaFile;
 
         $nm->move(public_path().'/images', $namaFile);
         $spesimen->save();
