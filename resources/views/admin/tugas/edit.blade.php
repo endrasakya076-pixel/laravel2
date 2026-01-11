@@ -22,6 +22,7 @@
         <div class="custom-file">
                 <div class="form-group">
                 <input type="file" name="foto" id="foto" class="foto" value="{{ $spesimen->foto }}">
+                <img src="{{ asset('images/'. $spesimen->foto) }}" width="30%" height="30%" alt="" srcset="">
                 </div>
         </div>
     </div>
