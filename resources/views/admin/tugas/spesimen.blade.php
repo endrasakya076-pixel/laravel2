@@ -34,14 +34,14 @@
                 @enderror
             </div>
         </div>
-        {{-- <div class="row mb-4">
+        <div class="row mb-4">
             <div class="col-xl-6">
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Nama :</label>
                 <input type="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}">
             </div>
-        </div> --}}
+        </div>
         {{-- <div class="row mb-4">
             <div class="col-xl-6">
                 <label class="form-label">
