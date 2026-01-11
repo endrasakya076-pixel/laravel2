@@ -21,7 +21,7 @@
         </label>
         <div class="custom-file">
                 <div class="form-group">
-                <input type="file" id="gambar" class="gambar">
+                <input type="file" name="gambar" id="gambar" class="gambar">
                 </div>
         </div>
     </div>
