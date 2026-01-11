@@ -46,6 +46,9 @@
             </small>
             @enderror
         </div>
+        <div class="mt-2">
+            <img id="img-preview" class="img-fluid img-thumbnail" style="max-height: 200px; display: none;">
+        </div>
     </div>
             <div class="col-xl-6 mb-1">
                 <label class="form-label">
@@ -103,8 +106,21 @@
 @endsection
 
 <script>
-    $('.custom-file-input').on('change', function() {
-        let fileName = $(this).val().split('\\').pop();
-        $(this).next('.custom-file-label').addClass("selected").html(fileName);
-    });
+   function previewImage() {
+    const image = document.querySelector('#fotoSpesimen');
+    const imgPreview = document.querySelector('#img-preview');
+    const label = document.querySelector('.custom-file-label');
+
+    // Menampilkan nama file di label
+    label.textContent = image.files[0].name;
+
+    // Logika Preview
+    const oFReader = new FileReader();
+    oFReader.readAsDataURL(image.files[0]);
+
+    oFReader.onload = function(oFREvent) {
+        imgPreview.style.display = 'block';
+        imgPreview.src = oFREvent.target.result;
+    }
+}
 </script>
