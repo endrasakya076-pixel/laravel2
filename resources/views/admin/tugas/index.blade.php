@@ -58,14 +58,10 @@
                                              <td class="text-center">{{ $loop->iteration }}</td>
 
                                             {{-- 2. Menampilkan foto (asumsi folder ada di public/storage) --}}
-                                            <td class="text-center">
-                                             @if($item->foto)
-                                            <img src="{{ asset('storage/' . $item->foto) }}" alt="Foto" width="50" class="img-thumbnail">
-                                            @else
-                                            <span class="badge badge-secondary">No Photo</span>
-                                                @endif
+                                            <td>
+                                            <a href="{{ asset('storage/' . $item->foto) }}" target="_blank">
+                                                <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama }}" width="50">
                                             </td>
-
                                             {{-- 3. Menampilkan data teks dari kolom database --}}
                                             <td>{{ $item->cif }}</td>
                                             <td>{{ $item->nama }}</td>
