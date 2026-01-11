@@ -11,7 +11,7 @@
                 Kembali</a>
     </div>
     <div class="card-body">
-        <form action="{{ route('userStore') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('tugasStore') }}" method="post" enctype="multipart/form-data">
             @csrf
         {{-- <div class="row mb-4">
             <div class="col-xl-6 mb-2">
