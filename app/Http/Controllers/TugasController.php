@@ -33,13 +33,16 @@ class TugasController extends Controller
         $namaFile = $nm->getClientOriginalName();
 
         $spesimen = new Spesimen();
-        $spesimen->nama = $request->nama;
         $spesimen->foto = $namaFile;
-
         $nm->move(public_path().'/images', $namaFile);
+        $spesimen->cif = $request->cif;
+        $spesimen->nama = $request->nama;
+        $spesimen->alamat = $request->alamat;
+        $spesimen->nama_ibu = $request->nama_ibu;
+        $spesimen->alamat_ibu = $request->alamat_ibu;
         $spesimen->save();
 
-return redirect('spesimen');
+return redirect()->route('spesimen')->with('success','Data user berhasil ditambahkan');
 
         // $request->validate([
         //     'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
