@@ -29,7 +29,18 @@ class TugasController extends Controller
         return view('admin/tugas/spesimen', $data);
     }
     public function store(Request $request){
-        dd($request->all());
+        $nm = $request->gambar;
+        $namaFile = $nm->getClientOriginalName();
+
+        $spesimen = new Spesimen();
+        $spesimen->nama = $request->nama;
+        $spesimen->gambar = $namaFile;
+
+        $nm->move(public_path().'/images', $namaFile);
+        $spesimen->save();
+
+return redirect('spesimen');
+
         // $request->validate([
         //     'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         //     'cif' => 'required|unique:spesimen,cif',
