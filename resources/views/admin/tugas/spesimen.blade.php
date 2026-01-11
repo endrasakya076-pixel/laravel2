@@ -38,11 +38,11 @@
                 <div class="form-group">
                 <input type="file" id="gambar" class="gambar">
                 </div>
-            @error('nama')
+            {{-- @error('nama')
             <small class="text-danger">
                 {{ $message }}   
             </small>
-            @enderror
+            @enderror --}}
         </div>
         <div class="mt-4">
             <img id="img-preview" class="img-fluid img-thumbnail" style="max-height: 200px; display: none;">
