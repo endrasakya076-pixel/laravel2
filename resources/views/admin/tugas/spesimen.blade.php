@@ -52,7 +52,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Cif:</label>
-                <input type="email" name="cif" class="form-control @error('cif') is-invalid @enderror" value="{{ old('cif') }}">
+                <input type="cif" name="cif" class="form-control @error('cif') is-invalid @enderror" value="{{ old('cif') }}">
                     @error('cif')
                 {{-- <small class="text-danger">
                     {{ $message }}   
