@@ -14,7 +14,7 @@
         <form action="{{ route('tugasStore') }}" method="post" enctype="multipart/form-data">
             @csrf
     <div class="row mb-4">
-    <div class="col-xl-6 mb-8">
+    <div class="col-xl-6">
         <label class="form-label">
             <span class="text-danger">*</span>
             Foto Spesimen :
