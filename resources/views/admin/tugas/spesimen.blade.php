@@ -13,18 +13,6 @@
     <div class="card-body">
         <form action="{{ route('tugasStore') }}" method="post" enctype="multipart/form-data">
             @csrf
-        {{-- <div class="row mb-4">
-            <div class="col-xl-6 mb-2">
-                <label class="form-label">
-                    <span class="text-danger">*</span>
-                    Foto Spesimen :</label>
-                <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}">
-                    @error('nama')
-                <small class="text-danger">
-                    {{ $message }}   
-                </small>
-                @enderror
-            </div> --}}
     <div class="row mb-4">
     <div class="col-xl-6 mb-2">
         <label class="form-label">
@@ -32,31 +20,17 @@
             Foto Spesimen :
         </label>
         <div class="custom-file">
-            {{-- <div class="form-group">
-                <input type="text" id="nama" class="form-control">
-                </div> --}}
                 <div class="form-group">
                 <input type="file" id="gambar" class="gambar">
                 </div>
-            {{-- @error('nama')
-            <small class="text-danger">
-                {{ $message }}   
-            </small>
-            @enderror --}}
-        </div>
-        <div class="mt-4">
-            <img id="img-preview" class="img-fluid img-thumbnail" style="max-height: 200px; display: none;">
         </div>
     </div>
-            <div class="col-xl-6 mb-1">
+        <div class="col-xl-6 mb-1">
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Cif:</label>
                 <input type="cif" name="cif" class="form-control @error('cif') is-invalid @enderror" value="{{ old('cif') }}">
                     @error('cif')
-                {{-- <small class="text-danger">
-                    {{ $message }}   
-                </small> --}}
                 @enderror
             </div>
         </div>
