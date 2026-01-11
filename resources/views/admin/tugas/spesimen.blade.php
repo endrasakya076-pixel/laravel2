@@ -52,20 +52,20 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Cif:</label>
-                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
-                    @error('email')
-                <small class="text-danger">
+                <input type="email" name="cif" class="form-control @error('cif') is-invalid @enderror" value="{{ old('cif') }}">
+                    @error('cif')
+                {{-- <small class="text-danger">
                     {{ $message }}   
-                </small>
+                </small> --}}
                 @enderror
             </div>
         </div>
-        <div class="row mb-6">
+        <div class="row mb-4">
             <div class="col-xl-6">
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Nama :</label>
-                <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror">
+                <input type="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}">
             </div>
         </div>
         <div class="row mb-4">
@@ -73,7 +73,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Alamat :</label>
-                <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror">
+                <input type="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ old('alamat') }}">
             </div>
         </div>
         <div class="row mb-4">
@@ -81,7 +81,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Nama Ibu Kandung :</label>
-                <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror">
+                <input type="nama_ibu" name="nama_ibu" class="form-control @error('nama_ibu') is-invalid @enderror" value="{{ old('nama_ibu') }}">
             </div>
         </div>
         <div class="row mb-4">
@@ -89,7 +89,7 @@
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Alamat :</label>
-                <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror">
+                <input type="alamat_ibu" name="alamat_ibu" class="form-control @error('alamat_ibu') is-invalid @enderror" value="{{ old('alamat_ibu') }}">
             </div>
         </div>
         <div>
@@ -102,50 +102,3 @@
     </div>
 </div>
 @endsection
-
-<script>
-$('.custom-file-input').on('change', function() {
-    let fileName = $(this).val().split('\\').pop();
-    $(this).next('.custom-file-label').addClass("selected").html(fileName);
-});
-</script>
-
-<script>
-   function previewImage() {
-    const image = document.querySelector('#fotoSpesimen');
-    const imgPreview = document.querySelector('#img-preview');
-    const label = document.querySelector('.custom-file-label');
-
-    // Menampilkan nama file di label
-    label.textContent = image.files[0].name;
-
-    // Logika Preview
-    const oFReader = new FileReader();
-    oFReader.readAsDataURL(image.files[0]);
-
-    oFReader.onload = function(oFREvent) {
-        imgPreview.style.display = 'block';
-        imgPreview.src = oFREvent.target.result;
-    }
-}
-</script>
-<script>
-    // Script untuk memunculkan nama file di text bar
-    $('.custom-file-input').on('change', function() {
-        let fileName = $(this).val().split('\\').pop();
-        $(this).next('.custom-file-label').addClass("selected").html(fileName);
-        
-        // Bonus: Fungsi Preview Gambar
-        previewImage(this);
-    });
-
-    function previewImage(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#img-preview').attr('src', e.target.result).show();
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-</script>
