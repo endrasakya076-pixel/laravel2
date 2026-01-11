@@ -25,7 +25,7 @@
                 </small>
                 @enderror
             </div> --}}
-            <div class="row mb-4">
+    <div class="row mb-4">
     <div class="col-xl-6 mb-2">
         <label class="form-label">
             <span class="text-danger">*</span>
@@ -47,6 +47,7 @@
             @enderror
         </div>
     </div>
+    <div class="row mb-4">
             <div class="col-xl-6 mb-1">
                 <label class="form-label">
                     <span class="text-danger">*</span>
