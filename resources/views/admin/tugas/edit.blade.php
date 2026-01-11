@@ -28,7 +28,7 @@
                 </div>
         </div>
     </div>
-        <div class="col-xl-6 mb-1">
+        <div class="col-xl-6 mb-6">
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Cif:</label>
@@ -37,7 +37,7 @@
                 @enderror
             </div>
         </div>
-        <div class="row mb-7">
+        <div class="row mb-4">
             <div class="col-xl-6">
                 <label class="form-label">
                     <span class="text-danger">*</span>
