@@ -73,4 +73,14 @@ return redirect()->route('tugas')->with('success','Data user berhasil ditambahka
         $spesimen->save();
         return redirect()->route('tugas')->with('success', 'Data spesimen berhasil diperbarui');
     }
+    public function destroy($id)
+    {
+        $spesimen = Spesimen::find($id);
+        if ($spesimen) {
+            $spesimen->delete();
+            return redirect()->route('tugas')->with('success', 'Data spesimen berhasil dihapus');
+        } else {
+            return redirect()->route('tugas')->with('error', 'Data spesimen tidak ditemukan');
+        }
+    }
 }
