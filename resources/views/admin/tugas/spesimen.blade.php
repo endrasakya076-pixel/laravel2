@@ -11,7 +11,7 @@
                 Kembali</a>
     </div>
     <div class="card-body">
-        <form action="{{ route('userStore') }}" method="post">
+        <form action="{{ route('userStore') }}" method="post" enctype="multipart/form-data">
             @csrf
         {{-- <div class="row mb-4">
             <div class="col-xl-6 mb-2">
@@ -33,13 +33,12 @@
         </label>
         
         <div class="custom-file">
-            <input type="file" 
-                   name="nama" 
-                   class="custom-file-input @error('nama') is-invalid @enderror" 
-                   id="fotoSpesimen"
-                   accept="image/*">
-            <label class="custom-file-label" for="fotoSpesimen">Pilih file...</label>
-            
+            <div class="form-group">
+                <input type="text" id="nama" class="form-control">
+                </div>
+                <div class="form-group">
+                <input type="file" id="gambar" class="gambar">
+                </div>
             @error('nama')
             <small class="text-danger">
                 {{ $message }}   
