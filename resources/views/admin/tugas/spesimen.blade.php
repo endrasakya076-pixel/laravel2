@@ -13,7 +13,7 @@
     <div class="card-body">
         <form action="{{ route('userStore') }}" method="post">
             @csrf
-        <div class="row mb-4">
+        {{-- <div class="row mb-4">
             <div class="col-xl-6 mb-2">
                 <label class="form-label">
                     <span class="text-danger">*</span>
@@ -24,7 +24,35 @@
                     {{ $message }}   
                 </small>
                 @enderror
-            </div>
+            </div> --}}
+            <div class="row mb-4">
+    <div class="col-xl-6 mb-2">
+        <label class="form-label">
+            <span class="text-danger">*</span>
+            Foto Spesimen :
+        </label>
+        
+        <div class="custom-file">
+            <input type="file" 
+                   name="nama" 
+                   class="custom-file-input @error('nama') is-invalid @enderror" 
+                   id="fotoSpesimen"
+                   accept="image/*">
+            <label class="custom-file-label" for="fotoSpesimen">Pilih file...</label>
+            
+            @error('nama')
+            <small class="text-danger">
+                {{ $message }}   
+            </small>
+            @enderror
+        </div>
+    </div>
+</div>
+$('.custom-file-input').on('change', function() {
+    let fileName = $(this).val().split('\\').pop();
+    $(this).next('.custom-file-label').addClass("selected").html(fileName);
+});
+
             <div class="col-xl-6 mb-1">
                 <label class="form-label">
                     <span class="text-danger">*</span>
