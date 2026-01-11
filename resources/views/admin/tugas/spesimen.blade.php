@@ -24,7 +24,7 @@
                 <input type="file" id="gambar" class="gambar">
                 </div>
         </div>
-    </div>
+    
         <div class="col-xl-6 mb-1">
                 <label class="form-label">
                     <span class="text-danger">*</span>
@@ -73,6 +73,7 @@
             </button>
         </div>
         </form>
+        </div>
     </div>
 </div>
 @endsection
