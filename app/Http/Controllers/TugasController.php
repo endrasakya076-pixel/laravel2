@@ -54,4 +54,23 @@ return redirect()->route('tugas')->with('success','Data user berhasil ditambahka
         );
         return view('admin/tugas/edit', $data);
     }
+    public function update(Request $request, $id)
+    {
+        $spesimen = Spesimen::find($id);
+
+        if ($request->hasFile('foto')) {
+            $nm = $request->foto;
+            $namaFile = time().rand(100,999).""."".$nm->getClientOriginalName();
+            $nm->move(public_path().'/images', $namaFile);
+            $spesimen->foto = $namaFile;
+        }
+
+        $spesimen->cif = $request->cif;
+        $spesimen->nama = $request->nama;
+        $spesimen->alamat = $request->alamat;
+        $spesimen->nama_ibu = $request->nama_ibu;
+        $spesimen->alamat_ibu = $request->alamat_ibu;
+        $spesimen->save();
+        return redirect()->route('tugas')->with('success', 'Data spesimen berhasil diperbarui');
+    }
 }
