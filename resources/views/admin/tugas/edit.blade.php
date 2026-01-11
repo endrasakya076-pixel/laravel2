@@ -21,7 +21,7 @@
         </label>
         <div class="custom-file">
             <div class="form-group">
-                <img src="{{ asset('images/'. $spesimen->foto) }}" width="50p" height="50p" alt="" srcset="">
+                <img src="{{ asset('images/'. $spesimen->foto) }}" width="20p" height="20p" alt="" srcset="">
             </div>
                 <div class="form-group">
                 <input type="file" name="foto" id="foto" class="foto" value="{{ $spesimen->foto }}" src="{{ asset('images/'. $spesimen->foto) }}">
