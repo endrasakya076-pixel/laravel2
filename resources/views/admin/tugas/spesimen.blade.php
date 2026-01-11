@@ -48,11 +48,6 @@
         </div>
     </div>
 </div>
-$('.custom-file-input').on('change', function() {
-    let fileName = $(this).val().split('\\').pop();
-    $(this).next('.custom-file-label').addClass("selected").html(fileName);
-});
-
             <div class="col-xl-6 mb-1">
                 <label class="form-label">
                     <span class="text-danger">*</span>
@@ -107,3 +102,10 @@ $('.custom-file-input').on('change', function() {
     </div>
 </div>
 @endsection
+
+<script>
+    $('.custom-file-input').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });
+</script>
