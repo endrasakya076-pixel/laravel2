@@ -59,8 +59,7 @@
 
                                             {{-- 2. Menampilkan foto (asumsi folder ada di public/storage) --}}
                                             <td>
-                                            <a href="{{ asset('storage/' . $item->foto) }}" target="_blank">
-                                                <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama }}" width="50">
+                                            <a href="{{ asset('images/'. $item->foto) }}" target="_blank" rell="noopener noreferrer">
                                             </td>
                                             {{-- 3. Menampilkan data teks dari kolom database --}}
                                             <td>{{ $item->cif }}</td>
