@@ -30,7 +30,7 @@ class TugasController extends Controller
     }
     public function store(Request $request){
         $nm = $request->foto;
-        $namaFile = $nm->getClientOriginalName();
+        $namaFile = time().rand(100,999).""."".$nm->getClientOriginalName();
 
         $spesimen = new Spesimen();
         $spesimen->foto = $namaFile;
