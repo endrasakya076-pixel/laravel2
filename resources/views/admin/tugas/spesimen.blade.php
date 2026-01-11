@@ -25,13 +25,12 @@
                 </small>
                 @enderror
             </div> --}}
-            <div class="row mb-4">
+    <div class="row mb-4">
     <div class="col-xl-6 mb-2">
         <label class="form-label">
             <span class="text-danger">*</span>
             Foto Spesimen :
         </label>
-        
         <div class="custom-file">
             <div class="form-group">
                 <input type="text" id="nama" class="form-control">
@@ -45,7 +44,7 @@
             </small>
             @enderror
         </div>
-        <div class="mt-2">
+        <div class="mt-4">
             <img id="img-preview" class="img-fluid img-thumbnail" style="max-height: 200px; display: none;">
         </div>
     </div>
