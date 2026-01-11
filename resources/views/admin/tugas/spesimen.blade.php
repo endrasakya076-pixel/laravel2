@@ -106,6 +106,13 @@
 @endsection
 
 <script>
+$('.custom-file-input').on('change', function() {
+    let fileName = $(this).val().split('\\').pop();
+    $(this).next('.custom-file-label').addClass("selected").html(fileName);
+});
+</script>
+
+<script>
    function previewImage() {
     const image = document.querySelector('#fotoSpesimen');
     const imgPreview = document.querySelector('#img-preview');
@@ -123,4 +130,24 @@
         imgPreview.src = oFREvent.target.result;
     }
 }
+</script>
+<script>
+    // Script untuk memunculkan nama file di text bar
+    $('.custom-file-input').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        
+        // Bonus: Fungsi Preview Gambar
+        previewImage(this);
+    });
+
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#img-preview').attr('src', e.target.result).show();
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 </script>
