@@ -42,30 +42,30 @@
                 <input type="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}">
             </div>
         </div>
-        {{-- <div class="row mb-4">
+        <div class="row mb-4">
             <div class="col-xl-6">
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Alamat :</label>
                 <input type="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ old('alamat') }}">
             </div>
-        </div> --}}
-        {{-- <div class="row mb-4">
+        </div>
+        <div class="row mb-4">
             <div class="col-xl-6">
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Nama Ibu Kandung :</label>
                 <input type="nama_ibu" name="nama_ibu" class="form-control @error('nama_ibu') is-invalid @enderror" value="{{ old('nama_ibu') }}">
             </div>
-        </div> --}}
-        {{-- <div class="row mb-4">
+        </div>
+        <div class="row mb-4">
             <div class="col-xl-6">
                 <label class="form-label">
                     <span class="text-danger">*</span>
                     Alamat :</label>
                 <input type="alamat_ibu" name="alamat_ibu" class="form-control @error('alamat_ibu') is-invalid @enderror" value="{{ old('alamat_ibu') }}">
             </div>
-        </div> --}}
+        </div>
         <div>
             <button type="submit" class="btn btn-sm btn-primary">
                 <i class="fas fa-save mr-2"></i>
