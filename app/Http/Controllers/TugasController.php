@@ -42,7 +42,7 @@ class TugasController extends Controller
         $spesimen->alamat_ibu = $request->alamat_ibu;
         $spesimen->save();
 
-return redirect()->route('spesimen')->with('success','Data user berhasil ditambahkan');
+return redirect()->route('tugas')->with('success','Data user berhasil ditambahkan');
 
         // $request->validate([
         //     'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
