@@ -31,7 +31,7 @@
                                             <th>Nama</th>
                                             <th>Email</th>
                                             <th>Jabatan</th>
-                                            <th>Tugas </th>
+                                            {{-- <th>Tugas </th> --}}
                                             <th>
                                                 <i class="fas fa-cog"></i>
                                             </th>
@@ -58,7 +58,7 @@
                                                 </span>
                                             @endif
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             @if ($item->is_tugas == false)
                                                 <span class="badge badge-primary">
                                                     Belum Ada Tugas
@@ -68,7 +68,7 @@
                                                    Sudah Ada Tugas
                                                 </span>
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <td class="text-center">
                                             <a href="{{ route('userEdit', $item->id) }}" class="btn btn-sm btn-warning">
                                                 <i class="fas fa-edit"></i>
