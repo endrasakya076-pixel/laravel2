@@ -31,7 +31,7 @@ class TugasController extends Controller
     public function store(Request $request){
     // 1. Tambahkan Validasi
     $request->validate([
-        'foto' => 'required|image|mimes:jpeg,png,jpg|min:1024', // min:1024 KB = 1 MB
+        'foto' => 'required|image|mimes:jpeg,png,jpg|between:200,400', // min:1024 KB = 1 MB
         'cif' => 'required',
         'nama' => 'required',
         // Kolom lain nullable agar bisa dikosongkan seperti permintaan awal Anda
