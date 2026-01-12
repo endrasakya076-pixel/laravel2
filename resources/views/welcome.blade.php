@@ -77,7 +77,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="{{ route('login') }}">Login</a>
+      {{-- <a class="btn-getstarted" href="{{ route('login') }}">Login</a> --}}
 
     </div>
   </header>
@@ -93,8 +93,8 @@
             <h1>Membangun Bersama Masyarakat</h1>
             <p>Aplikasi ini merupakan aplikasi untuk memverifikasi data spesimen nasabah secara akurat dan efisien guna meningkatkan keamanan serta validitas transaksi perbankan.</p>
             <div class="d-flex">
-              {{-- <a href="#about" class="btn-get-started">Login</a>
-              <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a> --}}
+               <a class="btn-getstarted" href="{{ route('login') }}">Login</a>
+              {{--<a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a> --}}
             </div>
           </div>
           <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
@@ -668,7 +668,7 @@
     </section><!-- /Team Section --> --}}
 
     <!-- Contact Section -->
-    <section id="contact" class="contact section">
+    {{-- <section id="contact" class="contact section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -753,7 +753,7 @@
 
     </section><!-- /Contact Section -->
 
-  </main>
+  </main> --}}
 
   <footer id="footer" class="footer">
 
