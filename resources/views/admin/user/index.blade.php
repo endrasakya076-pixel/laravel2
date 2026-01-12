@@ -2,7 +2,7 @@
 
 @section('content')
 <h1 class="h3 mb-4 text-gray-800">
-    <i class="fas fa-fw fa-user mr-2"></i>
+    <i class="fas fa-fw fa-user mr-2" href="{{ route('dashboard.index') }}"></i>
     {{ $title }}</h1>
 <div class="card">
     <div class="card-header d-flex flex-wrap justify-content-center justify-content-xl-between">
