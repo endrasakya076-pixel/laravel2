@@ -24,6 +24,7 @@
                 <img src="{{ asset('images/'. $spesimen->foto) }}" width="20p" height="20p" alt="" srcset="">
             </div>
                 <div class="form-group">
+                    <label>Ganti Foto Spesimen (Maksimal 400 KB)</label>
                 <input type="file" name="foto" id="foto" class="foto" value="{{ $spesimen->foto }}" src="{{ asset('images/'. $spesimen->foto) }}">
                 </div>
                 @error('foto')
@@ -84,3 +85,13 @@
     </div>
 </div>
 @endsection
+
+<script>
+    // Script sederhana untuk cek ukuran file sebelum upload
+    document.getElementById('fotoInput').onchange = function() {
+        if(this.files[0].size > 400 * 1024) { // 400 KB
+           alert("Peringatan: Ukuran file ini terlalu besar (" + (this.files[0].size/1024).toFixed(2) + " KB). Maksimal adalah 400 KB.");
+           this.value = ""; // Reset input
+        };
+    };
+</script>
