@@ -85,17 +85,21 @@ return redirect()->route('tugas')->with('success','Data user berhasil ditambahka
     }
     public function search(Request $request)
     {
-        $searchTerm = $request->input('search');
-        $spesimen = Spesimen::where('nama', 'LIKE', '%' . $searchTerm . '%')
-            ->orWhere('cif', 'LIKE', '%' . $searchTerm . '%')
-            ->get();
+        $search = $request->search;
+        $post = Spesimen::where('title','like',"%".$search."%")->orWhere('body','like',"%".$search."%")->get();
+        return view('posts.index',['posts'=>$post]);
 
-        $data = array(
-            'title' => 'Hasil Pencarian Spesimen',
-            'menuTugas' => 'active',
-            'spesimen' => $spesimen,
-        );
+        // $searchTerm = $request->input('search');
+        // $spesimen = Spesimen::where('nama', 'LIKE', '%' . $searchTerm . '%')
+        //     ->orWhere('cif', 'LIKE', '%' . $searchTerm . '%')
+        //     ->get();
 
-        return view('admin/tugas/index', $data);
+        // $data = array(
+        //     'title' => 'Hasil Pencarian Spesimen',
+        //     'menuTugas' => 'active',
+        //     'spesimen' => $spesimen,
+        // );
+
+        // return view('admin/tugas/index', $data);
     }
 }
