@@ -21,7 +21,13 @@
         </label>
         <div class="custom-file">
                 <div class="form-group">
-                <input type="file" name="foto" id="foto" class="foto">
+                {{-- <input type="file" name="foto" id="foto" class="foto"> --}}
+                <input type="file" name="foto" class="form-control @error('foto') is-invalid @enderror">
+                    @error('foto')
+                    <div class="invalid-feedback">
+                    {{ $message }}
+                    </div>
+                    @enderror
                 </div>
         </div>
     </div>
