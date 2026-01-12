@@ -77,7 +77,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="{{ route('login') }}">Login</a>
+      {{-- <a class="btn-getstarted" href="{{ route('login') }}">Login</a> --}}
 
     </div>
   </header>
@@ -822,7 +822,7 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Pt.BPR Prima Nadi</strong> <span>All Rights Reserved</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">PT.BPR Prima Nadi</strong> <span>All Rights Reserved</span></p>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you've purchased the pro version. -->
