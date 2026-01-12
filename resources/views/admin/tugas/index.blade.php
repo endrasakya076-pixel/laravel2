@@ -39,6 +39,20 @@
         z-index: 999; /* Agar berada di atas elemen tabel lain */
         box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     }
+    
+    /* Membuat latar belakang modal lebih gelap */
+    .modal-backdrop.show {
+        opacity: 0.8;
+    }
+    
+    /* Animasi zoom saat modal terbuka */
+    .modal.fade .modal-dialog {
+        transform: scale(0.8);
+        transition: transform 0.3s ease-out;
+    }
+    .modal.show .modal-dialog {
+        transform: scale(1);
+    }
 </style>
 
 @section('content')
@@ -102,12 +116,30 @@
                                              <td class="text-center">{{ $loop->iteration }}</td>
 
                                             {{-- 2. Menampilkan foto (asumsi folder ada di public/storage) --}}
-                                            <td>
-    <a href="{{ asset('images/'. $item->foto) }}" target="_blank">
-        <div class="img-container">
-            <img src="{{ asset('images/'. $item->foto) }}" class="pop-zoom">
+    <td>
+    <center>
+        <img src="{{ asset('images/'. $item->foto) }}" 
+             style="width: 50px; height: 50px; object-fit: cover; cursor: pointer; border-radius: 5px;" 
+             data-toggle="modal" 
+             data-target="#imageModal{{ $item->id }}"
+             title="Klik untuk memperbesar">
+    </center>
+
+    <div class="modal fade" id="imageModal{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content" style="background: transparent; border: none;">
+                <div class="modal-body text-center">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" style="font-size: 3rem; opacity: 1;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <img src="{{ asset('images/'. $item->foto) }}" class="img-fluid rounded shadow-lg">
+                    <div class="text-white mt-3">
+                        <h5>{{ $item->nama }} ({{ $item->cif }})</h5>
+                    </div>
+                </div>
+            </div>
         </div>
-    </a>
+    </div>
 </td>
                                             {{-- 3. Menampilkan data teks dari kolom database --}}
                                             <td>{{ $item->cif }}</td>
