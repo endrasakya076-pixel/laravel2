@@ -23,7 +23,7 @@
         </div> --}}
                     <!-- Search Form -->
                      <form
-                       action="{{ url('search') }}" method="GET">
+                       action="{{ route('tugasSearch') }}" method="GET">
                         <div class="input-group">
                             <input name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                                 aria-label="Search" aria-describedby="basic-addon2">
