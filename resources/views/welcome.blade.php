@@ -75,7 +75,7 @@
 <section id="hero" class="hero section">
     <div class="container">
         <div class="row gy-4 align-items-center"> <div class="col-lg-6 order-1 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start" data-aos="fade-up">
-                <h1>Membangun Bersama Masyarakat</h1>
+                <h1>Membangun Bersama Masyarakat.</h1>
                 {{-- <p>Aplikasi ini merupakan aplikasi untuk memverifikasi data spesimen nasabah secara akurat dan efisien guna meningkatkan keamanan serta validitas transaksi perbankan.</p> --}}
                 <p>Verifikasi adalah proses pengendalian internal untuk menjamin keabsahan instruksi nasabah dengan cara membandingkan identitas serta spesimen tanda tangan yang tersimpan dalam sistem dengan dokumen transaksi yang diajukan.</p>
                 
