@@ -150,13 +150,23 @@ class TugasController extends Controller
     }
     public function destroy($id)
     {
-        $spesimen = Spesimen::find($id);
-        if ($spesimen) {
-            $spesimen->delete();
-            return redirect()->route('tugas')->with('success', 'Data spesimen berhasil dihapus');
-        } else {
-            return redirect()->route('tugas')->with('error', 'Data spesimen tidak ditemukan');
+       // 1. Cari data spesimen
+    $spesimen = Spesimen::find($id);
+
+    if ($spesimen) {
+        // 2. Tentukan lokasi/path file foto
+        $filePath = public_path('images/' . $spesimen->foto);
+
+        // 3. Cek apakah file fotonya ada di folder, jika ada maka hapus (unlink)
+        if (!empty($spesimen->foto) && file_exists($filePath)) {
+            unlink($filePath);
         }
+        // 4. Hapus data dari database
+        $spesimen->delete();
+        return redirect()->route('tugas')->with('success', 'Data spesimen dan file foto berhasil dihapus');
+        } else {
+        return redirect()->route('tugas')->with('error', 'Data spesimen tidak ditemukan');
+    }
     }
     public function search(Request $request)
     {
