@@ -31,7 +31,7 @@ class TugasController extends Controller
     public function store(Request $request){
     // 1. Tambahkan Validasi
     $request->validate([
-        'foto' => 'required|image|mimes:jpeg,png,jpg|between:200,400', // min:1024 KB = 1 MB
+        'foto' => 'required|image|mimes:jpeg,png,jpg|max:400', // max:400 KB = 0.4 MB
         'cif' => 'required',
         'nama' => 'required',
         // Kolom lain nullable agar bisa dikosongkan seperti permintaan awal Anda
@@ -40,7 +40,7 @@ class TugasController extends Controller
         'alamat_ibu' => 'nullable',
     ], [
         // Pesan error kustom (opsional)
-        'foto.min' => 'Ukuran foto terlalu kecil, minimal harus 1 MB agar gambar terlihat jelas saat verifikasi.',
+        'foto.min' => 'Ukuran foto terlalu kecil, maksimal 400 KB agar gambar terlihat jelas saat verifikasi.',
         'foto.required' => 'Foto spesimen wajib diunggah.',
     ]);
 
