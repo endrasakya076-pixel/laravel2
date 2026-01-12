@@ -86,8 +86,8 @@ return redirect()->route('tugas')->with('success','Data user berhasil ditambahka
     public function search(Request $request)
     {
         $search = $request->search;
-        $post = Spesimen::where('title','like',"%".$search."%")->orWhere('body','like',"%".$search."%")->get();
-        return view('posts.index',['posts'=>$post]);
+        $post = Spesimen::where('nama','like',"%".$search."%")->orWhere('cif','like',"%".$search."%")->get();
+
 
         // $searchTerm = $request->input('search');
         // $spesimen = Spesimen::where('nama', 'LIKE', '%' . $searchTerm . '%')
