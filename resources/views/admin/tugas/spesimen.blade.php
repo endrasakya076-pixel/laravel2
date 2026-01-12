@@ -68,7 +68,7 @@
             <div class="col-xl-6">
                 <label class="form-label">
                     <span class="text-danger">*</span>
-                    Alamat :</label>
+                    Alamat ibu kandung:</label>
                 <input type="alamat_ibu" name="alamat_ibu" class="form-control @error('alamat_ibu') is-invalid @enderror" value="{{ old('alamat_ibu') }}">
             </div>
         </div>
