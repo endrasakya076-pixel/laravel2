@@ -76,7 +76,47 @@
                                              <td class="text-center">{{ $loop->iteration }}</td>
 
                                             {{-- 2. Menampilkan foto (asumsi folder ada di public/storage) --}}
-    <td>
+<td>
+    <center>
+        <img src="{{ asset('images/'. $item->foto) }}" 
+             style="width: 50px; height: 50px; object-fit: cover; cursor: pointer; border: 2px solid #007bff; border-radius: 8px; transition: 0.3s;" 
+             data-toggle="modal" 
+             data-target="#imageModal{{ $item->id }}"
+             title="Klik untuk memperbesar"
+             onmouseover="this.style.opacity='0.7'" 
+             onmouseout="this.style.opacity='1'">
+    </center>
+
+    <div class="modal fade" id="imageModal{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content" style="background: transparent; border: none;">
+                
+                <div class="shadow-lg" style="background: linear-gradient(45deg, #007bff, #00c6ff); color: white; padding: 15px; border-radius: 15px 15px 0 0; border-bottom: 2px solid rgba(255,255,255,0.2); position: relative;">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" 
+                            style="position: absolute; right: 15px; top: 10px; opacity: 1; outline: none;">
+                        <span aria-hidden="true" style="font-size: 2rem;">&times;</span>
+                    </button>
+                    
+                    <h4 class="mb-1" style="font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+                        {{ $item->nama }}
+                    </h4>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">
+                        <i class="fas fa-id-card mr-1"></i> CIF: <strong>{{ $item->cif }}</strong> 
+                        <span class="mx-2">|</span> 
+                        <i class="fas fa-female mr-1"></i> Ibu Kandung: <strong>{{ $item->nama_ibu }}</strong>
+                    </div>
+                </div>
+
+                <div class="modal-body p-0 shadow-lg" style="background: white; border-radius: 0 0 15px 15px; overflow: hidden;">
+                    <img src="{{ asset('images/'. $item->foto) }}" class="img-fluid" style="width: 100%; display: block;">
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</td>
+
+{{-- <td>
     <center>
         <img src="{{ asset('images/'. $item->foto) }}" 
              style="width: 50px; height: 50px; object-fit: cover; cursor: pointer; border-radius: 5px;" 
@@ -84,7 +124,6 @@
              data-target="#imageModal{{ $item->id }}"
              title="Klik untuk memperbesar">
     </center>
-
     <div class="modal fade" id="imageModal{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content" style="background: transparent; border: none;">
@@ -100,7 +139,7 @@
             </div>
         </div>
     </div>
-</td>
+</td> --}}
                                             {{-- 3. Menampilkan data teks dari kolom database --}}
                                             <td>{{ $item->cif }}</td>
                                             <td>{{ $item->nama }}</td>
