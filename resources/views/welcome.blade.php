@@ -182,7 +182,7 @@
     </section><!-- /About Section -->
 
     <!-- Stats Section -->
-    <section id="stats" class="stats section">
+    {{-- <section id="stats" class="stats section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
@@ -665,7 +665,7 @@
 
       </div>
 
-    </section><!-- /Team Section -->
+    </section><!-- /Team Section --> --}}
 
     <!-- Contact Section -->
     <section id="contact" class="contact section">
