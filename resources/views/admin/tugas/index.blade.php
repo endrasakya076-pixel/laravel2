@@ -1,45 +1,5 @@
 @extends('layouts/app')
 <style>
-    /* Kontainer gambar untuk membatasi luapan saat dizoom */
-    .img-container {
-        overflow: hidden;
-        width: 80px; /* Atur lebar kontainer */
-        height: 80px; /* Atur tinggi kontainer */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        cursor: zoom-in;
-    }
-
-    .img-zoom {
-        transition: transform .3s ease; /* Animasi halus */
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    /* Efek saat kursor mengarah ke gambar */
-    .img-zoom:hover {
-        transform: scale(2.5); /* Gambar membesar 2.5 kali lipat */
-    }
-
-    .pop-zoom {
-        transition: transform .2s;
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-        border-radius: 5px;
-    }
-
-    .pop-zoom:hover {
-        transform: scale(4); /* Membesar keluar dari tabel */
-        position: relative;
-        z-index: 999; /* Agar berada di atas elemen tabel lain */
-        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    }
-    
     /* Membuat latar belakang modal lebih gelap */
     .modal-backdrop.show {
         opacity: 0.8;
