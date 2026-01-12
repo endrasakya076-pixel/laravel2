@@ -83,4 +83,19 @@ return redirect()->route('tugas')->with('success','Data user berhasil ditambahka
             return redirect()->route('tugas')->with('error', 'Data spesimen tidak ditemukan');
         }
     }
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $spesimen = Spesimen::where('nama', 'LIKE', '%' . $searchTerm . '%')
+            ->orWhere('cif', 'LIKE', '%' . $searchTerm . '%')
+            ->get();
+
+        $data = array(
+            'title' => 'Hasil Pencarian Spesimen',
+            'menuTugas' => 'active',
+            'spesimen' => $spesimen,
+        );
+
+        return view('admin/tugas/index', $data);
+    }
 }
