@@ -24,7 +24,6 @@
                 <img src="{{ asset('images/'. $spesimen->foto) }}" width="20p" height="20p" alt="" srcset="">
             </div>
                 <div class="form-group">
-                    <label>Ganti Foto Spesimen (Maksimal 400 KB)</label>
                 <input type="file" name="foto" id="foto" class="foto" value="{{ $spesimen->foto }}" src="{{ asset('images/'. $spesimen->foto) }}">
                 </div>
                 @error('foto')
