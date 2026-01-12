@@ -77,7 +77,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      {{-- <a class="btn-getstarted" href="{{ route('login') }}">Login</a> --}}
+      <a class="btn-getstarted" href="{{ route('login') }}">Login</a>
 
     </div>
   </header>
@@ -93,7 +93,7 @@
             <h1>Membangun Bersama Masyarakat</h1>
             <p>Aplikasi ini merupakan aplikasi untuk memverifikasi data spesimen nasabah secara akurat dan efisien guna meningkatkan keamanan serta validitas transaksi perbankan.</p>
             <div class="d-flex">
-               <a class="btn-getstarted" href="{{ route('login') }}">Login</a>
+               <a lass="btn-getstarted" href="{{ route('login') }}">Login</a>
               {{--<a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a> --}}
             </div>
           </div>
