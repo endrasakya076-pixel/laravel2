@@ -46,7 +46,7 @@
                                             <th>Nama</th>
                                             <th>Alamat</th>
                                             <th>Nama Ibu Kandung</th>
-                                            <th>Alamat</th>
+                                            <th>Alamat Ibu Kandung</th>
                                             <th>
                                                 <i class="fas fa-cog"></i>
                                             </th>
