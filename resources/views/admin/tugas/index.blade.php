@@ -22,18 +22,20 @@
             </a>
         </div> --}}
                     <!-- Search Form -->
-                     <form
-                       action="{{ url('tugasSearch') }}" method="GET">
-                        <div class="input-group">
-                            <input name="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button value="search" class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                     <form action="{{ url('tugasSearch') }}" method="GET">
+    <div class="input-group">
+        <input name="search" type="text" 
+               class="form-control bg-light border-0 small" 
+               placeholder="Cari Nama, CIF, atau Alamat..."
+               aria-label="Search" 
+               aria-describedby="basic-addon2"
+               value="{{ request('search') }}"> <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search fa-sm"></i>
+            </button>
+        </div>
+    </div>
+</form>
     </div>
     <div class="card-body">
         <div class="table-responsive">
