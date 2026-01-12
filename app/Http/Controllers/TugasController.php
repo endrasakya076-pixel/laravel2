@@ -25,8 +25,6 @@ class TugasController extends Controller
 
             'title' => 'Tambah Spesimen',
             'menuTugas' => 'active',
-            'nama_ibu' => 'nullable',
-            'alamat_ibu' => 'nullable',
         );
         return view('admin/tugas/spesimen', $data);
     }
