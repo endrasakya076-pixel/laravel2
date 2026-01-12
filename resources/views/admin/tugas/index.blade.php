@@ -94,7 +94,7 @@
                     </button>
                     <img src="{{ asset('images/'. $item->foto) }}" class="img-fluid rounded shadow-lg">
                     <div class="text-white mt-3">
-                        <h5>{{ $item->nama }} <br> ({{ $item->cif }})</h5> <br> ({{ $item->ibu_kandung }})
+                        <h5>{{ $item->nama }} <br> ({{ $item->cif }})</h5> <br> ({{ $item->nama_ibu }})
                     </div>
                 </div>
             </div>
