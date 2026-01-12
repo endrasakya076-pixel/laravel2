@@ -6,7 +6,7 @@
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-tasks"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Spesimen<sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Spesimen<sup></sup></div>
             </a>
 
             <!-- Divider -->
