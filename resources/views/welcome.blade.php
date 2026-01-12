@@ -119,7 +119,7 @@
               <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
             </div>
           </div><!-- End Service Item -->
-
+{{-- 
           <div class="col-lg-4 d-flex" data-aos="fade-up" data-aos-delay="200">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
@@ -179,7 +179,7 @@
 
       </div>
 
-    </section><!-- /About Section -->
+    </section><!-- /About Section --> --}}
 
     <!-- Stats Section -->
     {{-- <section id="stats" class="stats section">
