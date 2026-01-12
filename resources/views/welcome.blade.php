@@ -72,7 +72,7 @@
               <li><a href="#">Dropdown 4</a></li>
             </ul>
           </li> --}}
-          <li><a href="#contact">Contact</a></li>
+          {{-- <li><a href="#contact">Contact</a></li> --}}
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -85,25 +85,24 @@
   <main class="main">
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section">
-
-      <div class="container">
+  <section id="hero" class="hero section" style="padding-top: 60px;"> <div class="container">
         <div class="row gy-2">
-          <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-up">
-            <h1>Membangun Bersama Masyarakat</h1>
-            <p>Aplikasi ini merupakan aplikasi untuk memverifikasi data spesimen nasabah secara akurat dan efisien guna meningkatkan keamanan serta validitas transaksi perbankan.</p>
-            <div class="d-flex">
-               <a lass="btn-getstarted" href="{{ route('login') }}">Login</a>
-              {{--<a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a> --}}
+            <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-up" style="margin-top: -30px;">
+                <h1 style="margin-bottom: 10px;">Membangun Bersama Masyarakat</h1>
+                <p>Aplikasi ini merupakan aplikasi untuk memverifikasi data spesimen nasabah secara akurat dan efisien guna meningkatkan keamanan serta validitas transaksi perbankan.</p>
+                
+                <div class="d-flex mt-3">
+                    <a class="btn btn-primary rounded-pill px-4" href="{{ route('login') }}">Login Sekarang</a>
+                </div>
             </div>
-          </div>
-          <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
-            <img src="{{ asset('enno/assets/img/hero-img.png') }}" class="img-fluid animated" alt="">
-          </div>
+            
+            <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
+                <img src="{{ asset('enno/assets/img/hero-img.png') }}" class="img-fluid animated" alt="">
+            </div>
         </div>
-      </div>
+    </div>
 
-    </section><!-- /Hero Section -->
+</section>
 
     <!-- Featured Services Section -->
     {{-- <section id="featured-services" class="featured-services section">
