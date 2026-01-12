@@ -88,7 +88,7 @@
     <section id="hero" class="hero section">
 
       <div class="container">
-        <div class="row gy-4">
+        <div class="row gy-2">
           <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-up">
             <h1>Membangun Bersama Masyarakat</h1>
             <p>Aplikasi ini merupakan aplikasi untuk memverifikasi data spesimen nasabah secara akurat dan efisien guna meningkatkan keamanan serta validitas transaksi perbankan.</p>
@@ -774,7 +774,7 @@
       </div>
     </div> --}}
 
-    <div class="container footer-top">
+    {{-- <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="index.html" class="d-flex align-items-center">
@@ -817,19 +817,19 @@
             <a href=""><i class="bi bi-instagram"></i></a>
             <a href=""><i class="bi bi-linkedin"></i></a>
           </div>
-        </div>
+        </div> --}}
 
       </div>
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">eNno</strong> <span>All Rights Reserved</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Pt.BPR Prima Nadi</strong> <span>All Rights Reserved</span></p>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you've purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon
+        {{-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon --}}
       </div>
     </div>
 
