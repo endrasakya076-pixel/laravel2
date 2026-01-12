@@ -1,4 +1,30 @@
 @extends('layouts/app')
+<style>
+    /* Kontainer gambar untuk membatasi luapan saat dizoom */
+    .img-container {
+        overflow: hidden;
+        width: 80px; /* Atur lebar kontainer */
+        height: 80px; /* Atur tinggi kontainer */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: zoom-in;
+    }
+
+    .img-zoom {
+        transition: transform .3s ease; /* Animasi halus */
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Efek saat kursor mengarah ke gambar */
+    .img-zoom:hover {
+        transform: scale(2.5); /* Gambar membesar 2.5 kali lipat */
+    }
+</style>
 
 @section('content')
 <h1 class="h3 mb-4 text-gray-800">
@@ -62,10 +88,14 @@
 
                                             {{-- 2. Menampilkan foto (asumsi folder ada di public/storage) --}}
                                             <td>
-                                            <a href="{{ asset('images/'. $item->foto) }}" target="_blank" rel="noopener noreferrer">
-                                                <img src="{{ asset('images/'. $item->foto) }}" width="30%" height="30%" alt="" srcset="">
-                                            </a>
-                                            </td>
+    <a href="{{ asset('images/'. $item->foto) }}" target="_blank">
+        <div class="img-container">
+            <img src="{{ asset('images/'. $item->foto) }}" 
+                 class="img-zoom" 
+                 alt="Foto Spesimen">
+        </div>
+    </a>
+</td>
                                             {{-- 3. Menampilkan data teks dari kolom database --}}
                                             <td>{{ $item->cif }}</td>
                                             <td>{{ $item->nama }}</td>
