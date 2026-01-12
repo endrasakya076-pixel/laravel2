@@ -26,6 +26,11 @@
                 <div class="form-group">
                 <input type="file" name="foto" id="foto" class="foto" value="{{ $spesimen->foto }}" src="{{ asset('images/'. $spesimen->foto) }}">
                 </div>
+                @error('foto')
+                    <div class="invalid-feedback">
+                    {{ $message }}
+                    </div>
+                    @enderror
         </div>
     </div>
         <div class="col-xl-6 mb-6">

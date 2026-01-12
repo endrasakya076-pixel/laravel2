@@ -89,22 +89,64 @@ class TugasController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $spesimen = Spesimen::find($id);
+     // 1. Validasi Data
+    $request->validate([
+        // foto bersifat nullable agar jika tidak ganti foto, sistem tidak error
+        // namun jika diisi, maksimal harus 400KB
+        'foto' => 'nullable|image|mimes:jpeg,png,jpg|file|max:400', 
+        'cif' => 'required',
+        'nama' => 'required',
+        'alamat' => 'nullable',
+        'nama_ibu' => 'nullable',
+        'alamat_ibu' => 'nullable',
+    ], [
+        'foto.max' => 'Ukuran foto baru terlalu besar, maksimal adalah 400 KB.',
+        'foto.image' => 'File harus berupa gambar.',
+    ]);
 
-        if ($request->hasFile('foto')) {
-            $nm = $request->foto;
-            $namaFile = time().rand(100,999).""."".$nm->getClientOriginalName();
-            $nm->move(public_path().'/images', $namaFile);
-            $spesimen->foto = $namaFile;
+    $spesimen = Spesimen::findOrFail($id);
+
+    // 2. Cek apakah ada file foto baru yang diunggah
+    if ($request->hasFile('foto')) {
+        // Hapus foto lama dari folder jika ingin menghemat penyimpanan (Opsional)
+        if (file_exists(public_path('images/' . $spesimen->foto))) {
+            @unlink(public_path('images/' . $spesimen->foto));
         }
 
-        $spesimen->cif = $request->cif;
-        $spesimen->nama = $request->nama;
-        $spesimen->alamat = $request->alamat;
-        $spesimen->nama_ibu = $request->nama_ibu;
-        $spesimen->alamat_ibu = $request->alamat_ibu;
-        $spesimen->save();
-        return redirect()->route('tugas')->with('success', 'Data spesimen berhasil diperbarui');
+        $nm = $request->foto;
+        $namaFile = time().rand(100,999).$nm->getClientOriginalName();
+        $nm->move(public_path().'/images', $namaFile);
+        
+        // Simpan nama file baru ke database
+        $spesimen->foto = $namaFile;
+    }
+
+    // 3. Update data teks lainnya
+    $spesimen->cif = $request->cif;
+    $spesimen->nama = $request->nama;
+    $spesimen->alamat = $request->alamat;
+    $spesimen->nama_ibu = $request->nama_ibu;
+    $spesimen->alamat_ibu = $request->alamat_ibu;
+    
+    $spesimen->save();
+
+    return redirect()->route('tugas')->with('success', 'Data spesimen berhasil diperbarui');
+    // $spesimen = Spesimen::find($id);
+
+        // if ($request->hasFile('foto')) {
+        //     $nm = $request->foto;
+        //     $namaFile = time().rand(100,999).""."".$nm->getClientOriginalName();
+        //     $nm->move(public_path().'/images', $namaFile);
+        //     $spesimen->foto = $namaFile;
+        // }
+
+        // $spesimen->cif = $request->cif;
+        // $spesimen->nama = $request->nama;
+        // $spesimen->alamat = $request->alamat;
+        // $spesimen->nama_ibu = $request->nama_ibu;
+        // $spesimen->alamat_ibu = $request->alamat_ibu;
+        // $spesimen->save();
+        // return redirect()->route('tugas')->with('success', 'Data spesimen berhasil diperbarui');
     }
     public function destroy($id)
     {
