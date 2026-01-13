@@ -103,7 +103,7 @@
                     <div style="font-size: 0.9rem; opacity: 0.9;">
                         <i class="fas fa-id-card mr-1"></i> CIF: <strong>{{ $item->cif }}</strong> 
                         <span class="mx-2">|</span>
-                        <i class="fas fa-card mr-1"></i> No. Rekening: <strong>{{ $item->no_rekening }}</strong>
+                        <i class="fas fa-id-card mr-1"></i> No. Rekening: <strong>{{ $item->no_rekening }}</strong> <tr></tr>
                         <i class="fas fa-female mr-1"></i> Ibu Kandung: <strong>{{ $item->nama_ibu }}</strong>
                     </div>
                 </div>
