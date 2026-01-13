@@ -10,9 +10,10 @@ class Spesimen extends Model
     protected $fillable = [
         'foto',
         'cif',
+        'no_rekening',
         'nama',
         'alamat',
         'nama_ibu',
-        'alamat_ibu',
+        
     ];
 }

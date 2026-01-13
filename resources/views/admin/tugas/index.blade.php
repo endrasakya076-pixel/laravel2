@@ -60,10 +60,10 @@
                                             <th>No</th>
                                             <th>Foto Spesimen</th>
                                             <th>CIF</th>
+                                            <th>No. Rekening</th>
                                             <th>Nama</th>
                                             <th>Alamat</th>
                                             <th>Nama Ibu Kandung</th>
-                                            <th>Alamat Ibu Kandung</th>
                                             <th>
                                                 <i class="fas fa-cog"></i>
                                             </th>
@@ -142,10 +142,10 @@
 </td> --}}
                                             {{-- 3. Menampilkan data teks dari kolom database --}}
                                             <td>{{ $item->cif }}</td>
+                                            <td>{{ $item->no_rekening }}</td>
                                             <td>{{ $item->nama }}</td>
                                             <td>{{ $item->alamat }}</td>
-                                            <td>{{ $item->nama_ibu }}</td>    
-                                            <td>{{ $item->alamat_ibu }}</td>    
+                                            <td>{{ $item->nama_ibu }}</td>        
                                             <td class="text-center">
                                             <a href="{{ route('tugasEdit', $item->id) }}" class="btn btn-sm btn-warning">
                                                 <i class="fas fa-edit"></i>

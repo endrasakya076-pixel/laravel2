@@ -33,11 +33,11 @@ class TugasController extends Controller
     $request->validate([
         'foto' => 'required|image|mimes:jpeg,png,jpg|max:400', // max:400 KB = 0.4 MB
         'cif' => 'required',
+        'no_rekening' => 'required',
         'nama' => 'required',
         // Kolom lain nullable agar bisa dikosongkan seperti permintaan awal Anda
         'alamat' => 'nullable',
         'nama_ibu' => 'nullable',
-        'alamat_ibu' => 'nullable',
     ], [
         // Pesan error kustom (opsional)
         'foto.min' => 'Ukuran foto terlalu kecil, maksimal 400 KB agar gambar terlihat jelas saat verifikasi.',
@@ -53,10 +53,10 @@ class TugasController extends Controller
     $nm->move(public_path().'/images', $namaFile);
     
     $spesimen->cif = $request->cif;
+    $spesimen->no_rekening = $request->no_rekening;
     $spesimen->nama = $request->nama;
     $spesimen->alamat = $request->alamat;
     $spesimen->nama_ibu = $request->nama_ibu;
-    $spesimen->alamat_ibu = $request->alamat_ibu;
     $spesimen->save();
 
     return redirect()->route('tugas')->with('success','Data user berhasil ditambahkan');
@@ -117,10 +117,10 @@ class TugasController extends Controller
     }
 
     $spesimen->cif = $request->cif;
+    $spesimen->no_rekening = $request->no_rekening;
     $spesimen->nama = $request->nama;
     $spesimen->alamat = $request->alamat;
     $spesimen->nama_ibu = $request->nama_ibu;
-    $spesimen->alamat_ibu = $request->alamat_ibu;
     $spesimen->save();
 
     return redirect()->route('tugas')->with('success', 'Data spesimen berhasil diperbarui');
@@ -205,9 +205,9 @@ class TugasController extends Controller
         // Pencarian mencakup semua kolom relevan
     $spesimen = Spesimen::where('nama', 'LIKE', '%' . $searchTerm . '%')
         ->orWhere('cif', 'LIKE', '%' . $searchTerm . '%')
+        ->orWhere('no_rekening', 'LIKE', '%' . $searchTerm . '%')
         ->orWhere('alamat', 'LIKE', '%' . $searchTerm . '%')
         ->orWhere('nama_ibu', 'LIKE', '%' . $searchTerm . '%')
-        ->orWhere('alamat_ibu', 'LIKE', '%' . $searchTerm . '%')
         ->get();
 
     $data = array(

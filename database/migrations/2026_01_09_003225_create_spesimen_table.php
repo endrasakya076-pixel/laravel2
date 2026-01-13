@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('foto');
             $table->string('cif');
+            $table->string('no_rekening');
             $table->string('nama');
             $table->string('alamat');
             $table->string('nama_ibu');
-            $table->string('alamat_ibu');
             $table->timestamps();
         });
     }
