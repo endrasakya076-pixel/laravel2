@@ -9,6 +9,22 @@ class TugasController extends Controller
 {
      public function index()
     {
+    //     // Mengambil data user yang sedang login
+    // $user = auth()->user();
+
+    // // Logika Filter: Admin melihat semua, Karyawan melihat milik sendiri
+    // if ($user->role === 'admin') {
+    //     $spesimen = Spesimen::all();
+    // } else {
+    //     // Pastikan Anda sudah menambahkan kolom 'user_id' di tabel spesimen
+    //     $spesimen = Spesimen::where('user_id', $user->id)->get();
+    // }
+    // $data = array(
+    //     'title'     => 'Data Spesimen',
+    //     'menuTugas' => 'active',
+    //     'spesimen'  => $spesimen,
+    // );
+    // return view('admin/tugas/index', $data);
         // Mengambil semua data dari tabel spesimen
         $spesimen = Spesimen::all();
         $data = array(
