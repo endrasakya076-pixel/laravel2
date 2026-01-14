@@ -79,7 +79,7 @@
 <td>
     <center>
     <img src="{{ asset('images/'. $item->foto) }}" 
-         style="width: 50px; height: 50px; object-fit: cover; cursor: pointer; border: 2px solid #007bff; border-radius: 8px; transition: 0.3s;" 
+         style="width: 100px; height: 100px; object-fit: cover; cursor: pointer; border: 2px solid #007bff; border-radius: 8px; transition: 0.3s;" 
          data-toggle="modal" 
          data-target="#imageModal{{ $item->id }}"
          title="Klik untuk memperbesar"
