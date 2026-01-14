@@ -216,21 +216,47 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let isZoomed = false;
     let isDragging = false;
+    let scale = 1; // Skala awal
     let startX, startY, translateX = 0, translateY = 0;
 
-    // 1. Fungsi Klik untuk Zoom
-    img.addEventListener('click', function(e) {
-        if (!isZoomed) {
-            this.style.transform = "scale(2.5)"; // Zoom lebih besar agar enak digeser
-            container.style.cursor = "move";
-            isZoomed = true;
+    // 1. Fungsi Zoom menggunakan Roda Mouse (Scroll)
+    container.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        const zoomSpeed = 0.1;
+        if (e.deltaY < 0) {
+            scale += zoomSpeed; // Zoom In
         } else {
-            // Reset posisi dan skala
-            resetImage();
+            scale -= zoomSpeed; // Zoom Out
         }
+
+        // Batasi zoom minimal 1x dan maksimal 5x
+        scale = Math.min(Math.max(1, scale), 5);
+        
+        isZoomed = scale > 1;
+        container.style.cursor = isZoomed ? "move" : "zoom-in";
+        
+        // Jika kembali ke ukuran semula, reset posisi ke tengah
+        if (scale === 1) {
+            translateX = 0;
+            translateY = 0;
+        }
+        
+        updateTransform();
     });
 
-    // 2. Logika Geser (Drag)
+    // 2. Fungsi Klik untuk Zoom Instan (2.5x)
+    img.addEventListener('click', function(e) {
+        if (!isZoomed) {
+            scale = 2.5;
+            isZoomed = true;
+            container.style.cursor = "move";
+        } else {
+            resetImage();
+        }
+        updateTransform();
+    });
+
+    // 3. Logika Geser (Drag)
     container.addEventListener('mousedown', function(e) {
         if (!isZoomed) return;
         isDragging = true;
@@ -244,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         translateX = e.clientX - startX;
         translateY = e.clientY - startY;
-        img.style.transform = `scale(2.5) translate(${translateX / 2.5}px, ${translateY / 2.5}px)`;
+        updateTransform();
     });
 
     window.addEventListener('mouseup', function() {
@@ -252,7 +278,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isZoomed) container.style.cursor = "move";
     });
 
-    // 3. Reset saat modal ditutup
+    // Fungsi pusat untuk update gaya CSS
+    function updateTransform() {
+        // Menggunakan translate dibagi scale agar pergeseran mengikuti kecepatan mouse
+        img.style.transform = `scale(${scale}) translate(${translateX / scale}px, ${translateY / scale}px)`;
+    }
+
+    // 4. Reset saat modal ditutup
     $('#imageModal{{ $item->id }}').on('hidden.bs.modal', function () {
         resetImage();
     });
@@ -260,6 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function resetImage() {
         isZoomed = false;
         isDragging = false;
+        scale = 1;
         translateX = 0;
         translateY = 0;
         img.style.transform = "scale(1) translate(0, 0)";
