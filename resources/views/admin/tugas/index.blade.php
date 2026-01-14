@@ -216,29 +216,60 @@
 @endsection
 
 <script>
-// Tunggu sampai dokumen siap
 document.addEventListener('DOMContentLoaded', function() {
     const img = document.getElementById('imageZoom{{ $item->id }}');
+    const container = img.parentElement;
+    
     let isZoomed = false;
+    let isDragging = false;
+    let startX, startY, translateX = 0, translateY = 0;
 
-    img.addEventListener('click', function() {
+    // 1. Fungsi Klik untuk Zoom
+    img.addEventListener('click', function(e) {
         if (!isZoomed) {
-            // Zoom In ke 2x lipat
-            this.style.transform = "scale(2)";
-            this.parentElement.style.cursor = "zoom-out";
+            this.style.transform = "scale(2.5)"; // Zoom lebih besar agar enak digeser
+            container.style.cursor = "move";
             isZoomed = true;
         } else {
-            // Zoom Out ke normal
-            this.style.transform = "scale(1)";
-            this.parentElement.style.cursor = "zoom-in";
-            isZoomed = false;
+            // Reset posisi dan skala
+            resetImage();
         }
     });
 
-    // Reset saat modal ditutup agar tidak nyangkut dalam kondisi zoom
-    $('#imageModal{{ $item->id }}').on('hidden.bs.modal', function () {
-        img.style.transform = "scale(1)";
-        isZoomed = false;
+    // 2. Logika Geser (Drag)
+    container.addEventListener('mousedown', function(e) {
+        if (!isZoomed) return;
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+        container.style.cursor = "grabbing";
     });
+
+    window.addEventListener('mousemove', function(e) {
+        if (!isDragging || !isZoomed) return;
+        e.preventDefault();
+        translateX = e.clientX - startX;
+        translateY = e.clientY - startY;
+        img.style.transform = `scale(2.5) translate(${translateX / 2.5}px, ${translateY / 2.5}px)`;
+    });
+
+    window.addEventListener('mouseup', function() {
+        isDragging = false;
+        if (isZoomed) container.style.cursor = "move";
+    });
+
+    // 3. Reset saat modal ditutup
+    $('#imageModal{{ $item->id }}').on('hidden.bs.modal', function () {
+        resetImage();
+    });
+
+    function resetImage() {
+        isZoomed = false;
+        isDragging = false;
+        translateX = 0;
+        translateY = 0;
+        img.style.transform = "scale(1) translate(0, 0)";
+        container.style.cursor = "zoom-in";
+    }
 });
 </script>
