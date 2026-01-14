@@ -93,7 +93,7 @@
             
             <div class="shadow-lg" style="background: linear-gradient(45deg, #007bff, #00c6ff); color: white; padding: 15px; border-radius: 15px 15px 0 0; border-bottom: 2px solid rgba(255,255,255,0.2); position: relative; z-index: 10;">
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" 
-                        style="position: absolute; right: 15px; top: 10px; opacity: 1; outline: none;">
+                        style="position: absolute; right: 50px; top: 50px; opacity: 1; outline: none;">
                     <span aria-hidden="true" style="font-size: 2rem;">&times;</span>
                 </button>
                 
@@ -109,7 +109,7 @@
                 </div>
             </div>
 
-            <div class="modal-body p-0 shadow-lg" style="background: white; border-radius: 0 0 15px 15px; overflow: hidden; position: relative;">
+<div class="modal-body p-0 shadow-lg" style="background: white; border-radius: 0 0 15px 15px; overflow: hidden; position: relative;">
     <div class="zoom-wrapper" style="overflow: hidden; cursor: zoom-in;">
         <img id="imageZoom{{ $item->id }}" 
              src="{{ asset('images/'. $item->foto) }}" 
