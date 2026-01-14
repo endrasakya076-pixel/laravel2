@@ -93,7 +93,7 @@
                 
                 <div class="shadow-lg" style="background: linear-gradient(45deg, #007bff, #00c6ff); color: white; padding: 15px; border-radius: 15px 15px 0 0; border-bottom: 2px solid rgba(255,255,255,0.2); position: relative;">
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" 
-                            style="position: absolute; right: 25px; top: 20px; opacity: 1; outline: none;">
+                            style="position: absolute; right: 15px; top: 10px; opacity: 1; outline: none;">
                         <span aria-hidden="true" style="font-size: 2rem;">&times;</span>
                     </button>
                     
