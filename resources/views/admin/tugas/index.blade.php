@@ -82,44 +82,38 @@
          style="width: 100px; height: 100px; object-fit: cover; cursor: pointer; border: 2px solid #007bff; border-radius: 8px; transition: 0.3s;" 
          data-toggle="modal" 
          data-target="#imageModal{{ $item->id }}"
-         title="Klik untuk memperbesar"
-         onmouseover="this.style.opacity='0.7'" 
-         onmouseout="this.style.opacity='1'">
+         title="Klik untuk memperbesar">
 </center>
 
 <div class="modal fade" id="imageModal{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content" style="background: transparent; border: none;">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="max-width: 95%; margin: 10px auto;">
+        <div class="modal-content" style="background: white; border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
             
-            <div class="shadow-lg" style="background: linear-gradient(45deg, #007bff, #00c6ff); color: white; padding: 15px; border-radius: 15px 15px 0 0; border-bottom: 2px solid rgba(255,255,255,0.2); position: relative; z-index: 10;">
+            <div style="background: linear-gradient(45deg, #007bff, #00c6ff); color: white; padding: 15px; border-radius: 15px 15px 0 0; position: relative; z-index: 10;">
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" 
-                        style="position: absolute; right: 20px; top: 20px; opacity: 1; outline: none;">
-                    <span aria-hidden="true" style="font-size: 2rem;">&times;</span>
+                        style="position: absolute; right: 20px; top: 15px; opacity: 1; outline: none; z-index: 11;">
+                    <span aria-hidden="true" style="font-size: 2.5rem;">&times;</span>
                 </button>
                 
-                <h4 class="mb-1" style="font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
-                    {{ $item->nama }}
-                </h4>
+                <h4 class="mb-1" style="font-weight: bold; text-transform: uppercase;">{{ $item->nama }}</h4>
                 <div style="font-size: 0.9rem; opacity: 0.9;">
                     <i class="fas fa-id-card mr-1"></i> CIF: <strong>{{ $item->cif }}</strong> 
                     <span class="mx-2">|</span>
-                    <i class="fas fa-id-card mr-1"></i> No. Rekening: <strong>{{ $item->no_rekening }}</strong>
+                    <i class="fas fa-id-card mr-1"></i> Rek: <strong>{{ $item->no_rekening }}</strong>
                     <span class="mx-2">|</span>
-                    <i class="fas fa-female mr-1"></i> Ibu Kandung: <strong>{{ $item->nama_ibu }}</strong>
+                    <i class="fas fa-female mr-1"></i> Ibu: <strong>{{ $item->nama_ibu }}</strong>
                 </div>
             </div>
 
-<div class="modal-body p-0 shadow-lg" style="background: white; border-radius: 0 0 15px 15px; overflow: hidden; position: relative;">
-    <div class="zoom-wrapper" style="overflow: hidden; cursor: zoom-in;">
-        <img id="imageZoom{{ $item->id }}" 
-             src="{{ asset('images/'. $item->foto) }}" 
-             class="img-fluid" 
-             style="width: 300%; transition: transform 0.3s ease; transform-origin: center;">
-    </div>
-</div>
+            <div class="modal-body p-0" style="background: #1a1a1a; height: 80vh; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;">
+                <div id="wrapper{{ $item->id }}" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; cursor: zoom-in;">
+                    <img id="imageZoom{{ $item->id }}" 
+                         src="{{ asset('images/'. $item->foto) }}" 
+                         style="max-width: 100%; max-height: 100%; transition: transform 0.1s ease-out; transform: scale(1);">
+                </div>
                 
-                <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; padding: 2px 10px; border-radius: 20px; font-size: 10px;">
-                    Scroll untuk Zoom In/Out
+                <div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; pointer-events: none;">
+                    Klik untuk Zoom | Drag untuk Geser
                 </div>
             </div>
             
@@ -271,5 +265,70 @@ document.addEventListener('DOMContentLoaded', function() {
         img.style.transform = "scale(1) translate(0, 0)";
         container.style.cursor = "zoom-in";
     }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const img = document.getElementById('imageZoom{{ $item->id }}');
+    const container = document.getElementById('wrapper{{ $item->id }}');
+    
+    let isZoomed = false;
+    let isDragging = false;
+    let startX, startY, translateX = 0, translateY = 0;
+    let scale = 1;
+
+    // 1. Klik untuk Zoom In/Out
+    img.addEventListener('click', function() {
+        if (!isZoomed) {
+            scale = 2.5;
+            isZoomed = true;
+            container.style.cursor = "move";
+        } else {
+            resetImage();
+        }
+        applyTransform();
+    });
+
+    // 2. Drag/Geser Gambar
+    container.addEventListener('mousedown', function(e) {
+        if (!isZoomed) return;
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+        container.style.cursor = "grabbing";
+    });
+
+    window.addEventListener('mousemove', function(e) {
+        if (!isDragging || !isZoomed) return;
+        e.preventDefault();
+        translateX = e.clientX - startX;
+        translateY = e.clientY - startY;
+        applyTransform();
+    });
+
+    window.addEventListener('mouseup', function() {
+        isDragging = false;
+        if (isZoomed) container.style.cursor = "move";
+    });
+
+    function applyTransform() {
+        img.style.transform = `scale(${scale}) translate(${translateX / scale}px, ${translateY / scale}px)`;
+    }
+
+    function resetImage() {
+        isZoomed = false;
+        isDragging = false;
+        scale = 1;
+        translateX = 0;
+        translateY = 0;
+        applyTransform();
+        container.style.cursor = "zoom-in";
+    }
+
+    // Reset saat modal ditutup
+    $('#imageModal{{ $item->id }}').on('hidden.bs.modal', function () {
+        resetImage();
+    });
 });
 </script>
