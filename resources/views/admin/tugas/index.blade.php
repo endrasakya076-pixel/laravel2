@@ -114,7 +114,7 @@
         <img id="imageZoom{{ $item->id }}" 
              src="{{ asset('images/'. $item->foto) }}" 
              class="img-fluid" 
-             style="width: 100%; transition: transform 0.3s ease; transform-origin: center;">
+             style="width: 200%; transition: transform 0.3s ease; transform-origin: center;">
     </div>
 </div>
                 
@@ -242,5 +242,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
