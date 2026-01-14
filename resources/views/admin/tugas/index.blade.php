@@ -109,12 +109,14 @@
                 </div>
             </div>
 
-            <div class="modal-body p-0 shadow-lg" style="background: #f8f9fa; border-radius: 0 0 15px 15px; overflow: hidden; position: relative; cursor: grab;">
-                <div id="zoomContainer{{ $item->id }}" style="transition: transform 0.2s ease; transform-origin: center center;">
-                    <img src="{{ asset('images/'. $item->foto) }}" 
-                         class="img-fluid" 
-                         style="width: 100%; display: block; pointer-events: none;">
-                </div>
+            <div class="modal-body p-0 shadow-lg" style="background: white; border-radius: 0 0 15px 15px; overflow: hidden; position: relative;">
+    <div class="zoom-wrapper" style="overflow: hidden; cursor: zoom-in;">
+        <img id="imageZoom{{ $item->id }}" 
+             src="{{ asset('images/'. $item->foto) }}" 
+             class="img-fluid" 
+             style="width: 100%; transition: transform 0.3s ease; transform-origin: center;">
+    </div>
+</div>
                 
                 <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; padding: 2px 10px; border-radius: 20px; font-size: 10px;">
                     Scroll untuk Zoom In/Out
@@ -214,23 +216,29 @@
 @endsection
 
 <script>
-document.getElementById('imageModal{{ $item->id }}').addEventListener('shown.bs.modal', function () {
-    const container = document.getElementById('zoomContainer{{ $item->id }}');
-    let scale = 1;
+// Tunggu sampai dokumen siap
+document.addEventListener('DOMContentLoaded', function() {
+    const img = document.getElementById('imageZoom{{ $item->id }}');
+    let isZoomed = false;
 
-    // Fungsi Zoom menggunakan Mouse Wheel
-    this.onwheel = function(e) {
-        e.preventDefault();
-        scale += e.deltaY * -0.001;
-        // Batas zoom minimal 1x dan maksimal 4x
-        scale = Math.min(Math.max(1, scale), 4);
-        container.style.transform = `scale(${scale})`;
-    };
+    img.addEventListener('click', function() {
+        if (!isZoomed) {
+            // Zoom In ke 2x lipat
+            this.style.transform = "scale(2)";
+            this.parentElement.style.cursor = "zoom-out";
+            isZoomed = true;
+        } else {
+            // Zoom Out ke normal
+            this.style.transform = "scale(1)";
+            this.parentElement.style.cursor = "zoom-in";
+            isZoomed = false;
+        }
+    });
 
-    // Reset zoom saat modal ditutup
-    $(this).on('hidden.bs.modal', function () {
-        scale = 1;
-        container.style.transform = `scale(1)`;
+    // Reset saat modal ditutup agar tidak nyangkut dalam kondisi zoom
+    $('#imageModal{{ $item->id }}').on('hidden.bs.modal', function () {
+        img.style.transform = "scale(1)";
+        isZoomed = false;
     });
 });
 </script>
