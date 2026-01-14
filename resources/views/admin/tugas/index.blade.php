@@ -114,7 +114,7 @@
         <img id="imageZoom{{ $item->id }}" 
              src="{{ asset('images/'. $item->foto) }}" 
              class="img-fluid" 
-             style="width: 200%; transition: transform 0.3s ease; transform-origin: center;">
+             style="width: 300%; transition: transform 0.3s ease; transform-origin: center;">
     </div>
 </div>
                 
