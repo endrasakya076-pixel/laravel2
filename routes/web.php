@@ -75,6 +75,8 @@ use App\Http\Controllers\DashboardController;
     Route::post('tugas/update/{id}',[TugasController::class,'update'])->name('tugasUpdate');
     Route::delete('tugas/destroy/{id}',[TugasController::class,'destroy'])->name('tugasDestroy');
     Route::get('/tugasSearch',[TugasController::class,'search'])->name('tugasSearch');
+    // Dashboard
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
     // Sesuaikan nama route dengan yang dipanggil di Controller dan View
     Route::get('/audit-log', [AuditLogController::class, 'index'])->name('audit-log');

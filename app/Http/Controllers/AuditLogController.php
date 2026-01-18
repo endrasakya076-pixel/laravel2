@@ -13,11 +13,12 @@ class AuditLogController extends Controller
     {
         $logs = \App\Models\ActivityLog::with('user')->latest()->paginate(20);
 
-        // SESUAIKAN dengan lokasi file Anda di views/admin/audit/index.blade.php
-        return view('admin.audit.index', [
+    // Arahkan ke folder 'audit' sesuai struktur folder Anda
+    return view('admin.audit.index', [
         'logs' => $logs,
-        'menuAudit' => 'active'
-        ]);
+        'menuAudit' => 'active',
+        'title' => 'Audit Log' // Tambahkan ini untuk memperbaiki error Gambar 20 ($title undefined)
+    ]);
     }
 
     public function clear()
