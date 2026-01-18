@@ -3,235 +3,220 @@
 namespace App\Http\Controllers;
 
 use App\Models\Spesimen;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class TugasController extends Controller
 {
-     public function index()
+    public function index()
     {
-    //     // Mengambil data user yang sedang login
-    // $user = auth()->user();
-
-    // // Logika Filter: Admin melihat semua, Karyawan melihat milik sendiri
-    // if ($user->role === 'admin') {
-    //     $spesimen = Spesimen::all();
-    // } else {
-    //     // Pastikan Anda sudah menambahkan kolom 'user_id' di tabel spesimen
-    //     $spesimen = Spesimen::where('user_id', $user->id)->get();
-    // }
-    // $data = array(
-    //     'title'     => 'Data Spesimen',
-    //     'menuTugas' => 'active',
-    //     'spesimen'  => $spesimen,
-    // );
-    // return view('admin/tugas/index', $data);
-        // Mengambil semua data dari tabel spesimen
-        $spesimen = Spesimen::all();
-        $data = array(
-
-            'title' => 'Data Spesimen',
+        // Menggunakan with('user') agar nama penginput bisa langsung tampil tanpa query berulang
+        $spesimen = Spesimen::with('user')->orderBy('created_at', 'desc')->get();
+        
+        $data = [
+            'title'     => 'Data Spesimen',
             'menuTugas' => 'active',
-            'spesimen' => $spesimen,
-        );
+            'spesimen'  => $spesimen,
+        ];
+        
         return view('admin/tugas/index', $data);
     }
+
     public function spesimen()
     {
-        $data = array(
-
-            'title' => 'Tambah Spesimen',
+        $data = [
+            'title'     => 'Tambah Spesimen',
             'menuTugas' => 'active',
-        );
+        ];
         return view('admin/tugas/spesimen', $data);
     }
-    public function store(Request $request){
-    // 1. Tambahkan Validasi
-    $request->validate([
-        'foto' => 'required|image|mimes:jpeg,png,jpg|max:400', // max:400 KB = 0.4 MB
-        'cif' => 'required',
-        'no_rekening' => 'required',
-        'nama' => 'required',
-        // Kolom lain nullable agar bisa dikosongkan seperti permintaan awal Anda
-        'alamat' => 'nullable',
-        'nama_ibu' => 'nullable',
-    ], [
-        // Pesan error kustom (opsional)
-        'foto.min' => 'Ukuran foto terlalu kecil, maksimal 400 KB agar gambar terlihat jelas saat verifikasi.',
-        'foto.required' => 'Foto spesimen wajib diunggah.',
-    ]);
 
-    // 2. Proses upload jika validasi lolos
-    $nm = $request->foto;
-    $namaFile = time().rand(100,999).$nm->getClientOriginalName();
+    public function store(Request $request)
+    {
+        $request->validate([
+            'foto'        => 'required|image|mimes:jpeg,png,jpg|max:400',
+            'cif'         => 'required|string',
+            'no_rekening' => 'required|string',
+            'nama'        => 'required|string',
+            'alamat'      => 'nullable',
+            'nama_ibu'    => 'nullable',
+        ], [
+            'foto.required' => 'Foto spesimen wajib diunggah.',
+            'foto.max'      => 'Ukuran foto maksimal 400 KB.',
+        ]);
 
-    $spesimen = new Spesimen();
-    $spesimen->foto = $namaFile;
-    $nm->move(public_path().'/images', $namaFile);
-    
-    $spesimen->cif = $request->cif;
-    $spesimen->no_rekening = $request->no_rekening;
-    $spesimen->nama = $request->nama;
-    $spesimen->alamat = $request->alamat;
-    $spesimen->nama_ibu = $request->nama_ibu;
-    $spesimen->save();
+        try {
+            DB::beginTransaction();
 
-    return redirect()->route('tugas')->with('success','Data user berhasil ditambahkan');
-}
-//     public function store(Request $request){
-//         $nm = $request->foto;
-//         $namaFile = time().rand(100,999).""."".$nm->getClientOriginalName();
+            $file = $request->file('foto');
+            $namaFile = time() . "_" . rand(100, 999) . "." . $file->getClientOriginalExtension();
+            
+            $spesimen = new Spesimen();
+            $spesimen->user_id     = Auth::id();
+            $spesimen->foto        = $namaFile;
+            $spesimen->cif         = $request->cif;
+            $spesimen->no_rekening = $request->no_rekening;
+            $spesimen->nama        = $request->nama;
+            $spesimen->alamat      = $request->alamat;
+            $spesimen->nama_ibu    = $request->nama_ibu;
+            $spesimen->save();
 
-//         $spesimen = new Spesimen();
-//         $spesimen->foto = $namaFile;
-//         $nm->move(public_path().'/images', $namaFile);
-//         $spesimen->cif = $request->cif;
-//         $spesimen->nama = $request->nama;
-//         $spesimen->alamat = $request->alamat;
-//         $spesimen->nama_ibu = $request->nama_ibu;
-//         $spesimen->alamat_ibu = $request->alamat_ibu;
-//         $spesimen->save();
+            // Simpan file fisik
+            $file->move(public_path('images'), $namaFile);
 
-// return redirect()->route('tugas')->with('success','Data user berhasil ditambahkan');
-//     }
+            ActivityLog::create([
+                'user_id'   => Auth::id(),
+                'aktivitas' => 'Tambah Spesimen',
+                'keterangan'=> "Menambah data nasabah: {$request->nama} (CIF: {$request->cif})",
+                'ip_address'=> $request->ip()
+            ]);
+
+            DB::commit();
+            return redirect()->route('tugas')->with('success', 'Data spesimen berhasil ditambahkan');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
+        }
+    }
+
     public function edit($id)
     {
-        $spesimen = Spesimen::find($id);
-        $data = array(
-            'title' => 'Edit Spesimen',
+        $spesimen = Spesimen::findOrFail($id);
+        
+        // Proteksi: Admin 2-5 hanya boleh edit data yang mereka buat sendiri (Opsional)
+        // if (Auth::id() != 1 && $spesimen->user_id != Auth::id()) {
+        //    abort(403, 'Anda tidak diizinkan mengedit data ini.');
+        // }
+
+        $data = [
+            'title'     => 'Edit Spesimen',
             'menuTugas' => 'active',
-            'spesimen' => Spesimen::findOrFail($id),
-        );
+            'spesimen'  => $spesimen,
+        ];
         return view('admin/tugas/edit', $data);
     }
+
     public function update(Request $request, $id)
     {
-    // 1. Validasi Ketat
-    $request->validate([
-        // 'nullable' artinya jika tidak upload foto baru, tidak apa-apa
-        // 'image' memastikan file benar-benar gambar
-        // 'max:400' membatasi maksimal 400 Kilobytes
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg|file|max:400',
-        'cif'  => 'required',
-        'nama' => 'required',
-    ], [
-        'foto.max'   => 'Gagal! Ukuran foto Anda terlalu besar (Lebih dari 400 KB). Silakan kecilkan ukuran foto terlebih dahulu.',
-        'foto.image' => 'File harus berupa gambar (JPG/PNG).',
-    ]);
+        $request->validate([
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:400',
+            'cif'  => 'required',
+            'nama' => 'required',
+        ]);
 
-    $spesimen = Spesimen::findOrFail($id);
+        $spesimen = Spesimen::findOrFail($id);
 
-    if ($request->hasFile('foto')) {
-        // Hapus foto lama agar folder tidak penuh
-        if ($spesimen->foto && file_exists(public_path('images/' . $spesimen->foto))) {
-            unlink(public_path('images/' . $spesimen->foto));
+        try {
+            DB::beginTransaction();
+
+            if ($request->hasFile('foto')) {
+                $oldPath = public_path('images/' . $spesimen->foto);
+                if (File::exists($oldPath)) {
+                    File::delete($oldPath);
+                }
+
+                $file = $request->file('foto');
+                $namaFile = time() . "_" . rand(100, 999) . "." . $file->getClientOriginalExtension();
+                $file->move(public_path('images'), $namaFile);
+                $spesimen->foto = $namaFile;
+            }
+
+            $spesimen->cif         = $request->cif;
+            $spesimen->no_rekening = $request->no_rekening;
+            $spesimen->nama        = $request->nama;
+            $spesimen->alamat      = $request->alamat;
+            $spesimen->nama_ibu    = $request->nama_ibu;
+            $spesimen->save();
+
+            ActivityLog::create([
+                'user_id'   => Auth::id(),
+                'aktivitas' => 'Update Spesimen',
+                'keterangan'=> "Mengubah data nasabah: {$spesimen->nama}",
+                'ip_address'=> $request->ip()
+            ]);
+
+            DB::commit();
+            return redirect()->route('tugas')->with('success', 'Data spesimen berhasil diperbarui');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Gagal memperbarui data.');
         }
-
-        $nm = $request->foto;
-        $namaFile = time().rand(100,999).$nm->getClientOriginalName();
-        $nm->move(public_path().'/images', $namaFile);
-        $spesimen->foto = $namaFile;
     }
 
-    $spesimen->cif = $request->cif;
-    $spesimen->no_rekening = $request->no_rekening;
-    $spesimen->nama = $request->nama;
-    $spesimen->alamat = $request->alamat;
-    $spesimen->nama_ibu = $request->nama_ibu;
-    $spesimen->save();
-
-    return redirect()->route('tugas')->with('success', 'Data spesimen berhasil diperbarui');
-    }
-    // public function update(Request $request, $id)
-    // {
-    //  // 1. Validasi Data
-    // $request->validate([
-    //     // foto bersifat nullable agar jika tidak ganti foto, sistem tidak error
-    //     // namun jika diisi, maksimal harus 400KB
-    //     'foto' => 'nullable|image|mimes:jpeg,png,jpg|file|max:400', 
-    //     'cif' => 'required',
-    //     'nama' => 'required',
-    //     'alamat' => 'nullable',
-    //     'nama_ibu' => 'nullable',
-    //     'alamat_ibu' => 'nullable',
-    // ], [
-    //     'foto.max' => 'Ukuran foto baru terlalu besar, maksimal adalah 400 KB.',
-    //     'foto.image' => 'File harus berupa gambar.',
-    // ]);
-    // $spesimen = Spesimen::findOrFail($id);
-    // // 2. Cek apakah ada file foto baru yang diunggah
-    // if ($request->hasFile('foto')) {
-    //     // Hapus foto lama dari folder jika ingin menghemat penyimpanan (Opsional)
-    //     if (file_exists(public_path('images/' . $spesimen->foto))) {
-    //         @unlink(public_path('images/' . $spesimen->foto));
-    //     }
-    //     $nm = $request->foto;
-    //     $namaFile = time().rand(100,999).$nm->getClientOriginalName();
-    //     $nm->move(public_path().'/images', $namaFile);
-    //     // Simpan nama file baru ke database
-    //     $spesimen->foto = $namaFile;
-    // }
-    // // 3. Update data teks lainnya
-    // $spesimen->cif = $request->cif;
-    // $spesimen->nama = $request->nama;
-    // $spesimen->alamat = $request->alamat;
-    // $spesimen->nama_ibu = $request->nama_ibu;
-    // $spesimen->alamat_ibu = $request->alamat_ibu;
-    
-    // $spesimen->save();
-
-    // return redirect()->route('tugas')->with('success', 'Data spesimen berhasil diperbarui');
-    // // $spesimen = Spesimen::find($id);
-
-    //     // if ($request->hasFile('foto')) {
-    //     //     $nm = $request->foto;
-    //     //     $namaFile = time().rand(100,999).""."".$nm->getClientOriginalName();
-    //     //     $nm->move(public_path().'/images', $namaFile);
-    //     //     $spesimen->foto = $namaFile;
-    //     // }
-
-    //     // $spesimen->cif = $request->cif;
-    //     // $spesimen->nama = $request->nama;
-    //     // $spesimen->alamat = $request->alamat;
-    //     // $spesimen->nama_ibu = $request->nama_ibu;
-    //     // $spesimen->alamat_ibu = $request->alamat_ibu;
-    //     // $spesimen->save();
-    //     // return redirect()->route('tugas')->with('success', 'Data spesimen berhasil diperbarui');
-    // }
     public function destroy($id)
     {
-       // 1. Cari data spesimen
-    $spesimen = Spesimen::find($id);
-    if ($spesimen) {
-        // 2. Tentukan lokasi/path file foto
-        $filePath = public_path('images/' . $spesimen->foto);
-        // 3. Cek apakah file fotonya ada di folder, jika ada maka hapus (unlink)
-        if (!empty($spesimen->foto) && file_exists($filePath)) {
-            unlink($filePath);
+        // Hanya Admin 1 yang boleh menghapus data spesimen (Opsional/Saran Security)
+        if (Auth::id() != 1) {
+            abort(403, 'Hanya Admin 1 yang dapat menghapus data spesimen.');
         }
-        // 4. Hapus data dari database
-        $spesimen->delete();
-        return redirect()->route('tugas')->with('success', 'Data spesimen dan file foto berhasil dihapus');
-        } else {
-        return redirect()->route('tugas')->with('error', 'Data spesimen tidak ditemukan');
+
+        $spesimen = Spesimen::findOrFail($id);
+        
+        try {
+            DB::beginTransaction();
+
+            $filePath = public_path('images/' . $spesimen->foto);
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+
+            $namaNasabah = $spesimen->nama;
+            $spesimen->delete();
+
+            ActivityLog::create([
+                'user_id'   => Auth::id(),
+                'aktivitas' => 'Hapus Spesimen',
+                'keterangan'=> "Menghapus data nasabah: {$namaNasabah}",
+                'ip_address'=> request()->ip()
+            ]);
+
+            DB::commit();
+            return redirect()->route('tugas')->with('success', 'Data spesimen berhasil dihapus');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Gagal menghapus data.');
+        }
     }
-    }
+
     public function search(Request $request)
     {
         $searchTerm = $request->input('search');
-        // Pencarian mencakup semua kolom relevan
-    $spesimen = Spesimen::where('nama', 'LIKE', '%' . $searchTerm . '%')
-        ->orWhere('cif', 'LIKE', '%' . $searchTerm . '%')
-        ->orWhere('no_rekening', 'LIKE', '%' . $searchTerm . '%')
-        ->orWhere('alamat', 'LIKE', '%' . $searchTerm . '%')
-        ->orWhere('nama_ibu', 'LIKE', '%' . $searchTerm . '%')
-        ->get();
+        
+        // Ditambahkan with('user') untuk efisiensi
+        $spesimen = Spesimen::with('user')
+            ->where(function($query) use ($searchTerm) {
+                $query->where('nama', 'LIKE', "%{$searchTerm}%")
+                      ->orWhere('cif', 'LIKE', "%{$searchTerm}%")
+                      ->orWhere('no_rekening', 'LIKE', "%{$searchTerm}%")
+                      ->orWhere('alamat', 'LIKE', "%{$searchTerm}%")
+                      ->orWhere('nama_ibu', 'LIKE', "%{$searchTerm}%");
+            })->get();
 
-    $data = array(
-        'title' => 'Hasil Pencarian: ' . $searchTerm,
-        'menuTugas' => 'active',
-        'spesimen' => $spesimen,
-    );
+        $data = [
+            'title'     => 'Hasil Pencarian: ' . $searchTerm,
+            'menuTugas' => 'active',
+            'spesimen'  => $spesimen,
+        ];
 
         return view('admin/tugas/index', $data);
+    }
+
+    public function dashboard()
+    {
+        $user = Auth::user();
+        
+        // Data Tambahan untuk Admin 1
+        $totalSpesimen = Spesimen::count();
+        $totalUser = \App\Models\User::count();
+        
+        $logs = ($user->id == 1) 
+                ? ActivityLog::with('user')->latest()->take(50)->get() 
+                : [];
+
+        return view('admin/dashboard', compact('logs', 'totalSpesimen', 'totalUser'));
     }
 }

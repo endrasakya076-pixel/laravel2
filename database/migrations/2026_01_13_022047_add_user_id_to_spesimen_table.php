@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('spesimen', function (Blueprint $table) {
-           $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-        });
+    Schema::table('spesimen', function (Blueprint $table) {
+        // Menambahkan kolom user_id setelah kolom id (opsional agar rapi)
+        $table->foreignId('user_id')->after('id')->constrained('users')->onDelete('cascade');
+    });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::table('spesimen', function (Blueprint $table) {
-            //
-        });
+    Schema::table('spesimen', function (Blueprint $table) {
+        // Menghapus foreign key dan kolomnya
+        $table->dropForeign(['user_id']);
+        $table->dropColumn('user_id');
+    });
     }
 };
