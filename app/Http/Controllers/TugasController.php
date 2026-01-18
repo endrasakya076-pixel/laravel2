@@ -217,6 +217,6 @@ class TugasController extends Controller
                 ? ActivityLog::with('user')->latest()->take(50)->get() 
                 : [];
 
-        return view('admin.dashboard', compact('logs', 'totalSpesimen', 'totalUser'));
+        return view('dashboard', compact('logs', 'totalSpesimen', 'totalUser'));
     }
 }
