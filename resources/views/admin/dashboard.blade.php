@@ -52,3 +52,41 @@
     @endif
 </div>
 @endsection
+
+@if(auth()->user()->id == 1)
+<div class="card mt-4 shadow">
+    <div class="card-header bg-dark text-white">
+        <h5 class="mb-0"><i class="fas fa-history mr-2"></i> Log Aktivitas Admin (Terbaru)</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Waktu</th>
+                        <th>Admin</th>
+                        <th>Aktivitas</th>
+                        <th>Keterangan</th>
+                        <th>IP Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($logs as $log)
+                    <tr>
+                        <td>{{ $log->created_at->format('d/m/Y H:i') }}</td>
+                        <td><strong>{{ $log->user->nama ?? 'System' }}</strong></td>
+                        <td><span class="badge badge-info">{{ $log->aktivitas }}</span></td>
+                        <td>{{ $log->keterangan }}</td>
+                        <td><small class="text-muted">{{ $log->ip_address }}</small></td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="text-center py-4">Belum ada aktivitas tercatat.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@endif
