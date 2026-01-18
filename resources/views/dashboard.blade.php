@@ -21,7 +21,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if(auth()->id() == 1)
+{{-- @if(auth()->id() == 1)
 <div class="card mt-4">
     <div class="card-header bg-dark text-white">
         <h5 class="mb-0">Log Aktivitas Admin (Terbaru)</h5>
@@ -51,7 +51,7 @@
         </table>
     </div>
 </div>
-@endif
+@endif --}}
     </div>
 @endsection
  
