@@ -74,5 +74,7 @@ use App\Http\Controllers\TugasController;
     Route::post('tugas/update/{id}',[TugasController::class,'update'])->name('tugasUpdate');
     Route::delete('tugas/destroy/{id}',[TugasController::class,'destroy'])->name('tugasDestroy');
     Route::get('/tugasSearch',[TugasController::class,'search'])->name('tugasSearch');
-    Route::get('/tugasDashboard', [TugasController::class, 'dashboard'])->name('tugasDashboard');
+
+//activity log
+    Route::get('activity-log',[TugasController::class,'activitylog'])->name('activityLog');
  });

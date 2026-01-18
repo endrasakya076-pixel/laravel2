@@ -28,8 +28,8 @@
             </div>
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item {{ $menuUser ?? '' }}">
-                <a class="nav-link" href="{{ route('user') }}">
+            <li class="nav-item {{ $menuTugas ?? '' }}">
+                <a class="nav-link" href="{{ route('activity-log') }}">
                     <i class="fas fa-user"></i>
                     <span>Audit Log</span></a>
 
