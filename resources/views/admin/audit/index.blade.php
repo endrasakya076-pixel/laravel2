@@ -12,8 +12,10 @@
         <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
             <div><i class="fas fa-history mr-1"></i> Riwayat Aktivitas Sistem</div>
             @if(auth()->id() == 1)
-                <form action="{{ route('audit.clear') }}" method="POST" onsubmit="return confirm('Hapus semua log?')">
-                    @csrf @method('DELETE')
+                {{-- Ganti bagian form di view Anda menjadi seperti ini --}}
+                <form action="{{ route('audit-log.clear') }}" method="POST" onsubmit="return confirm('Hapus semua log?')">
+                    @csrf 
+                    @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-sm">Kosongkan Log</button>
                 </form>
             @endif

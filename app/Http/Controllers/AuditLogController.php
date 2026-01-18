@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use id;
+// Hapus 'use id;' karena tidak diperlukan dan bisa menyebabkan error
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,24 +11,24 @@ class AuditLogController extends Controller
 {
     public function index()
     {
-        $logs = \App\Models\ActivityLog::with('user')->latest()->paginate(20);
+        // Mengambil data log beserta relasi user
+        $logs = ActivityLog::with('user')->latest()->paginate(20);
 
-    return view('admin.audit_log.index', [
-        'logs' => $logs,
-        'menuAudit' => 'active' // Ini yang membuat menu di sidebar menyala
-    ]);
-        return view('admin/audit/index', compact('logs'));
+        // ARAHKAN KE: admin/audit/index.blade.php
+        return view('admin.audit.index', [
+            'logs' => $logs,
+            'menuAudit' => 'active' 
+        ]);
     }
 
-    // Fungsi tambahan untuk membersihkan log lama (Opsional)
     public function clear()
     {
-    // Menggunakan Auth Facade untuk menghindari error garis merah pada id()
-    if (\Illuminate\Support\Facades\Auth::id() == 1) { 
-        \App\Models\ActivityLog::truncate();
-        return redirect()->route('audit-log')->with('success', 'Log berhasil dibersihkan');
-    }
-    
-    return redirect()->back()->with('error', 'Akses ditolak');
+        // Proteksi khusus Admin ID 1
+        if (Auth::id() == 1) { 
+            ActivityLog::truncate();
+            return redirect()->route('audit-log')->with('success', 'Log berhasil dibersihkan');
+        }
+        
+        return redirect()->back()->with('error', 'Akses ditolak');
     }
 }

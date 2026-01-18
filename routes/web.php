@@ -78,10 +78,8 @@ use App\Http\Controllers\DashboardController;
 
 //activity log
    Route::middleware(['auth'])->group(function () {
-    // Menu Utama Audit Log
+    // Sesuaikan nama route dengan yang dipanggil di Controller dan View
     Route::get('/audit-log', [AuditLogController::class, 'index'])->name('audit-log');
-    
-    // Proses Hapus Log (Gunakan nama yang lebih konsisten)
     Route::delete('/audit-log/clear', [AuditLogController::class, 'clear'])->name('audit-log.clear');
 });
  });
