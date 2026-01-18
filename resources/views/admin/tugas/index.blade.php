@@ -1,367 +1,164 @@
 @extends('layouts/app')
+
 <style>
-    /* Membuat latar belakang modal lebih gelap */
-    .modal-backdrop.show {
-        opacity: 0.8;
-    }
-    
-    /* Animasi zoom saat modal terbuka */
-    .modal.fade .modal-dialog {
-        transform: scale(0.8);
-        transition: transform 0.3s ease-out;
-    }
-    .modal.show .modal-dialog {
-        transform: scale(1);
-    }
+    .modal-backdrop.show { opacity: 0.8; }
+    .modal.fade .modal-dialog { transform: scale(0.8); transition: transform 0.3s ease-out; }
+    .modal.show .modal-dialog { transform: scale(1); }
+    /* Cursor awal untuk gambar di modal */
+    .img-zoom-container { cursor: zoom-in; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #1a1a1a; height: 80vh; position: relative; }
 </style>
 
 @section('content')
-<h1 class="h3 mb-4 text-gray-800">
-    <i class="fas fa-tasks mr-2"></i>
-    {{ $title }}</h1>
+<h1 class="h3 mb-4 text-gray-800"><i class="fas fa-tasks mr-2"></i> {{ $title }}</h1>
+
 <div class="card mb-5">
     <div class="card-header d-flex flex-wrap justify-content-center justify-content-xl-between">
         <div class="mb-1 mr-1">
             <a href="{{ route('tugasSpesimen') }}" class="btn btn-sm btn-primary">
-                <i class="fas fa-plus mr-2"></i>
-                Tambah Spesimen</a>
-        </div>
-        {{-- <div>
-            <a href="#" class="btn btn-sm btn-success">
-                <i class="fas fa-file-excel mr-2"></i>
-                File Excel
+                <i class="fas fa-plus mr-2"></i> Tambah Spesimen
             </a>
-            <a href="#" class="btn btn-sm btn-danger">
-                <i class="fas fa-file-excel mr-2"></i>
-                PDF
-            </a>
-        </div> --}}
-                    <!-- Search Form -->
-                     <form action="{{ url('tugasSearch') }}" method="GET">
-    <div class="input-group">
-        <input name="search" type="text" 
-               class="form-control bg-light border-0 small" 
-               placeholder="Cari Nama, CIF, No. Rekening"
-               aria-label="Search" 
-               aria-describedby="basic-addon2"
-               value="{{ request('search') }}"> <div class="input-group-append">
-            <button class="btn btn-primary" type="submit">
-                <i class="fas fa-search fa-sm"></i>
-            </button>
         </div>
-    </div>
-</form>
+        <form action="{{ url('tugasSearch') }}" method="GET">
+            <div class="input-group">
+                <input name="search" type="text" class="form-control bg-light border-0 small" placeholder="Cari Nama, CIF, No. Rekening" value="{{ request('search') }}">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-search fa-sm"></i></button>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="card-body">
         <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead class="bg-primary text-white">
-                                        <tr class="text-center">
-                                            <th>No</th>
-                                            <th>Foto Spesimen</th>
-                                            <th>CIF</th>
-                                            <th>No. Rekening</th>
-                                            <th>Nama</th>
-                                            <th>Alamat</th>
-                                            <th>Nama Ibu Kandung</th>
-                                            <th>
-                                                <i class="fas fa-cog"></i>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                   <tbody>
-                                    @foreach ($spesimen as $item)
-                                        <tr>
-                                            {{-- 1. Menampilkan nomor urut otomatis --}}
-                                             <td class="text-center">{{ $loop->iteration }}</td>
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead class="bg-primary text-white">
+                    <tr class="text-center">
+                        <th>No</th>
+                        <th>Foto Spesimen</th>
+                        <th>CIF</th>
+                        <th>No. Rekening</th>
+                        <th>Nama</th>
+                        <th>Alamat</th>
+                        <th>Nama Ibu Kandung</th>
+                        <th><i class="fas fa-cog"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($spesimen as $item)
+                    <tr>
+                        <td class="text-center">{{ $loop->iteration }}</td>
+                        <td>
+                            <center>
+                                <img src="{{ asset('images/'. $item->foto) }}" 
+                                     style="width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 2px solid #007bff; border-radius: 8px;" 
+                                     data-toggle="modal" data-target="#imageModal{{ $item->id }}" title="Klik untuk memperbesar">
+                            </center>
 
-                                            {{-- 2. Menampilkan foto (asumsi folder ada di public/storage) --}}
-<td>
-    <center>
-    <img src="{{ asset('images/'. $item->foto) }}" 
-         style="width: 100px; height: 100px; object-fit: cover; cursor: pointer; border: 2px solid #007bff; border-radius: 8px; transition: 0.3s;" 
-         data-toggle="modal" 
-         data-target="#imageModal{{ $item->id }}"
-         title="Klik untuk memperbesar">
-</center>
-
-<div class="modal fade" id="imageModal{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="max-width: 95%; margin: 10px auto;">
-        <div class="modal-content" style="background: white; border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-            
-            <div style="background: linear-gradient(45deg, #007bff, #00c6ff); color: white; padding: 15px; border-radius: 15px 15px 0 0; position: relative; z-index: 10;">
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" 
-                        style="position: absolute; right: 20px; top: 15px; opacity: 1; outline: none; z-index: 11;">
-                    <span aria-hidden="true" style="font-size: 2.5rem;">&times;</span>
-                </button>
-                
-                <h4 class="mb-1" style="font-weight: bold; text-transform: uppercase;">{{ $item->nama }}</h4>
-                <div style="font-size: 0.9rem; opacity: 0.9;">
-                    <i class="fas fa-id-card mr-1"></i> CIF: <strong>{{ $item->cif }}</strong> 
-                    <span class="mx-2">|</span>
-                    <i class="fas fa-id-card mr-1"></i> Rek: <strong>{{ $item->no_rekening }}</strong>
-                    <span class="mx-2">|</span>
-                    <i class="fas fa-female mr-1"></i> Ibu: <strong>{{ $item->nama_ibu }}</strong>
-                </div>
-            </div>
-
-            <div class="modal-body p-0" style="background: #1a1a1a; height: 80vh; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;">
-                <div id="wrapper{{ $item->id }}" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; cursor: zoom-in;">
-                    <img id="imageZoom{{ $item->id }}" 
-                         src="{{ asset('images/'. $item->foto) }}" 
-                         style="max-width: 100%; max-height: 100%; transition: transform 0.1s ease-out; transform: scale(1);">
-                </div>
-                
-                <div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; pointer-events: none;">
-                    Klik untuk Zoom | Drag untuk Geser
-                </div>
-            </div>
-            
-        </div>
-    </div>
-</div>
-    {{-- <center>
-        <img src="{{ asset('images/'. $item->foto) }}" 
-             style="width: 50px; height: 50px; object-fit: cover; cursor: pointer; border: 2px solid #007bff; border-radius: 8px; transition: 0.3s;" 
-             data-toggle="modal" 
-             data-target="#imageModal{{ $item->id }}"
-             title="Klik untuk memperbesar"
-             onmouseover="this.style.opacity='0.7'" 
-             onmouseout="this.style.opacity='1'">
-    </center>
-
-    <div class="modal fade" id="imageModal{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content" style="background: transparent; border: none;">
-                
-                <div class="shadow-lg" style="background: linear-gradient(45deg, #007bff, #00c6ff); color: white; padding: 15px; border-radius: 15px 15px 0 0; border-bottom: 2px solid rgba(255,255,255,0.2); position: relative;">
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" 
-                            style="position: absolute; right: 15px; top: 10px; opacity: 1; outline: none;">
-                        <span aria-hidden="true" style="font-size: 2rem;">&times;</span>
-                    </button>
-                    
-                    <h4 class="mb-1" style="font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
-                        {{ $item->nama }}
-                    </h4>
-                    <div style="font-size: 0.9rem; opacity: 0.9;">
-                        <i class="fas fa-id-card mr-1"></i> CIF: <strong>{{ $item->cif }}</strong> 
-                        <span class="mx-2">|</span>
-                        <i class="fas fa-id-card mr-1"></i> No. Rekening: <strong>{{ $item->no_rekening }}</strong>
-                        <span class="mx-2">|</span>
-                        <i class="fas fa-female mr-1"></i> Ibu Kandung: <strong>{{ $item->nama_ibu }}</strong>
-                    </div>
-                </div>
-
-                <div class="modal-body p-0 shadow-lg" style="background: white; border-radius: 0 0 15px 15px; overflow: hidden;">
-                    <img src="{{ asset('images/'. $item->foto) }}" class="img-fluid" style="width: 100%; display: block;">
-                </div>
-                
-            </div>
-        </div>
-    </div>
-</td> --}}
-
-{{-- <td>
-    <center>
-        <img src="{{ asset('images/'. $item->foto) }}" 
-             style="width: 50px; height: 50px; object-fit: cover; cursor: pointer; border-radius: 5px;" 
-             data-toggle="modal" 
-             data-target="#imageModal{{ $item->id }}"
-             title="Klik untuk memperbesar">
-    </center>
-    <div class="modal fade" id="imageModal{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content" style="background: transparent; border: none;">
-                <div class="modal-body text-center">
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" style="font-size: 3rem; opacity: 1;">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <img src="{{ asset('images/'. $item->foto) }}" class="img-fluid rounded shadow-lg">
-                    <div class="text-white mt-3">
-                        <h5>{{ $item->nama }} <br> ({{ $item->cif }})</h5> <br> ({{ $item->nama_ibu }})
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</td> --}}
-                                            {{-- 3. Menampilkan data teks dari kolom database --}}
-                                            <td>{{ $item->cif }}</td>
-                                            <td>{{ $item->no_rekening }}</td>
-                                            <td>{{ $item->nama }}</td>
-                                            <td>{{ $item->alamat }}</td>
-                                            <td>{{ $item->nama_ibu }}</td>        
-                                            <td class="text-center">
-                                            <a href="{{ route('tugasEdit', $item->id) }}" class="btn btn-sm btn-warning">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <button  class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{ $item->id }}">
-                                                <i class="fas fa-trash"></i>
+                            <div class="modal fade" id="imageModal{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 95%;">
+                                    <div class="modal-content" style="border-radius: 15px; overflow: hidden;">
+                                        <div style="background: linear-gradient(45deg, #007bff, #00c6ff); color: white; padding: 15px;">
+                                            <button type="button" class="close text-white" data-dismiss="modal" style="opacity: 1;">
+                                                <span aria-hidden="true" style="font-size: 2rem;">&times;</span>
                                             </button>
-                                            @include('admin/tugas/modal')
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                            <h4 class="mb-0">{{ $item->nama }}</h4>
+                                            <small>CIF: {{ $item->cif }} | Rek: {{ $item->no_rekening }}</small>
+                                        </div>
+                                        <div class="modal-body p-0 img-zoom-container" id="wrapper{{ $item->id }}">
+                                            <img src="{{ asset('images/'. $item->foto) }}" 
+                                                 class="img-zoomable" 
+                                                 data-id="{{ $item->id }}"
+                                                 style="max-width: 100%; max-height: 100%; transition: transform 0.1s ease-out; transform: scale(1);">
+                                            <div style="position: absolute; bottom: 10px; color: white; background: rgba(0,0,0,0.5); padding: 2px 10px; border-radius: 10px; font-size: 11px;">
+                                                Scroll untuk Zoom | Drag untuk Geser
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        </td>
+                        <td>{{ $item->cif }}</td>
+                        <td>{{ $item->no_rekening }}</td>
+                        <td>{{ $item->nama }}</td>
+                        <td>{{ $item->alamat }}</td>
+                        <td>{{ $item->nama_ibu }}</td>
+                        <td class="text-center">
+                            <a href="{{ route('tugasEdit', $item->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{ $item->id }}"><i class="fas fa-trash"></i></button>
+                            @include('admin/tugas/modal')
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @endsection
 
+@push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const img = document.getElementById('imageZoom{{ $item->id }}');
-    const container = img.parentElement;
-    
-    let isZoomed = false;
-    let isDragging = false;
-    let scale = 1; // Skala awal
-    let startX, startY, translateX = 0, translateY = 0;
-
-    // 1. Fungsi Zoom menggunakan Roda Mouse (Scroll)
-    container.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        const zoomSpeed = 0.1;
-        if (e.deltaY < 0) {
-            scale += zoomSpeed; // Zoom In
-        } else {
-            scale -= zoomSpeed; // Zoom Out
-        }
-
-        // Batasi zoom minimal 1x dan maksimal 5x
-        scale = Math.min(Math.max(1, scale), 5);
+$(document).ready(function() {
+    // Menangani semua modal gambar secara dinamis
+    $('.modal').on('shown.bs.modal', function () {
+        const modal = $(this);
+        const img = modal.find('.img-zoomable');
+        const container = modal.find('.img-zoom-container');
         
-        isZoomed = scale > 1;
-        container.style.cursor = isZoomed ? "move" : "zoom-in";
-        
-        // Jika kembali ke ukuran semula, reset posisi ke tengah
-        if (scale === 1) {
-            translateX = 0;
-            translateY = 0;
+        let scale = 1;
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
+
+        // 1. Zoom Roda Mouse
+        container.on('wheel', function(e) {
+            e.preventDefault();
+            let delta = e.originalEvent.deltaY;
+            if (delta < 0) scale += 0.2; else scale -= 0.2;
+            scale = Math.min(Math.max(1, scale), 5);
+            applyTransform();
+        });
+
+        // 2. Klik untuk Zoom 2.5x
+        img.on('click', function() {
+            if (scale === 1) scale = 2.5; else scale = 1;
+            if (scale === 1) { translateX = 0; translateY = 0; }
+            applyTransform();
+        });
+
+        // 3. Dragging
+        container.on('mousedown', function(e) {
+            if (scale > 1) {
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                container.css('cursor', 'grabbing');
+            }
+        });
+
+        $(window).on('mousemove', function(e) {
+            if (!isDragging) return;
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            applyTransform();
+        });
+
+        $(window).on('mouseup', function() {
+            isDragging = false;
+            if (scale > 1) container.css('cursor', 'move');
+        });
+
+        function applyTransform() {
+            img.css('transform', `scale(${scale}) translate(${translateX/scale}px, ${translateY/scale}px)`);
+            container.css('cursor', scale > 1 ? 'move' : 'zoom-in');
         }
-        
-        updateTransform();
-    });
 
-    // 2. Fungsi Klik untuk Zoom Instan (2.5x)
-    img.addEventListener('click', function(e) {
-        if (!isZoomed) {
-            scale = 2.5;
-            isZoomed = true;
-            container.style.cursor = "move";
-        } else {
-            resetImage();
-        }
-        updateTransform();
-    });
-
-    // 3. Logika Geser (Drag)
-    container.addEventListener('mousedown', function(e) {
-        if (!isZoomed) return;
-        isDragging = true;
-        startX = e.clientX - translateX;
-        startY = e.clientY - translateY;
-        container.style.cursor = "grabbing";
-    });
-
-    window.addEventListener('mousemove', function(e) {
-        if (!isDragging || !isZoomed) return;
-        e.preventDefault();
-        translateX = e.clientX - startX;
-        translateY = e.clientY - startY;
-        updateTransform();
-    });
-
-    window.addEventListener('mouseup', function() {
-        isDragging = false;
-        if (isZoomed) container.style.cursor = "move";
-    });
-
-    // Fungsi pusat untuk update gaya CSS
-    function updateTransform() {
-        // Menggunakan translate dibagi scale agar pergeseran mengikuti kecepatan mouse
-        img.style.transform = `scale(${scale}) translate(${translateX / scale}px, ${translateY / scale}px)`;
-    }
-
-    // 4. Reset saat modal ditutup
-    $('#imageModal{{ $item->id }}').on('hidden.bs.modal', function () {
-        resetImage();
-    });
-
-    function resetImage() {
-        isZoomed = false;
-        isDragging = false;
-        scale = 1;
-        translateX = 0;
-        translateY = 0;
-        img.style.transform = "scale(1) translate(0, 0)";
-        container.style.cursor = "zoom-in";
-    }
-});
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const img = document.getElementById('imageZoom{{ $item->id }}');
-    const container = document.getElementById('wrapper{{ $item->id }}');
-    
-    let isZoomed = false;
-    let isDragging = false;
-    let startX, startY, translateX = 0, translateY = 0;
-    let scale = 1;
-
-    // 1. Klik untuk Zoom In/Out
-    img.addEventListener('click', function() {
-        if (!isZoomed) {
-            scale = 2.5;
-            isZoomed = true;
-            container.style.cursor = "move";
-        } else {
-            resetImage();
-        }
-        applyTransform();
-    });
-
-    // 2. Drag/Geser Gambar
-    container.addEventListener('mousedown', function(e) {
-        if (!isZoomed) return;
-        isDragging = true;
-        startX = e.clientX - translateX;
-        startY = e.clientY - translateY;
-        container.style.cursor = "grabbing";
-    });
-
-    window.addEventListener('mousemove', function(e) {
-        if (!isDragging || !isZoomed) return;
-        e.preventDefault();
-        translateX = e.clientX - startX;
-        translateY = e.clientY - startY;
-        applyTransform();
-    });
-
-    window.addEventListener('mouseup', function() {
-        isDragging = false;
-        if (isZoomed) container.style.cursor = "move";
-    });
-
-    function applyTransform() {
-        img.style.transform = `scale(${scale}) translate(${translateX / scale}px, ${translateY / scale}px)`;
-    }
-
-    function resetImage() {
-        isZoomed = false;
-        isDragging = false;
-        scale = 1;
-        translateX = 0;
-        translateY = 0;
-        applyTransform();
-        container.style.cursor = "zoom-in";
-    }
-
-    // Reset saat modal ditutup
-    $('#imageModal{{ $item->id }}').on('hidden.bs.modal', function () {
-        resetImage();
+        // Reset saat modal ditutup
+        modal.on('hidden.bs.modal', function () {
+            scale = 1; translateX = 0; translateY = 0;
+            applyTransform();
+            $(window).off('mousemove mouseup');
+            container.off('wheel mousedown');
+        });
     });
 });
 </script>
+@endpush
