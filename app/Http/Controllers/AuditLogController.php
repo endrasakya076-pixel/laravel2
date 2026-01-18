@@ -11,13 +11,12 @@ class AuditLogController extends Controller
 {
     public function index()
     {
-        // Mengambil data log beserta relasi user
-        $logs = ActivityLog::with('user')->latest()->paginate(20);
+        $logs = \App\Models\ActivityLog::with('user')->latest()->paginate(20);
 
-        // ARAHKAN KE: admin/audit/index.blade.php
+        // SESUAIKAN dengan lokasi file Anda di views/admin/audit/index.blade.php
         return view('admin.audit.index', [
-            'logs' => $logs,
-            'menuAudit' => 'active' 
+        'logs' => $logs,
+        'menuAudit' => 'active'
         ]);
     }
 
