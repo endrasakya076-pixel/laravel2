@@ -28,10 +28,12 @@
             </div>
 
             <!-- Nav Item - Charts -->
+            @if(auth()->check() && auth()->id() == 1)
             <li class="nav-item {{ $menuAudit ?? '' }}">
                 <a class="nav-link" href="{{ route('audit-log') }}">
                     <i class="fas fa-fw fa-history"></i>
                     <span>Audit Log</span></a>
+            @endif
 
             <!-- Nav Item - Charts -->
             <li class="nav-item {{ $menuUser ?? '' }}">

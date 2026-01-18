@@ -11,13 +11,17 @@ class AuditLogController extends Controller
 {
     public function index()
     {
-        $logs = \App\Models\ActivityLog::with('user')->latest()->paginate(20);
+        // Cek apakah user yang login adalah ID 1
+    if (auth()->id() != 1) {
+        return redirect()->route('dashboard.index')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
+    }
 
-    // Arahkan ke folder 'audit' sesuai struktur folder Anda
+    $logs = \App\Models\ActivityLog::with('user')->latest()->paginate(20);
+
     return view('admin.audit.index', [
         'logs' => $logs,
         'menuAudit' => 'active',
-        'title' => 'Audit Log' // Tambahkan ini untuk memperbaiki error Gambar 20 ($title undefined)
+        'title' => 'Audit Log'
     ]);
     }
 
