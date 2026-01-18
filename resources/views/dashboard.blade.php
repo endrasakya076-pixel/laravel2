@@ -1,12 +1,6 @@
 @extends('layouts/app')
 
-@section('content')
-<h1 class="h3 mb-4 text-gray-800">
-    <i class="fas fa-fw fa-tachometer-alt mr-2"></i>
-    {{ $title }}</h1>
-    <div class="row">
-         <div class="col-xl-3 col-md-6 mb-4">
-                {{-- @extends('layouts.app')  --}}
+{{-- @extends('layouts.app')  --}}
 
 @section('content')
 <div class="container-fluid">
@@ -100,7 +94,6 @@
             * Menampilkan 50 aktivitas terbaru secara otomatis.
         </div>
     </div>
-    {{-- @endif --}}       
-    </div>
+    {{-- @endif --}}
+</div>
 @endsection
- 
