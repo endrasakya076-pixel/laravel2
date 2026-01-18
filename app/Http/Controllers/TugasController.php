@@ -216,6 +216,6 @@ class TugasController extends Controller
             : collect(); 
 
     // Pastikan diarahkan ke folder admin
-    return view('admin.dashboardd', compact('logs'));
+    return view('admin/dashboardd', compact('logs'));
 }
 }
