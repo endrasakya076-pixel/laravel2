@@ -206,12 +206,13 @@ class TugasController extends Controller
     }
     public function dashboard()
 {
-    $user = auth()->user();
+    // Menggunakan Auth Facade agar lebih stabil dan tidak merah di editor
+    $user = \Illuminate\Support\Facades\Auth::user();
     
-    // Pastikan variabel $logs didefinisikan meskipun isinya kosong
-    $logs = ($user->id == 1) 
-            ? \App\Models\ActivityLog::with('user')->latest()->take(50)->get() 
-            : collect(); // Menggunakan collect() agar tetap bisa di-foreach di Blade
+    // Ambil log jika user adalah Admin 1, jika bukan kirim koleksi kosong
+    $logs = ($user && $user->id == 1) 
+            ? \App\Models\ActivityLog::with('user')->latest()->take(10)->get() 
+            : collect(); 
 
     return view('admin.dashboard', compact('logs'));
 }
