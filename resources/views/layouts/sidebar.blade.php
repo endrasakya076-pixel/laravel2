@@ -29,7 +29,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item {{ $menuTugas ?? '' }}">
-                <a class="nav-link" href="{{ route('activity-log') }}">
+                <a class="nav-link" href="{{ route('tugas') }}">
                     <i class="fas fa-user"></i>
                     <span>Audit Log</span></a>
 

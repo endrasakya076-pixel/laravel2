@@ -76,5 +76,5 @@ use App\Http\Controllers\TugasController;
     Route::get('/tugasSearch',[TugasController::class,'search'])->name('tugasSearch');
 
 //activity log
-    Route::get('activity-log',[TugasController::class,'index'])->name('activityLog');
+    Route::get('activity-log',[TugasController::class,'activitylog'])->name('activityLog');
  });
