@@ -30,7 +30,7 @@
             <!-- Nav Item - Charts -->
             <li class="nav-item {{ $menuAudit ?? '' }}">
                 <a class="nav-link" href="{{ route('audit-log') }}">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-fw fa-history"></i>
                     <span>Audit Log</span></a>
 
             <!-- Nav Item - Charts -->

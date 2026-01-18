@@ -23,10 +23,12 @@ class AuditLogController extends Controller
     // Fungsi tambahan untuk membersihkan log lama (Opsional)
     public function clear()
     {
-    if (Auth::id() == 1) { 
+    // Menggunakan Auth Facade untuk menghindari error garis merah pada id()
+    if (\Illuminate\Support\Facades\Auth::id() == 1) { 
         \App\Models\ActivityLog::truncate();
-        return back()->with('success', 'Semua log aktivitas berhasil dihapus.');
+        return redirect()->route('audit-log')->with('success', 'Log berhasil dibersihkan');
     }
-    return back()->with('error', 'Anda tidak memiliki akses.');
+    
+    return redirect()->back()->with('error', 'Akses ditolak');
     }
 }
