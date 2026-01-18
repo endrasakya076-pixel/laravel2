@@ -1,5 +1,5 @@
 @extends('layouts/app')
-@extends('admin/dashboardd')
+@extends('')
 
 @section('content')
 <h1 class="h3 mb-4 text-gray-800">
