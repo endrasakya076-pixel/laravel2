@@ -206,14 +206,16 @@ class TugasController extends Controller
     }
     public function dashboard()
 {
-    // Menggunakan Auth Facade agar lebih stabil dan tidak merah di editor
+   // Menggunakan Auth facade agar lebih stabil
     $user = \Illuminate\Support\Facades\Auth::user();
-    
+
     // Ambil log jika user adalah Admin 1, jika bukan kirim koleksi kosong
+    // Ini agar variabel $logs SELALU ada dan tidak menyebabkan error Undefined
     $logs = ($user && $user->id == 1) 
-            ? \App\Models\ActivityLog::with('user')->latest()->take(10)->get() 
+            ? \App\Models\ActivityLog::with('user')->latest()->take(50)->get() 
             : collect(); 
 
-    return view('admin.dashboard', compact('logs'));
+    // Pastikan diarahkan ke folder admin
+    return view('admin.dashboardd', compact('logs'));
 }
 }
