@@ -12,7 +12,7 @@ class AuditLogController extends Controller
     public function index()
     {
         // Cek apakah user yang login adalah ID 1
-    if (auth()->id() != 1) {
+    if (Auth::id() != 1) {
         return redirect()->route('dashboard.index')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
     }
 
