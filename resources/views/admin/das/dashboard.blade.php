@@ -55,8 +55,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($logs as $log)
-                        <tr>
+                        {{-- @forelse($logs as $log)
+                        <tr> --}}
                             {{-- <td class="px-4">{{ $log->created_at->format('d/m/Y H:i') }}</td>
                             <td>
                                 <span class="badge badge-light p-2">
@@ -75,7 +75,7 @@
                             <td>
                                 <code class="small text-muted">{{ $log->ip_address }}</code>
                             </td> --}}
-                        </tr>
+                        {{-- </tr>
                         @empty
                         <tr>
                             <td colspan="5" class="text-center py-5">
@@ -83,7 +83,7 @@
                                 <p class="text-muted">Belum ada aktivitas tercatat.</p>
                             </td>
                         </tr>
-                        @endforelse
+                        @endforelse --}}
                     </tbody>
                 </table>
             </div>
@@ -92,6 +92,6 @@
             * Menampilkan 50 aktivitas terbaru secara otomatis.
         </div>
     </div>
-    @endif
+    {{-- @endif --}}
 </div>
 @endsection
