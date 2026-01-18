@@ -204,7 +204,7 @@ class TugasController extends Controller
 
         return view('admin/tugas/index', $data);
     }
-    public function dashboardd()
+    public function dashboard()
 {
    // Menggunakan Auth facade agar lebih stabil
     $user = \Illuminate\Support\Facades\Auth::user();
@@ -216,6 +216,6 @@ class TugasController extends Controller
             : collect(); 
 
     // Pastikan diarahkan ke folder admin
-    return view('admin/dashboardd', compact('logs'));
+    return view('admin/dashboard', compact('logs'));
 }
 }
