@@ -95,7 +95,7 @@
 </div>
 @endsection
 
-@push('scripts')
+{{-- @push('scripts')
 <script>
 $(document).ready(function() {
     // Menangani semua modal gambar secara dinamis
@@ -162,3 +162,21 @@ $(document).ready(function() {
 });
 </script>
 @endpush
+
+@section('content')
+    @endsection --}}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Menangani semua elemen dengan class 'img-zoomable'
+    document.querySelectorAll('.img-zoomable').forEach(function(img) {
+        const container = img.parentElement;
+        let scale = 1;
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
+
+        // Fungsi Zoom dan Drag diletakkan di sini (Gunakan kode JS yang saya berikan sebelumnya)
+        // ...
+    });
+});
+</script>

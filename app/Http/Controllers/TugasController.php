@@ -204,19 +204,15 @@ class TugasController extends Controller
 
         return view('admin/tugas/index', $data);
     }
-
     public function dashboard()
-    {
-        $user = Auth::user();
-        
-        // Data Tambahan untuk Admin 1
-        $totalSpesimen = Spesimen::count();
-        $totalUser = \App\Models\User::count();
-        
-        $logs = ($user->id == 1) 
-                ? ActivityLog::with('user')->latest()->take(50)->get() 
-                : [];
+{
+    $user = auth()->user();
+    
+    // Pastikan variabel $logs didefinisikan meskipun isinya kosong
+    $logs = ($user->id == 1) 
+            ? \App\Models\ActivityLog::with('user')->latest()->take(50)->get() 
+            : collect(); // Menggunakan collect() agar tetap bisa di-foreach di Blade
 
-        return view('admin/dashboard', compact('logs', 'totalSpesimen', 'totalUser'));
-    }
+    return view('admin.dashboard', compact('logs'));
+}
 }

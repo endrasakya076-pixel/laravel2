@@ -16,4 +16,9 @@ class Spesimen extends Model
         'nama_ibu',
         
     ];
+    public function user()
+    {
+    return $this->belongsTo(User::class);
+    }
 }
+
