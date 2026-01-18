@@ -3,8 +3,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HaloController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TugasController;
+use App\Http\Controllers\AuditLogController;
+use App\Http\Controllers\DashboardController;
 
 // Route::get('/', function () {
 //     //return view('welcome');
@@ -76,5 +77,6 @@ use App\Http\Controllers\TugasController;
     Route::get('/tugasSearch',[TugasController::class,'search'])->name('tugasSearch');
 
 //activity log
-    Route::get('activity-log',[TugasController::class,'activitylog'])->name('activityLog');
+    Route::get('audit-log',[AuditLogController::class,'index'])->name('auditLog');
+    Route::delete('audit-log/clear',[AuditLogController::class,'clear'])->name('auditLogClear');
  });

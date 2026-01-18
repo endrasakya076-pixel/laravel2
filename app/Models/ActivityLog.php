@@ -17,7 +17,8 @@ class ActivityLog extends Model
         'user_id',
         'aktivitas',
         'keterangan',
-        'ip_address'
+        'ip_address',
+        'browser'
     ];
 
     /**

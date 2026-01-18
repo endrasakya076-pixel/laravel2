@@ -204,18 +204,18 @@ class TugasController extends Controller
 
         return view('admin/tugas/index', $data);
     }
-    public function activitylog()
-{
-   // Menggunakan Auth facade agar lebih stabil
-    $user = \Illuminate\Support\Facades\Auth::user();
+//     public function dashboard()
+// {
+//    // Menggunakan Auth facade agar lebih stabil
+//     $user = \Illuminate\Support\Facades\Auth::user();
 
-    // Ambil log jika user adalah Admin 1, jika bukan kirim koleksi kosong
-    // Ini agar variabel $logs SELALU ada dan tidak menyebabkan error Undefined
-    $logs = ($user && $user->id == 1) 
-            ? \App\Models\ActivityLog::with('user')->latest()->take(50)->get() 
-            : collect(); 
+//     // Ambil log jika user adalah Admin 1, jika bukan kirim koleksi kosong
+//     // Ini agar variabel $logs SELALU ada dan tidak menyebabkan error Undefined
+//     $logs = ($user && $user->id == 1) 
+//             ? \App\Models\ActivityLog::with('user')->latest()->take(50)->get() 
+//             : collect(); 
 
-    // Pastikan diarahkan ke folder admin
-    return view('admin/ads/dashboard', compact('logs'));
-}
+//     // Pastikan diarahkan ke folder admin
+//     return view('admin/ads/dashboard', compact('logs'));
+// }
 }
