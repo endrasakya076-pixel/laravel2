@@ -1,4 +1,4 @@
-@extends('layouts.app') {{-- Sesuaikan dengan nama file di folder layouts Anda --}}
+@extends('layouts.admin') {{-- Sesuaikan dengan nama file di folder layouts Anda --}}
 
 @section('content')
 <div class="container-fluid">
