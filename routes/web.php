@@ -77,9 +77,9 @@ use App\Http\Controllers\DashboardController;
     Route::get('/tugasSearch',[TugasController::class,'search'])->name('tugasSearch');
 
 //activity log
-   Route::middleware(['auth'])->group(function () {
+//    Route::middleware(['auth'])->group(function () {
     // Sesuaikan nama route dengan yang dipanggil di Controller dan View
     Route::get('/audit-log', [AuditLogController::class, 'index'])->name('audit-log');
     Route::delete('/audit-log/clear', [AuditLogController::class, 'clear'])->name('audit-log.clear');
-});
+    // });
  });
