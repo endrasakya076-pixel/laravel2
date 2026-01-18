@@ -27,6 +27,11 @@
                 MENU
             </div>
 
+            <!-- Nav Item - Charts -->
+            <li class="nav-item {{ $menuUser ?? '' }}">
+                <a class="nav-link" href="{{ route('user') }}">
+                    <i class="fas fa-user"></i>
+                    <span>Audit Log</span></a>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item {{ $menuUser ?? '' }}">
@@ -41,27 +46,5 @@
                     <i class="fas fa-tasks"></i>
                     <span>Data Spesimen</span></a>
             </li>
-<!-- Heading -->
-            {{-- <div class="sidebar-heading">
-                MENU KARYAWAN
-            </div> --}}
-
-            
-
-            <!-- Nav Item - Tables -->
-            {{-- <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i class="fas fa-tasks"></i>
-                    <span>Data tugas</span></a>
-            </li> --}}
-
-            <!-- Divider -->
-            {{-- <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div> --}}
-
         </ul>
         <!-- End of Sidebar -->
