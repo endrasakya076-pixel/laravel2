@@ -61,7 +61,7 @@
                                                 <span aria-hidden="true" style="font-size: 2rem;">&times;</span>
                                             </button>
                                             <h4 class="mb-0">{{ $item->nama }}</h4>
-                                            <small>CIF: {{ $item->cif }} | Rek: {{ $item->no_rekening }}</small>
+                                            <small>CIF: {{ $item->cif }} | Rek: {{ $item->no_rekening }} | Ibu Kandung : {{ $item->nama_ibu }}</small>
                                         </div>
                                         <div class="modal-body p-0 img-zoom-container" id="wrapper{{ $item->id }}">
                                             <img src="{{ asset('images/'. $item->foto) }}" 
