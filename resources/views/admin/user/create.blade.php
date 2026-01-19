@@ -46,6 +46,7 @@
                     <option selected disabled>--Pilih Jabatan--</option>
                     <option value="Admin">Admin</option>
                     <option value="Karyawan">Karyawan</option>
+                    <option value="Staff TI">Staff TI</option>
                 </select>
                 @error('jabatan')
                 <small class="text-danger">

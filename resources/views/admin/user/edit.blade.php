@@ -46,6 +46,7 @@
                     <option disabled>--Pilih Jabatan--</option>
                     <option value="Admin" {{ $user->jabatan == 'Admin' ? 'selected' : '' }}>Admin</option>
                     <option value="Karyawan" {{ $user->jabatan == 'Karyawan' ? 'selected' : '' }}>Karyawan</option>
+                    <option value="Staff TI" {{ $user->jabatan == 'Staff TI' ? 'selected' : '' }}>Staff TI</option>
                 </select>
                 @error('jabatan')
                 <small class="text-danger">
