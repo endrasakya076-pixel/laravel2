@@ -47,6 +47,10 @@
                     <option value="Admin">Admin</option>
                     <option value="Kabag TI">Kabag TI</option>
                     <option value="Staff TI">Staff TI</option>
+                    <option value="Kabag SKAI">Kabag SKAI</option>
+                    <option value="Head Teller">Head Teller</option>
+                    <option value="Teller">Teller</option>
+                    <option value="CS">CS</option>
                 </select>
                 @error('jabatan')
                 <small class="text-danger">

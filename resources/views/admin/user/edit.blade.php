@@ -47,6 +47,10 @@
                     <option value="Admin" {{ $user->jabatan == 'Admin' ? 'selected' : '' }}>Admin</option>
                     <option value="Kabag TI" {{ $user->jabatan == 'Kabag TI' ? 'selected' : '' }}>Kabag TI</option>
                     <option value="Staff TI" {{ $user->jabatan == 'Staff TI' ? 'selected' : '' }}>Staff TI</option>
+                    <option value="Kabag SKAI" {{ $user->jabatan == 'Kabag SKAI' ? 'selected' : '' }}>Kabag SKAI</option>
+                    <option value="Head Teller" {{ $user->jabatan == 'Head Teller' ? 'selected' : '' }}>Head Teller</option>
+                    <option value="Teller" {{ $user->jabatan == 'Teller' ? 'selected' : '' }}>Teller</option>
+                    <option value="CS" {{ $user->jabatan == 'CS' ? 'selected' : '' }}>CS</option>
                 </select>
                 @error('jabatan')
                 <small class="text-danger">

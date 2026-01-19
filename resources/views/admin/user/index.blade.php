@@ -60,6 +60,22 @@
                                                 <span class="badge badge-success">
                                                     {{ $item->jabatan }}
                                                 </span>
+                                            @elseif ($item->jabatan == 'Kabag SKAI')
+                                                <span class="badge badge-warning">
+                                                    {{ $item->jabatan }}
+                                                </span>
+                                            @elseif ($item->jabatan == 'Head Teller')
+                                                <span class="badge badge-info">
+                                                    {{ $item->jabatan }}
+                                                </span>
+                                            @elseif ($item->jabatan == 'Teller')
+                                                <span class="badge badge-dark">
+                                                    {{ $item->jabatan }}
+                                                </span>
+                                            @elseif ($item->jabatan == 'CS')
+                                                <span class="badge badge-light">
+                                                    {{ $item->jabatan }}
+                                                </span>
                                             @endif
                                         </td>
                                         <td class="text-center">
