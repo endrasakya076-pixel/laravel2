@@ -45,16 +45,7 @@
                 <select name="jabatan" class="form-control @error('jabatan') is-invalid @enderror">
                     <option disabled>--Pilih Jabatan--</option>
                     <option value="Admin" {{ $user->jabatan == 'Admin' ? 'selected' : '' }}>Admin</option>
-                    <option value="Kabag SKAI" {{ $user->jabatan == 'Kabag SKAI' ? 'selected' : '' }}>Kabag SKAI</option>
-                    <option value="Kabag Operasional" {{ $user->jabatan == 'Kabag Operasional' ? 'selected' : '' }}>Kabag Operasional</option>
-                    <option value="Kabag TI" {{ $user->jabatan == 'Kabag TI' ? 'selected' : '' }}>Kabag TI</option>
-                    <option value="Kepala Cabang Gerung" {{ $user->jabatan == 'Kepala Cabang Gerung' ? 'selected' : '' }}>Kepala Cabang Gerung</option>
-                    <option value="Kepala Cabang Pancor" {{ $user->jabatan == 'Kepala Cabang Pancor' ? 'selected' : '' }}>Kepala Cabang Pancor</option>
-                    <option value="Kepala Cabang Tanjung" {{ $user->jabatan == 'Kepala Cabang Tanjung' ? 'selected' : '' }}>Kepala Cabang Tanjung</option>
-                    <option value="Kasi Operasional" {{ $user->jabatan == 'Kasi Operasional' ? 'selected' : '' }}>Kasi Operasional</option>
-                    <option value="Staff TI" {{ $user->jabatan == 'Staff TI' ? 'selected' : '' }}>Staff TI</option>
-                    <option value="HeadTeller" {{ $user->jabatan == 'HeadTeller' ? 'selected' : '' }}>Head Teller</option>
-                    <option value="Teller" {{ $user->jabatan == 'Teller' ? 'selected' : '' }}>Teller</option>
+                    <option value="Karyawan" {{ $user->jabatan == 'Karyawan' ? 'selected' : '' }}>Karyawan</option>
                 </select>
                 @error('jabatan')
                 <small class="text-danger">

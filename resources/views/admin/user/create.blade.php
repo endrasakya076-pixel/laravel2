@@ -45,16 +45,7 @@
                 <select name="jabatan" class="form-control @error('jabatan') is-invalid @enderror">
                     <option selected disabled>--Pilih Jabatan--</option>
                     <option value="Admin">Admin</option>
-                    <option value="Kabag SKAI">Kabag SKAI</option>
-                    <option value="Kabag Operasional">Kabag Operasional</option>
-                    <option value="Kabag TI">Kabag TI</option>
-                    <option value="Kepala Cabang Gerung">Kepala Cabang Gerung</option>
-                    <option value="Kepala Cabang Pancor">Kepala Cabang Pancor</option>
-                    <option value="Kepala Cabang Tanjung">Kepala Cabang Tanjung</option>
-                    <option value="Kasi Operasional">Kasi Operasional</option>
-                    <option value="Staff TI">Staff TI</option>
-                    <option value="HeadTeller">Head Teller</option>
-                    <option value="Teller">Teller</option>
+                    <option value="Karyawan">Karyawan</option>
                 </select>
                 @error('jabatan')
                 <small class="text-danger">
