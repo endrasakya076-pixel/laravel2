@@ -52,7 +52,7 @@
                                                 <span class="badge badge-primary">
                                                     {{ $item->jabatan }}
                                                 </span>
-                                            @elseif ($item->jabatan == 'Karyawan')
+                                            @elseif ($item->jabatan == 'Kabag TI')
                                                 <span class="badge badge-secondary">
                                                     {{ $item->jabatan }}
                                                 </span>

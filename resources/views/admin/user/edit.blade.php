@@ -45,7 +45,7 @@
                 <select name="jabatan" class="form-control @error('jabatan') is-invalid @enderror">
                     <option disabled>--Pilih Jabatan--</option>
                     <option value="Admin" {{ $user->jabatan == 'Admin' ? 'selected' : '' }}>Admin</option>
-                    <option value="Karyawan" {{ $user->jabatan == 'Karyawan' ? 'selected' : '' }}>Karyawan</option>
+                    <option value="Kabag TI" {{ $user->jabatan == 'Kabag TI' ? 'selected' : '' }}>Kabag TI</option>
                     <option value="Staff TI" {{ $user->jabatan == 'Staff TI' ? 'selected' : '' }}>Staff TI</option>
                 </select>
                 @error('jabatan')
