@@ -16,7 +16,7 @@ class AuditLogController extends Controller
         return redirect()->route('dashboard.index')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
     }
 
-    $logs = \App\Models\ActivityLog::with('user')->latest()->paginate(20);
+    $logs = \App\Models\ActivityLog::with('user')->latest()->paginate(10);
 
     return view('admin.audit.index', [
         'logs' => $logs,
