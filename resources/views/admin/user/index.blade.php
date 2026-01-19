@@ -11,16 +11,6 @@
                 <i class="fas fa-plus mr-2"></i>
                 Tambah Data</a>
         </div>
-        {{-- <div>
-            <a href="#" class="btn btn-sm btn-success">
-                <i class="fas fa-file-excel mr-2"></i>
-                File Excel
-            </a>
-            <a href="#" class="btn btn-sm btn-danger">
-                <i class="fas fa-file-excel mr-2"></i>
-                PDF
-            </a>
-        </div> --}}
     </div>
     <div class="card-body">
         <div class="table-responsive">
