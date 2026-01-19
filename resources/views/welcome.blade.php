@@ -506,7 +506,7 @@
           <div class="hero-text">
             <h1>MEMBANGUN BERSAMA MASYARAKAT</h1>
             <p>Verifikasi merupakan proses pengendalian internal untuk menjamin keabsahan instruksi nasabah dengan cara membandingkan identitas serta spesimen tanda tangan yang tersimpan dalam sistem dengan dokumen transaksi yang diajukan.</p>
-            <a href="#" class="btn-hologram">
+            <a href="{{ route('login') }}" class="btn-hologram">
               <span>LOGIN SEKARANG</span>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M4.167 10h11.666M10 4.167L15.833 10 10 15.833" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
