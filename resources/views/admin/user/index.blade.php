@@ -56,19 +56,12 @@
                                                 <span class="badge badge-secondary">
                                                     {{ $item->jabatan }}
                                                 </span>
+                                            @elseif ($item->jabatan == 'Staff TI')
+                                                <span class="badge badge-success">
+                                                    {{ $item->jabatan }}
+                                                </span>
                                             @endif
                                         </td>
-                                        {{-- <td>
-                                            @if ($item->is_tugas == false)
-                                                <span class="badge badge-primary">
-                                                    Belum Ada Tugas
-                                                </span>
-                                            @else
-                                                <span class="badge badge-success">
-                                                   Sudah Ada Tugas
-                                                </span>
-                                            @endif
-                                        </td> --}}
                                         <td class="text-center">
                                             <a href="{{ route('userEdit', $item->id) }}" class="btn btn-sm btn-warning">
                                                 <i class="fas fa-edit"></i>
