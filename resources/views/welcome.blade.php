@@ -176,15 +176,10 @@
     }
 
     .hero-content {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
       align-items: center;
-      gap: 2rem;
-    }
-
-    .hero-text {
-      text-align: center;
-      max-width: 800px;
     }
 
     .hero-text h1 {
@@ -339,7 +334,6 @@
       background: #2c5aa0;
       border-radius: 50%;
       box-shadow: 0 0 15px rgba(44, 90, 160, 0.5);
-      z-index: 5;
     }
 
     .lock-keyhole::after {
@@ -352,33 +346,6 @@
       height: 20px;
       background: #2c5aa0;
       border-radius: 0 0 4px 4px;
-    }
-
-    /* Button in Lock */
-    .btn-in-lock {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 20;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: white;
-      padding: 0.9rem 2rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 25px rgba(74, 144, 226, 0.35);
-      white-space: nowrap;
-    }
-
-    .btn-in-lock:hover {
-      transform: translate(-50%, -50%) scale(1.05);
-      box-shadow: 0 12px 35px rgba(74, 144, 226, 0.45);
     }
 
     /* Floating Security Icons */
@@ -489,7 +456,8 @@
     /* Responsive */
     @media (max-width: 768px) {
       .hero-content {
-        gap: 2rem;
+        grid-template-columns: 1fr;
+        gap: 3rem;
       }
 
       .hero-text h1 {
@@ -502,11 +470,6 @@
 
       .lock-main {
         transform: scale(0.8);
-      }
-
-      .btn-in-lock {
-        font-size: 0.85rem;
-        padding: 0.8rem 1.5rem;
       }
 
       .features {
@@ -562,6 +525,12 @@
           <div class="hero-text">
             <h1>Membangun <span class="highlight">Bersama</span> Masyarakat</h1>
             <p>Verifikasi merupakan proses pengendalian internal untuk menjamin keabsahan instruksi nasabah dengan cara membandingkan identitas serta spesimen tanda tangan yang tersimpan dalam sistem dengan dokumen transaksi yang diajukan.</p>
+            <a href="{{ route('login') }}" class="btn-primary">
+              <span>Login Sekarang</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4.167 10h11.666M10 4.167L15.833 10 10 15.833" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
 
           <div class="lock-container">
@@ -577,31 +546,7 @@
               <div class="lock-body">
                 <div class="lock-keyhole"></div>
               </div>
-              <a href="{{ route('login') }}" class="btn-in-lock">
-                <span>Login Sekarang</span>
-                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                  <path d="M4.167 10h11.666M10 4.167L15.833 10 10 15.833" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
             </div>
-          </div>
-        </div>
-
-        <div class="features">
-          <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3>Verifikasi Cepat</h3>
-            <p>Sistem otomatis yang memverifikasi data nasabah dalam hitungan detik dengan akurasi tinggi menggunakan teknologi modern</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🛡️</div>
-            <h3>Keamanan Terjamin</h3>
-            <p>Teknologi enkripsi modern melindungi setiap transaksi dan data nasabah dengan standar keamanan tertinggi</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">📊</div>
-            <h3>Dashboard Analytics</h3>
-            <p>Pantau semua aktivitas verifikasi melalui dashboard yang intuitif dan real-time dengan visualisasi data lengkap</p>
           </div>
         </div>
       </div>
