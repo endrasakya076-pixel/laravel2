@@ -503,4 +503,10 @@
         padding: 0.6rem;
       }
     }
+    .logo-image {
+  height: 45px !important;
+  width: auto !important;
+  max-width: 200px;
+  object-fit: contain;
+}
     
