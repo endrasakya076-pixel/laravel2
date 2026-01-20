@@ -531,7 +531,6 @@
     <div class="container">
       <div class="header-content">
         <a href="#" class="logo">
-          <div class="logo-icon">🔐</div>
           <span>PT. BPR PRIMA NADI</span>
         </a>
       </div>
