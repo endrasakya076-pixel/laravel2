@@ -523,7 +523,7 @@
       <div class="container">
         <div class="hero-content">
           <div class="hero-text">
-            <h1>Membangun Bersama</span> Masyarakat</h1>
+            <h1>Membangun <span class="highlight">Bersama</span> Masyarakat</h1>
             <p>Verifikasi merupakan proses pengendalian internal untuk menjamin keabsahan instruksi nasabah dengan cara membandingkan identitas serta spesimen tanda tangan yang tersimpan dalam sistem dengan dokumen transaksi yang diajukan.</p>
             <a href="{{ route('login') }}" class="btn-primary">
               <span>Login Sekarang</span>
