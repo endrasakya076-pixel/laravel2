@@ -516,8 +516,8 @@
 
 /* Tambahkan style untuk logo image */
 .logo-image {
-  height: 50px;        /* Sesuaikan ukuran */
-  width: auto;         /* Menjaga proporsi */
+  height: 10px;        /* Sesuaikan ukuran */
+  width: 20px;         /* Menjaga proporsi */
   object-fit: contain; /* Menjaga proporsi gambar */
 }
 
