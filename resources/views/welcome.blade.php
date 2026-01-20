@@ -26,11 +26,11 @@
     <div class="container">
       <div class="header-content">
         <a href="#" class="logo">
-          <span>PT. BPR PRIMA NADI</span>
+          <img src="{{ asset('images/logo/logoprima.png') }}" alt="PT. BPR PRIMA NADI" class="logo-image">
         </a>
       </div>
     </div>
-  </header>
+</header>
 
   <main>
     <section class="hero">

@@ -503,3 +503,33 @@
         padding: 0.6rem;
       }
     }
+    .logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+    }
+
+/* Tambahkan style untuk logo image */
+.logo-image {
+  height: 50px;        /* Sesuaikan ukuran */
+  width: auto;         /* Menjaga proporsi */
+  object-fit: contain; /* Menjaga proporsi gambar */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .logo-image {
+    height: 40px;      /* Ukuran lebih kecil di mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-image {
+    height: 35px;
+  }
+}
