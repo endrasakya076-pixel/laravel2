@@ -26,7 +26,7 @@
     <div class="container">
       <div class="header-content">
         <a href="#" class="logo">
-          <img src="{{ asset('images/logo/logoprima.png') }}" alt="PT. BPR PRIMA NADI" class="logo-image" >
+          <img src="{{ asset('images/logo/logoprima.png') }}" class="logo-image" >
         </a>
       </div>
     </div>
