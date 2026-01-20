@@ -26,7 +26,7 @@
     <div class="container">
       <div class="header-content">
         <a href="#" class="logo">
-          <img src="{{ asset('images/logo/logoprima.png') }}" class="logo-image" style="height: 10px; width: 20px;">
+          <img src="{{ asset('images/logo/logoprima.png') }}" class="logo-image" style="height: 30px; width: 40px;">
         </a>
       </div>
     </div>
