@@ -129,9 +129,9 @@
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 0 1.5rem;
       position: relative;
       z-index: 1;
     }
@@ -182,11 +182,15 @@
       align-items: center;
     }
 
+    .hero-text {
+      max-width: 700px;
+    }
+
     .hero-text h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 3.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 2.8rem;
       font-weight: 700;
-      line-height: 1.2;
+      line-height: 1.3;
       margin-bottom: 1.5rem;
       color: var(--text-dark);
     }
@@ -199,8 +203,8 @@
     }
 
     .hero-text p {
-      font-size: 1.125rem;
-      line-height: 1.8;
+      font-size: 1rem;
+      line-height: 1.7;
       color: #5a6c7d;
       margin-bottom: 2rem;
     }
@@ -246,7 +250,7 @@
     .lock-container {
       position: relative;
       width: 100%;
-      height: 500px;
+      height: 450px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -334,6 +338,7 @@
       background: #2c5aa0;
       border-radius: 50%;
       box-shadow: 0 0 15px rgba(44, 90, 160, 0.5);
+      z-index: 5;
     }
 
     .lock-keyhole::after {
@@ -388,55 +393,7 @@
       50% { transform: translateY(-15px); }
     }
 
-    /* Features */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-top: 6rem;
-    }
 
-    .feature-card {
-      background: white;
-      border-radius: 20px;
-      padding: 2.5rem 2rem;
-      box-shadow: 0 8px 30px rgba(74, 144, 226, 0.12);
-      transition: all 0.3s ease;
-      border: 1px solid rgba(74, 144, 226, 0.1);
-    }
-
-    .feature-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 45px rgba(74, 144, 226, 0.25);
-      border-color: var(--primary);
-    }
-
-    .feature-icon {
-      width: 70px;
-      height: 70px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
-    }
-
-    .feature-card h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.3rem;
-      margin-bottom: 0.75rem;
-      color: var(--text-dark);
-      font-weight: 600;
-    }
-
-    .feature-card p {
-      color: #5a6c7d;
-      font-size: 0.95rem;
-      line-height: 1.7;
-    }
 
     /* Footer */
     footer {
@@ -454,14 +411,18 @@
     }
 
     /* Responsive */
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
+      .container {
+        max-width: 900px;
+        padding: 0 1.5rem;
+      }
+
       .hero-content {
-        grid-template-columns: 1fr;
         gap: 3rem;
       }
 
       .hero-text h1 {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
       }
 
       .lock-container {
@@ -469,15 +430,42 @@
       }
 
       .lock-main {
-        transform: scale(0.8);
+        transform: scale(0.9);
       }
 
-      .features {
-        grid-template-columns: 1fr;
+
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.25rem;
       }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+
+      .hero-text p {
+        font-size: 0.95rem;
+      }
+
+      .lock-container {
+        height: 350px;
+      }
+
+      .lock-main {
+        transform: scale(0.75);
+      }
+
+
 
       .logo {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
       }
 
       .btn-primary {
@@ -492,6 +480,38 @@
 
       .floating-elements .float-icon {
         display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-text h1 {
+        font-size: 1.75rem;
+      }
+
+      .hero-text p {
+        font-size: 0.9rem;
+      }
+
+      .lock-container {
+        height: 320px;
+      }
+
+      .lock-main {
+        transform: scale(0.65);
+      }
+
+      .logo {
+        font-size: 1rem;
+      }
+
+      .btn-primary {
+        padding: 0.9rem 1.8rem;
+        font-size: 0.95rem;
+      }
+
+      .security-icon {
+        font-size: 1.1rem;
+        padding: 0.6rem;
       }
     }
   </style>
@@ -511,6 +531,7 @@
     <div class="container">
       <div class="header-content">
         <a href="#" class="logo">
+          <div class="logo-icon">🔐</div>
           <span>PT. BPR PRIMA NADI</span>
         </a>
       </div>
@@ -548,6 +569,8 @@
             </div>
           </div>
         </div>
+
+
       </div>
     </section>
   </main>
