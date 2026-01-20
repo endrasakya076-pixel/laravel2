@@ -516,20 +516,20 @@
 
 /* Tambahkan style untuk logo image */
 .logo-image {
-  height: 10px;        /* Sesuaikan ukuran */
-  width: 20px;         /* Menjaga proporsi */
+  height: 30px;        /* Sesuaikan ukuran */
+  width: auto;         /* Menjaga proporsi */
   object-fit: contain; /* Menjaga proporsi gambar */
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .logo-image {
-    height: 40px;      /* Ukuran lebih kecil di mobile */
+    height: 28px;      /* Ukuran lebih kecil di mobile */
   }
 }
 
 @media (max-width: 480px) {
   .logo-image {
-    height: 35px;
+    height: 24px;
   }
 }
