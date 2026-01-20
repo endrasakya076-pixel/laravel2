@@ -576,7 +576,7 @@
 
   <footer>
     <div class="container">
-      <p>© 2024 <strong>PT. BPR Prima Nadi</strong> - All Rights Reserved</p>
+      <p>© 2026 <strong>PT. BPR Prima Nadi</strong> - All Rights Reserved</p>
     </div>
   </footer>
 </body>
