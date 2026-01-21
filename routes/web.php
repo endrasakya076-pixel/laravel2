@@ -83,4 +83,5 @@ use App\Http\Controllers\DashboardController;
     Route::delete('/audit-log/clear', [AuditLogController::class, 'clear'])->name('audit-log.clear');
     // Pastikan menggunakan POST karena kita melakukan perubahan data
     Route::post('/verifikasi/{id}', [AuditLogController::class, 'updateVerifikasi'])->name('verifikasi.update');
+    Route::get('/audit-log/pdf', [AuditLogController::class, 'generatePDF'])->name('audit-log.pdf');
  });
