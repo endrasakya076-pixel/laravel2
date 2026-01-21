@@ -31,6 +31,7 @@
                             <th width="15%">Aktivitas</th>
                             <th>Keterangan</th>
                             <th width="15%">IP Address</th>
+                            <th width="15%">Browser</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,6 +60,9 @@
                             
                             <td>
                                 <code class="text-primary">{{ $log->ip_address }}</code>
+                            </td>
+                            <td>
+                                <code class="text-primary">{{ $log->browser }}</code>
                             </td>
                         </tr>
                         @empty
