@@ -81,4 +81,6 @@ use App\Http\Controllers\DashboardController;
     // Sesuaikan nama route dengan yang dipanggil di Controller dan View
     Route::get('/audit-log', [AuditLogController::class, 'index'])->name('audit-log');
     Route::delete('/audit-log/clear', [AuditLogController::class, 'clear'])->name('audit-log.clear');
+    // Pastikan menggunakan POST karena kita melakukan perubahan data
+    Route::post('/verifikasi/{id}', [AuditLogController::class, 'updateVerifikasi'])->name('verifikasi.update');
  });
