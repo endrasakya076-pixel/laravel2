@@ -54,10 +54,10 @@ class AuditLogController extends Controller
 }
 
     // Fungsi untuk mencatat log verifikasi
-    public static function logVerification($nama, $status)
+    public static function logVerification($item, $status)
     {
         $aktivitas = $status === 'berhasil' ? 'Verifikasi Berhasil' : 'Verifikasi Gagal';
-        $keterangan = "Data dengan nama $nama telah di-verifikasi: $status";
+        $keterangan = "Data dengan nama " . $item->nama . " telah di-verifikasi: " . $status;
 
         ActivityLog::create([
             'user_id' => Auth::id(),
