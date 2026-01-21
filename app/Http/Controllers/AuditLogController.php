@@ -37,25 +37,27 @@ class AuditLogController extends Controller
     }
     public function updateVerifikasi(Request $request, $id)
 {
-    // 1. Cari data nasabah
-    $item = \App\Models\ActivityLog::findOrFail($id); 
-    $status = $request->status; // Menerima 'berhasil' atau 'gagal'
+    // 1. Ambil data dari tabel spesimen berdasarkan ID
+    // Pastikan Nama Modelnya sesuai (misal: Spesimen)
+    $nasabah = \App\Models\Spesimen::findOrFail($id); 
+    
+    $status = $request->status; // 'berhasil' atau 'gagal'
 
-    // 2. Update status di tabel utama
-    $item->update([
+    // 2. Update status verifikasi di tabel spesimen tersebut
+    $nasabah->update([
         'status_verifikasi' => $status,
     ]);
 
-    // 3. SUSUN KETERANGAN DENGAN NAMA NASABAH
-    // Variabel $item->nama akan mengambil nama nasabah dari database
-    $keterangan = "Data dengan nama [" . $item->nama . "] telah di-verifikasi: " . $status;
+    // 3. SUSUN KETERANGAN: Mengambil kolom 'nama' dari tabel spesimen
+    $namaNasabah = $nasabah->nama; 
+    $keteranganLog = "Data dengan nama [" . $namaNasabah . "] telah di-verifikasi: " . $status;
 
     // 4. Kirim ke AuditLogController
-    \App\Http\Controllers\AuditLogController::logVerification($keterangan, $status);
+    // Pastikan Anda mempassing variabel $keteranganLog yang sudah ada namanya
+    \App\Http\Controllers\AuditLogController::logVerification($keteranganLog, $status);
 
-    return redirect()->back()->with('success', "Verifikasi untuk " . $item->nama . " berhasil disimpan.");
+    return redirect()->back()->with('success', "Status verifikasi " . $namaNasabah . " berhasil diperbarui.");
 }
-
     public static function logVerification($keterangan, $status)
     {
         $userId = Auth::id();
