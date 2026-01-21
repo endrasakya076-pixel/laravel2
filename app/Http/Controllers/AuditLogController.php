@@ -60,17 +60,13 @@ class AuditLogController extends Controller
     }
     public static function logVerification($keterangan, $status)
     {
-        $userId = Auth::id();
-        $ipAddress = request()->ip();
-        $browser = request()->header('User-Agent');
-
+       if (Auth::check()) {
         \App\Models\ActivityLog::create([
-            'id' => $userId,
-            'aktivitas' => 'Verifikasi Data',
-            'keterangan' => $keterangan,
-            'ip_address' => $ipAddress,
-            'browser' => $browser,
-            'status_verifikasi' => $status,
+            'user_id'    => Auth::id(),
+            'aktivitas'  => "Verifikasi " . ucfirst($status),
+            'keterangan' => $keterangan, // Ini akan berisi string dengan nama nasabah tadi
+            'ip_address' => request()->ip(),
+            'browser'    => request()->userAgent(),
         ]);
-    }
+    }}
 }
