@@ -37,34 +37,37 @@ class AuditLogController extends Controller
     }
     public function updateVerifikasi(Request $request, $id)
 {
-    // Mengambil data berdasarkan ID
     $item = \App\Models\ActivityLog::findOrFail($id); 
     $status = $request->status; // 'berhasil' atau 'gagal'
 
-    // 1. Update status verifikasi di tabel MasterData
+    // Update status di database utama
     $item->update([
         'status_verifikasi' => $status,
     ]);
 
-    // 2. Gunakan fungsi logVerification dari AuditLogController yang sudah kita buat tadi
-    // Ini lebih bersih dan terpusat
-    \App\Http\Controllers\AuditLogController::logVerification($item->nama, $status);
+    // Kirim nama nasabah ke fungsi log
+    // Gunakan strtolower agar rapi atau keep original
+    $keterangan = "Data dengan nama " . $item->nama . " telah di-verifikasi: " . $status;
 
-    return redirect()->back()->with('success', "Data $item->nama telah di-verifikasi: $status");
+    // Panggil fungsi log
+    \App\Http\Controllers\AuditLogController::logVerification($keterangan, $status);
+
+    return redirect()->back()->with('success', 'Verifikasi berhasil dicatat.');
 }
 
-    // Fungsi untuk mencatat log verifikasi
-    public static function logVerification($item, $status)
+    public static function logVerification($keterangan, $status)
     {
-        $aktivitas = $status === 'berhasil' ? 'Verifikasi Berhasil' : 'Verifikasi Gagal';
-        $keterangan = "Data dengan nama " . $item->nama . " telah di-verifikasi: " . $status;
+        $userId = Auth::id();
+        $ipAddress = request()->ip();
+        $browser = request()->header('User-Agent');
 
-        ActivityLog::create([
-            'user_id' => Auth::id(),
-            'aktivitas' => $aktivitas,
+        \App\Models\ActivityLog::create([
+            'user_id' => $userId,
+            'aktivitas' => 'Verifikasi Data',
             'keterangan' => $keterangan,
-            'ip_address' => request()->ip(),
-            'browser' => request()->header('User-Agent'),
+            'ip_address' => $ipAddress,
+            'browser' => $browser,
+            'status_verifikasi' => $status,
         ]);
     }
 }
