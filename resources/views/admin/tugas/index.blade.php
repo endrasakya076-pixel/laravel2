@@ -72,6 +72,23 @@
                                                 Scroll untuk Zoom | Drag untuk Geser
                                             </div>
                                         </div>
+                                        <div class="modal-footer justify-content-center" style="background: #f8f9fa; border-top: 1px solid #dee2e6;">
+    <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
+        @csrf
+        <input type="hidden" name="status" value="gagal">
+        <button type="submit" class="btn btn-danger btn-lg mx-2" onclick="return confirm('Yakin menyatakan GAGAL verifikasi?')">
+            <i class="fas fa-times-circle"></i> Gagal Verifikasi
+        </button>
+    </form>
+
+    <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
+        @csrf
+        <input type="hidden" name="status" value="berhasil">
+        <button type="submit" class="btn btn-success btn-lg mx-2" onclick="return confirm('Yakin menyatakan BERHASIL verifikasi?')">
+            <i class="fas fa-check-circle"></i> Berhasil Verifikasi
+        </button>
+    </form>
+</div>
                                     </div>
                                 </div>
                             </div>
