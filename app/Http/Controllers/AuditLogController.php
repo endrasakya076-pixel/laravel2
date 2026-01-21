@@ -36,7 +36,7 @@ class AuditLogController extends Controller
         return redirect()->back()->with('error', 'Akses ditolak');
     }
     public function updateVerifikasi(Request $request, $id)
-{
+    {
     // 1. Ambil data dari tabel spesimen berdasarkan ID
     // Pastikan Nama Modelnya sesuai (misal: Spesimen)
     $nasabah = \App\Models\Spesimen::findOrFail($id); 
@@ -57,7 +57,7 @@ class AuditLogController extends Controller
     \App\Http\Controllers\AuditLogController::logVerification($keteranganLog, $status);
 
     return redirect()->back()->with('success', "Status verifikasi " . $namaNasabah . " berhasil diperbarui.");
-}
+    }
     public static function logVerification($keterangan, $status)
     {
         $userId = Auth::id();
@@ -65,7 +65,7 @@ class AuditLogController extends Controller
         $browser = request()->header('User-Agent');
 
         \App\Models\ActivityLog::create([
-            'user_id' => $userId,
+            'id' => $userId,
             'aktivitas' => 'Verifikasi Data',
             'keterangan' => $keterangan,
             'ip_address' => $ipAddress,
