@@ -73,22 +73,21 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer justify-content-center" style="background: #f8f9fa; border-top: 1px solid #dee2e6;">
-    <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
-        @csrf
-        <input type="hidden" name="status" value="gagal">
-        <button type="submit" class="btn btn-danger btn-lg mx-2" onclick="return confirm('Yakin menyatakan GAGAL verifikasi?')">
-            <i class="fas fa-times-circle"></i> Gagal Verifikasi
-        </button>
-    </form>
-
-    <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
-        @csrf
-        <input type="hidden" name="status" value="berhasil">
-        <button type="submit" class="btn btn-success btn-lg mx-2" onclick="return confirm('Yakin menyatakan BERHASIL verifikasi?')">
-            <i class="fas fa-check-circle"></i> Berhasil Verifikasi
-        </button>
-    </form>
-</div>
+                                        <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                             <input type="hidden" name="status" value="gagal">
+                                                 <button type="submit" class="btn btn-danger btn-lg mx-2" onclick="return confirm('Yakin menyatakan GAGAL verifikasi?')">
+                                                <i class="fas fa-times-circle"></i> Gagal Verifikasi
+                                                </button>
+                                                </form>
+                                                <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <input type="hidden" name="status" value="berhasil">
+                                                    <button type="submit" class="btn btn-success btn-lg mx-2" onclick="return confirm('Yakin menyatakan BERHASIL verifikasi?')">
+                                                <i class="fas fa-check-circle"></i> Berhasil Verifikasi
+                                                </button>
+                                            </form>
+                                         </div>
                                     </div>
                                 </div>
                             </div>
@@ -111,77 +110,6 @@
     </div>
 </div>
 @endsection
-
-{{-- @push('scripts')
-<script>
-$(document).ready(function() {
-    // Menangani semua modal gambar secara dinamis
-    $('.modal').on('shown.bs.modal', function () {
-        const modal = $(this);
-        const img = modal.find('.img-zoomable');
-        const container = modal.find('.img-zoom-container');
-        
-        let scale = 1;
-        let isDragging = false;
-        let startX, startY, translateX = 0, translateY = 0;
-
-        // 1. Zoom Roda Mouse
-        container.on('wheel', function(e) {
-            e.preventDefault();
-            let delta = e.originalEvent.deltaY;
-            if (delta < 0) scale += 0.2; else scale -= 0.2;
-            scale = Math.min(Math.max(1, scale), 5);
-            applyTransform();
-        });
-
-        // 2. Klik untuk Zoom 2.5x
-        img.on('click', function() {
-            if (scale === 1) scale = 2.5; else scale = 1;
-            if (scale === 1) { translateX = 0; translateY = 0; }
-            applyTransform();
-        });
-
-        // 3. Dragging
-        container.on('mousedown', function(e) {
-            if (scale > 1) {
-                isDragging = true;
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
-                container.css('cursor', 'grabbing');
-            }
-        });
-
-        $(window).on('mousemove', function(e) {
-            if (!isDragging) return;
-            translateX = e.clientX - startX;
-            translateY = e.clientY - startY;
-            applyTransform();
-        });
-
-        $(window).on('mouseup', function() {
-            isDragging = false;
-            if (scale > 1) container.css('cursor', 'move');
-        });
-
-        function applyTransform() {
-            img.css('transform', `scale(${scale}) translate(${translateX/scale}px, ${translateY/scale}px)`);
-            container.css('cursor', scale > 1 ? 'move' : 'zoom-in');
-        }
-
-        // Reset saat modal ditutup
-        modal.on('hidden.bs.modal', function () {
-            scale = 1; translateX = 0; translateY = 0;
-            applyTransform();
-            $(window).off('mousemove mouseup');
-            container.off('wheel mousedown');
-        });
-    });
-});
-</script>
-@endpush
-
-@section('content')
-    @endsection --}}
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
