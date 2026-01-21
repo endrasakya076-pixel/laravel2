@@ -3,7 +3,8 @@
 @section('content')
 <h1 class="h3 mb-4 text-gray-800">
     <i class="fas fa-fw fa-plus mr-2"></i>
-    {{ $title }}</h1>
+    {{ $title }}
+</h1>
 <div class="card">
     <div class="card-header bg-primary">
             <a href="{{ route('tugas')  }}" class="btn btn-sm btn-success">
