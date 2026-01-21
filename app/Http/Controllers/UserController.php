@@ -103,35 +103,49 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        if (Auth::id() != 1 && $id == 1) { abort(403); }
+{
+    // Proteksi: Admin lain tidak boleh mengedit data Admin Utama (ID 1)
+    if (Auth::id() != 1 && $id == 1) { 
+        abort(403, 'Anda tidak memiliki hak akses untuk mengubah data Admin Utama.'); 
+    }
 
-        $request->validate([
-            'nama'     => 'required',
-            'email'    => 'required|unique:users,email,' . $id,
-            'jabatan'  => 'required',
-            'password' => 'nullable|confirmed|min:8',
-        ]);
+    $request->validate([
+        'nama'     => 'required|string|max:255',
+        'email'    => 'required|email|unique:users,email,' . $id,
+        'jabatan'  => 'required',
+        'password' => 'nullable|confirmed|min:8',
+    ]);
 
-        $user = User::findOrFail($id);
-        $user->nama    = $request->nama;
-        $user->email   = $request->email;
+    $user = User::findOrFail($id);
+    
+    // Simpan data lama untuk perbandingan di Log (Opsional)
+    $jabatanLama = $user->jabatan;
+
+    $user->nama  = $request->nama;
+    $user->email = $request->email;
+
+    // PROTEKSI JABATAN: Hanya Admin ID 1 yang boleh mengubah kolom jabatan
+    if (Auth::id() == 1) {
         $user->jabatan = $request->jabatan;
+    } 
+    // Jika bukan ID 1, jabatan tidak diupdate (tetap menggunakan nilai lama)
 
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
-        $user->save();
+    if ($request->filled('password')) {
+        $user->password = Hash::make($request->password);
+    }
+    
+    $user->save();
 
-        // CATAT LOG
-        ActivityLog::create([
-            'user_id'   => Auth::id(),
-            'aktivitas' => 'Update User',
-            'keterangan'=> 'Mengubah data user: ' . $user->nama,
-            'ip_address'=> $request->ip()
-        ]);
+    // CATAT LOG DENGAN DETAIL LENGKAP
+    \App\Models\ActivityLog::create([
+        'user_id'   => Auth::id(),
+        'aktivitas' => 'Update User',
+        'keterangan'=> 'Mengubah data user: ' . $user->nama . ' (Jabatan: ' . $user->jabatan . ')',
+        'ip_address'=> $request->ip(),
+        'browser'   => $request->userAgent(), // Menambahkan data browser agar tidak error
+    ]);
 
-        return redirect()->route('user')->with('success', 'Data user berhasil diedit');
+    return redirect()->route('user')->with('success', 'Data user ' . $user->nama . ' berhasil diperbarui');
     }
 
     public function destroy($id)
