@@ -72,18 +72,18 @@ class AuditLogController extends Controller
         ]);
     }
     }
-    public function generatePDF()
-{
-    // Cek akses: Hanya Admin ID 1 yang bisa cetak (opsional)
-    if (Auth::id() != 1) {
-            abort(403);
-    }
+    // public function generatePDF()
+    // {
+    // // Cek akses: Hanya Admin ID 1 yang bisa cetak (opsional)
+    // if (Auth::id() != 1) {
+    //         abort(403);
+    // }
 
-    $logs = ActivityLog::with('user')->latest()->get();
+    // $logs = ActivityLog::with('user')->latest()->get();
     
-    // Pastikan view 'admin.audit.pdf' sudah Anda buat filenya
-    $pdf = Pdf::loadView('admin.audit.pdf', compact('logs'));
+    // // Pastikan view 'admin.audit.pdf' sudah Anda buat filenya
+    // $pdf = Pdf::loadView('admin.audit.pdf', compact('logs'));
     
-    return $pdf->download('audit.pdf');
-    }
+    // return $pdf->download('audit.pdf');
+    // }
 }
