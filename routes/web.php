@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ApprovalController;
 
 // Route::get('/', function () {
 //     //return view('welcome');
@@ -84,4 +85,8 @@ use App\Http\Controllers\DashboardController;
     // Pastikan menggunakan POST karena kita melakukan perubahan data
     Route::post('/verifikasi/{id}', [AuditLogController::class, 'updateVerifikasi'])->name('verifikasi.update');
     Route::get('/audit-log/pdf', [AuditLogController::class, 'generatePDF'])->name('audit-log.pdf');
+    
+    // Approvals
+    Route::get('/approvals', [ApprovalController::class, 'index'])->name('approvals.index');
+    Route::post('/approvals/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.approve');
  });

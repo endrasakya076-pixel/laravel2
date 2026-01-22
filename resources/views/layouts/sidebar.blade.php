@@ -1,4 +1,4 @@
-        <!-- Sidebar -->
+<!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -48,5 +48,13 @@
                     <i class="fas fa-tasks"></i>
                     <span>Data Spesimen</span></a>
             </li>
+
+            <!-- Nav Item - Approval -->
+            <li class="nav-item {{ $menuApproval ?? '' }}">
+                <a class="nav-link" href="{{ route('approvals.index') }}">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Persetujuan</span></a>
+            </li>
+
         </ul>
         <!-- End of Sidebar -->
