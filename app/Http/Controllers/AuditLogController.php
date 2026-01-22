@@ -88,6 +88,6 @@ class AuditLogController extends Controller
     // Pastikan view 'admin.audit.pdf' sudah Anda buat filenya
     $pdf = Pdf::loadView('admin.audit.pdf', compact('logs'));
     
-    return $pdf->download('audit-log.pdf');
+    return $pdf->download('audit.pdf');
     }
 }
