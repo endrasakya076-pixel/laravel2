@@ -3,6 +3,11 @@
 @section('content')
 <div class="container">
     <h1>Daftar Persetujuan</h1>
+    <div class="mb-3">
+        <a href="{{ route('tugas') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Kembali ke Data Spesimen
+        </a>
+    </div>
     <table class="table">
         <thead>
             <tr>
