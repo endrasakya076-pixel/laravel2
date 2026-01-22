@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 // Hapus 'use id;' karena tidak diperlukan dan bisa menyebabkan error
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class AuditLogController extends Controller
 {
@@ -77,21 +78,16 @@ class AuditLogController extends Controller
     if (Auth::id() != 1) {
             abort(403);
     }
+// Gunakan Auth::id() agar tidak error merah di editor
+    if (Auth::id() != 1) {
+        abort(403);
+    }
 
-    // Ambil semua data log terbaru
     $logs = ActivityLog::with('user')->latest()->get();
-
-    // Data yang dikirim ke view PDF
-    $data = [
-        'title' => 'Laporan Audit Log Sistem',
-        'date' => date('d/m/Y H:i'),
-        'logs' => $logs
-    ];
-
-    // Load view khusus untuk tampilan PDF
-    $pdf = Pdf::loadView('admin.audit.pdf', $data);
-
-    // Download file PDF
-    return $pdf->download('audit-log-' . date('Y-m-d') . '.pdf');
+    
+    // Pastikan view 'admin.audit.pdf' sudah Anda buat filenya
+    $pdf = Pdf::loadView('admin.audit.pdf', compact('logs'));
+    
+    return $pdf->download('audit-log.pdf');
     }
 }
