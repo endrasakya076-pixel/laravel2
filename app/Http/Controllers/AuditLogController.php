@@ -78,10 +78,6 @@ class AuditLogController extends Controller
     if (Auth::id() != 1) {
             abort(403);
     }
-// Gunakan Auth::id() agar tidak error merah di editor
-    if (Auth::id() != 1) {
-        abort(403);
-    }
 
     $logs = ActivityLog::with('user')->latest()->get();
     
