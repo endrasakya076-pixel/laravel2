@@ -96,7 +96,7 @@
                             </td>
                             <td>{{ $log->keterangan }}</td>
                             <td><code class="text-primary">{{ $log->ip_address }}</code></td>
-                            <td><small class="text-muted" title="{{ $log->browser }}">{{ Str::limit($log->browser, 20) }}</small></td>
+                            <td><small class="text-muted" title="{{ $log->browser }}">{{ Str::limit($log->browser, 10) }}</small></td>
                         </tr>
                         @empty
                         <tr>
