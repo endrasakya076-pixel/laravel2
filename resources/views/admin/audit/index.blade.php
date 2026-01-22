@@ -1,5 +1,37 @@
 @extends('layouts.app')
 
+<style>
+@media print {
+    /* Sembunyikan elemen yang tidak perlu saat dicetak */
+    .btn, 
+    .sidebar, 
+    .navbar, 
+    .breadcrumb, 
+    .card-header,
+    footer,
+    #debug-icon-wrapper { 
+        display: none !important; 
+    }
+
+    /* Atur agar tabel memenuhi halaman */
+    .container-fluid, .card, .card-body {
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+    }
+
+    table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+    }
+
+    th, td {
+        border: 1px solid #000 !important; /* Paksa garis tabel jadi hitam */
+        padding: 8px !important;
+    }
+}
+</style>
+
 @section('content')
 <div class="container-fluid">
     <h1 class="mt-4">Audit Log</h1>
@@ -13,14 +45,11 @@
             <div><i class="fas fa-history mr-1"></i> Riwayat Aktivitas Sistem</div>
             
             <div class="d-flex align-items-center" style="gap: 10px;">
+                
                 <button onclick="window.print()" class="btn btn-info btn-sm">
-    <i class="fas fa-print"></i> Cetak Log
-</button>
-                {{-- TOMBOL PDF --}}
-                <a href="{{ route('audit-log.pdf') }}" class="btn btn-info btn-sm" target="_blank">
-                    <i class="fas fa-file-pdf"></i> Cetak PDF
-                </a>
-
+                <i class="fas fa-print"></i> Cetak Log
+                </button>
+             
                 {{-- TOMBOL KOSONGKAN LOG (Hanya Admin ID 1) --}}
                 @if(auth()->id() == 1)
                     <form action="{{ route('audit-log.clear') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus semua log? Tindakan ini tidak dapat dibatalkan.')" class="m-0">
