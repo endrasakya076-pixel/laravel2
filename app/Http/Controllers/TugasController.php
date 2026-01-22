@@ -171,7 +171,8 @@ class TugasController extends Controller
                 'user_id'   => Auth::id(),
                 'aktivitas' => 'Hapus Spesimen',
                 'keterangan'=> "Menghapus data nasabah: {$namaNasabah}",
-                'ip_address'=> request()->ip()
+                'ip_address'=> request()->ip(),
+                'browser'   => request()->userAgent(),
             ]);
 
             DB::commit();
