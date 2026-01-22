@@ -69,7 +69,7 @@
                                                  data-id="{{ $item->id }}"
                                                  style="max-width: 100%; max-height: 100%; transition: transform 0.1s ease-out; transform: scale(1);">
                                             <div style="position: absolute; bottom: 10px; color: white; background: rgba(0,0,0,0.5); padding: 2px 10px; border-radius: 10px; font-size: 11px;">
-                                                Scroll untuk Zoom | Drag untuk Geser
+                                                {{-- Scroll untuk Zoom | Drag untuk Geser --}}
                                             </div>
                                         </div>
                                         <div class="modal-footer justify-content-center" style="background: #f8f9fa; border-top: 1px solid #dee2e6;">
