@@ -14,7 +14,7 @@ class ApprovalController extends Controller
         $approvals = Approval::where('is_approved', false)->get();
 
         // Tampilkan view dengan data persetujuan
-        return view('approvals.index', compact('approvals'));
+        return view('admin.approvals.index', compact('approvals'));
     }
 
     public function approve($id)
