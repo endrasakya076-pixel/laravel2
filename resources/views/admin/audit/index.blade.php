@@ -68,12 +68,12 @@
                 <table class="table table-bordered table-hover" width="100%" cellspacing="0">
                     <thead class="thead-light">
                         <tr>
-                            <th width="15%">Waktu (WITA)</th>
+                            <th width="12%">Waktu (WITA)</th>
                             <th width="15%">User</th>
-                            <th width="15%">Aktivitas</th>
+                            <th width="12%">Aktivitas</th>
                             <th>Keterangan</th>
-                            <th width="15%">IP Address</th>
-                            <th width="15%">Browser</th>
+                            <th width="10%">IP Address</th>
+                            <th width="18%">Browser</th>
                         </tr>
                     </thead>
                     <tbody>
