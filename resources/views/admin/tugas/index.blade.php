@@ -80,7 +80,7 @@
                                                 <i class="fas fa-times-circle"></i> Data Pembanding Tidak Sesuai
                                                 </button>
                                                 </form>
-                                                <form action="{{ route('approvals.index') }}" method="GET" class="d-inline">
+                                                <form action="{{ route('approvals.update', $item->id) }}" method="POST" class="d-inline">
                                                     <button type="submit" class="btn btn-success btn-lg mx-2" onclick="return confirm('Yakin data pembanding sesuai?')">
                                                         <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
                                                     </button>
