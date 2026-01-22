@@ -10,11 +10,12 @@ class ApprovalController extends Controller
 {
     public function index()
     {
+        $title = 'Persetujuan'; // Menambahkan variabel $title untuk view
         // Ambil data persetujuan yang belum disetujui
         $approvals = Approval::where('is_approved', false)->get();
 
         // Tampilkan view dengan data persetujuan
-        return view('admin.approvals.index', compact('approvals'));
+        return view('admin.approvals.index', compact('approvals', 'title'));
     }
 
     public function approve($id)
