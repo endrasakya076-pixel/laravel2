@@ -74,8 +74,8 @@ class AuditLogController extends Controller
     public function generatePDF()
 {
     // Cek akses: Hanya Admin ID 1 yang bisa cetak (opsional)
-    if (auth()->id() != 1) {
-        abort(403);
+    if (Auth::id() != 1) {
+            abort(403);
     }
 
     // Ambil semua data log terbaru
