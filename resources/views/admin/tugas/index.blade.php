@@ -76,14 +76,14 @@
                                         <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
                                         @csrf
                                              <input type="hidden" name="status" value="gagal">
-                                                 <button type="submit" class="btn btn-danger btn-lg mx-2" onclick="return confirm('Yakin menyatakan GAGAL verifikasi?')">
+                                                 <button type="submit" class="btn btn-danger btn-lg mx-2" onclick="return confirm('Yakin data pembanding tidak sesuai?')">
                                                 <i class="fas fa-times-circle"></i> Data Pembanding Tidak Sesuai
                                                 </button>
                                                 </form>
                                                 <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 <input type="hidden" name="status" value="berhasil">
-                                                    <button type="submit" class="btn btn-success btn-lg mx-2" onclick="return confirm('Yakin menyatakan BERHASIL verifikasi?')">
+                                                    <button type="submit" class="btn btn-success btn-lg mx-2" onclick="return confirm('Yakin data pembanding sesuai?')">
                                                 <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
                                                 </button>
                                             </form>
