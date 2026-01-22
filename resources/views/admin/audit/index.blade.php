@@ -72,7 +72,7 @@
                             <th width="15%">User</th>
                             <th width="15%">Aktivitas</th>
                             <th>Keterangan</th>
-                            <th width="12%">IP Address</th>
+                            <th width="15%">IP Address</th>
                             <th width="15%">Browser</th>
                         </tr>
                     </thead>
