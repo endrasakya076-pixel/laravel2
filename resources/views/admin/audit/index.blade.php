@@ -13,6 +13,9 @@
             <div><i class="fas fa-history mr-1"></i> Riwayat Aktivitas Sistem</div>
             
             <div class="d-flex align-items-center" style="gap: 10px;">
+                <button onclick="window.print()" class="btn btn-info btn-sm">
+    <i class="fas fa-print"></i> Cetak Log
+</button>
                 {{-- TOMBOL PDF --}}
                 <a href="{{ route('audit-log.pdf') }}" class="btn btn-info btn-sm" target="_blank">
                     <i class="fas fa-file-pdf"></i> Cetak PDF
