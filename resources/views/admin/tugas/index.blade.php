@@ -224,10 +224,4 @@ function submitTidakSesuai(id, nasabahName) {
         });
     }
 }
-// Di dalam function submitInput(id, nasabahName)
-body: JSON.stringify({ 
-    nasabah_name: nasabahName,
-    amount: amount,
-    keterangan: 'Data Pembanding Sesuai' // Tambahkan baris ini agar terbaca di Controller
-})
 </script>

@@ -69,60 +69,21 @@ class ApprovalController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi data yang masuk dari fetch JavaScript
-    $request->validate([
-        'nasabah_name' => 'required|string',
-        'amount'       => 'required',
-        'keterangan'   => 'nullable|string'
-    ]);
+        $request->validate([
+            'nasabah_name' => 'required|string',
+            'amount' => 'required',
+            'keterangan' => 'nullable|string'
+        ]);
 
-    if (Auth::check()) { // Menggunakan Facade Auth
-    $user = Auth::user();
-    $namaPengirim = $user->nama; 
-    $jamInput = now()->format('H:i');
+        Approval::create([
+            'nasabah_name' => $request->nasabah_name,
+            'amount' => $request->amount,
+            'keterangan' => $request->keterangan ?? 'Data Pembanding Sesuai',
+            'is_approved' => false,
+            'status' => 'Baru Masuk',
+        ]);
 
-        // 1. Tentukan Status Aktivitas & Keterangan untuk Audit Log
-        // Jika request memiliki keterangan "Tidak Sesuai"
-        $isSesuai = !str_contains(strtolower($request->keterangan), 'tidak sesuai');
-        $statusAktivitas = $isSesuai ? 'Data Pembanding Sesuai' : 'Data Pembanding Tidak Sesuai';
-        
-        // 2. Format Keterangan Lengkap (untuk tabel approvals)
-        $txtKeterangan = $request->keterangan ?? 'Data Pembanding Sesuai';
-        $keteranganFinal = $txtKeterangan . " (Oleh: " . ($user->nama ?? $user->name) . " jam " . $jamInput . " WITA)";
-
-        try {
-            \Illuminate\Support\Facades\DB::beginTransaction();
-
-            // 3. Simpan ke Tabel Approvals (Daftar Persetujuan)
-            \App\Models\Approval::create([
-                'nasabah_name' => $request->nasabah_name,
-                'amount'       => str_replace(['.', ','], '', $request->amount),
-                'keterangan'   => $keteranganFinal,
-                'is_approved'  => false,
-                'status'       => 'Baru Masuk',
-                'user_id'      => $user->id,
-            ]);
-
-            // 4. SIMPAN KE TABEL ACTIVITY_LOGS (Audit Log)
-            \App\Models\ActivityLog::create([
-                'user_id'    => $user->id,
-                'aktivitas'  => $statusAktivitas,
-                'keterangan' => "Petugas memverifikasi nasabah [" . $request->nasabah_name . "] dengan hasil: " . $statusAktivitas,
-                'ip_address' => $request->ip(),
-                'browser'    => $request->userAgent(),
-            ]);
-
-            \Illuminate\Support\Facades\DB::commit();
-
-            return response()->json(['message' => 'Berhasil tersimpan di Persetujuan & Audit Log']);
-
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\DB::rollback();
-            return response()->json(['message' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
-        }
-    }
-
-    return response()->json(['message' => 'Unauthorized'], 401);
+        return response()->json(['message' => 'Data berhasil masuk ke Persetujuan']);
     }
 
     public function hold($id)
