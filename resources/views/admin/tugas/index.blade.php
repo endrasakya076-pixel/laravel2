@@ -135,18 +135,18 @@
 @endsection
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Menangani semua elemen dengan class 'img-zoomable'
-    document.querySelectorAll('.img-zoomable').forEach(function(img) {
-        const container = img.parentElement;
-        let scale = 1;
-        let isDragging = false;
-        let startX, startY, translateX = 0, translateY = 0;
+// document.addEventListener('DOMContentLoaded', function() {
+//     // Menangani semua elemen dengan class 'img-zoomable'
+//     document.querySelectorAll('.img-zoomable').forEach(function(img) {
+//         const container = img.parentElement;
+//         let scale = 1;
+//         let isDragging = false;
+//         let startX, startY, translateX = 0, translateY = 0;
 
-        // Fungsi Zoom dan Drag diletakkan di sini (Gunakan kode JS yang saya berikan sebelumnya)
-        // ...
-    });
-});
+//         // Fungsi Zoom dan Drag diletakkan di sini (Gunakan kode JS yang saya berikan sebelumnya)
+//         // ...
+//     });
+// });
 function submitInput(id, nasabahName) {
         const amount = document.getElementById(`amount-${id}`).value;
         if (amount) {
@@ -164,7 +164,7 @@ function submitInput(id, nasabahName) {
             .then(response => response.json())
             .then(data => {
                 alert('Input Jumlah Penarikan berhasil disimpan!');
-                $(`#inputModal-${id}`);
+                $(`#inputModal-${id}`).modal('hide');
                 setTimeout(() => {
                     const imageModal = document.getElementById(`imageModal-${id}`);
                     if (imageModal) {
