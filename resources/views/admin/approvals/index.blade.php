@@ -30,20 +30,19 @@
                             <td class="align-middle font-weight-bold">{{ $approval->nasabah_name }}</td>
                             <td class="align-middle text-dark">Rp {{ number_format($approval->amount, 0, ',', '.') }}</td>
                             
-                            <td class="align-middle">
-                                <div class="mb-1">
-                                    @if(str_contains($approval->keterangan, 'Tidak Sesuai'))
-                                        <span class="text-danger font-weight-bold">
-                                            <i class="fas fa-exclamation-triangle mr-1"></i> 
-                                            {{ $approval->keterangan }}
-                                        </span>
-                                    @else
-                                        <span class="text-info font-italic">
-                                            <i class="fas fa-check-circle mr-1"></i> 
-                                            {{ $approval->keterangan ?? 'Data Pembanding Sesuai' }}
-                                        </span>
-                                    @endif
-                                </div>
+<td class="align-middle">
+    @if(str_contains($approval->keterangan, 'Tidak Sesuai'))
+        <span class="text-danger font-weight-bold">
+            <i class="fas fa-exclamation-triangle mr-1"></i> 
+            {{ $approval->keterangan }}
+        </span>
+    @else
+        <span class="text-info font-italic">
+            <i class="fas fa-check-circle mr-1"></i> 
+            {{ $approval->keterangan }}
+        </span>
+    @endif
+</td>
 
                                 <div class="border-top pt-1 mt-1" style="font-size: 0.75rem;">
                                     <span class="text-muted">
