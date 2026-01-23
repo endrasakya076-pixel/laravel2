@@ -102,7 +102,12 @@
                                     <form id="inputForm-{{ $item->id }}">
                                         <div class="form-group">
                                             <label for="amount">Jumlah Penarikan</label>
-                                            <input type="number" class="form-control" id="amount-{{ $item->id }}" name="amount" placeholder="Masukkan jumlah penarikan">
+                                            <input type="text" 
+                                                class="form-control" 
+                                                id="amount-{{ $item->id }}" 
+                                                name="amount" 
+                                                placeholder="Masukkan jumlah penarikan"
+                                                oninput="formatRupiah(this)">
                                         </div>
                                     </form>
                                 </div>
@@ -134,28 +139,30 @@
 @endsection
 
 <script>
-// Fungsi untuk menangani transisi antar modal
-function konfirmasiSesuai(id) {
-    // 1. Munculkan alert konfirmasi
-    if (confirm('Apakah Anda yakin data pembanding ini sesuai?')) {
-        
-        // 2. Tutup Modal Gambar terlebih dahulu
-        $(`#imageModal${id}`).modal('hide');
+// Fungsi untuk membuat format titik saat mengetik
+function formatRupiah(elemen) {
+    let value = elemen.value.replace(/[^,\d]/g, '').toString();
+    let split = value.split(',');
+    let sisa = split[0].length % 3;
+    let rupiah = split[0].substr(0, sisa);
+    let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-        // 3. Beri jeda 500ms agar modal pertama benar-benar hilang dari layar
-        // baru kemudian buka modal input penarikan
-        setTimeout(function() {
-            $(`#inputModal-${id}`).modal('show');
-        }, 500);
+    if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
     }
+
+    elemen.value = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
 }
 
-// Fungsi untuk menyimpan data ke server
+// Fungsi submit yang sudah disesuaikan untuk menghapus titik sebelum simpan
 function submitInput(id, nasabahName) {
     const amountInput = document.getElementById(`amount-${id}`);
-    const amount = amountInput.value;
+    
+    // Hilangkan semua titik agar menjadi angka murni sebelum dikirim ke server
+    const rawAmount = amountInput.value.replace(/\./g, '');
 
-    if (amount && amount > 0) {
+    if (rawAmount && rawAmount > 0) {
         fetch(`/approvals/store`, {
             method: 'POST',
             headers: {
@@ -164,7 +171,7 @@ function submitInput(id, nasabahName) {
             },
             body: JSON.stringify({ 
                 nasabah_name: nasabahName,
-                amount: amount
+                amount: rawAmount // Kirim angka bersih (contoh: 1000000)
             })
         })
         .then(response => response.json())
@@ -175,17 +182,10 @@ function submitInput(id, nasabahName) {
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Gagal menyimpan data. Silakan coba lagi.');
+            alert('Gagal menyimpan data.');
         });
     } else {
         alert('Masukkan jumlah penarikan yang valid!');
     }
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Handler untuk zoomable image (tetap gunakan kode lama Anda di sini)
-    document.querySelectorAll('.img-zoomable').forEach(function(img) {
-        // ... kode zoom Anda ...
-    });
-});
 </script>
