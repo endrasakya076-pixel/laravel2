@@ -80,8 +80,8 @@
                                                 <i class="fas fa-times-circle"></i> Data Pembanding Tidak Sesuai
                                                 </button>
                                                 </form>
-                                                <button type="button" class="btn btn-success btn-lg mx-2" data-toggle="modal" data-target="#inputModal-{{ $item->id }}" onclick="return confirm('Yakin data pembanding sesuai?')">
-                                                    <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
+                                                <button type="button" class="btn btn-success btn-lg mx-2" onclick="konfirmasiSesuai({{ $item->id }})">
+                                                <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
                                                 </button>
                                          </div>
                                     </div>
@@ -134,42 +134,58 @@
 @endsection
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Menangani semua elemen dengan class 'img-zoomable'
-    document.querySelectorAll('.img-zoomable').forEach(function(img) {
-        const container = img.parentElement;
-        let scale = 1;
-        let isDragging = false;
-        let startX, startY, translateX = 0, translateY = 0;
+// Fungsi untuk menangani transisi antar modal
+function konfirmasiSesuai(id) {
+    // 1. Munculkan alert konfirmasi
+    if (confirm('Apakah Anda yakin data pembanding ini sesuai?')) {
+        
+        // 2. Tutup Modal Gambar terlebih dahulu
+        $(`#imageModal${id}`).modal('hide');
 
-        // Fungsi Zoom dan Drag diletakkan di sini (Gunakan kode JS yang saya berikan sebelumnya)
-        // ...
-    });
-    });
-    function submitInput(id, nasabahName) {
-        const amount = document.getElementById(`amount-${id}`).value;
-        if (amount) {
-            fetch(`/approvals/store`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ 
-                    nasabah_name: nasabahName,
-                    amount: amount
-                })
+        // 3. Beri jeda 500ms agar modal pertama benar-benar hilang dari layar
+        // baru kemudian buka modal input penarikan
+        setTimeout(function() {
+            $(`#inputModal-${id}`).modal('show');
+        }, 500);
+    }
+}
+
+// Fungsi untuk menyimpan data ke server
+function submitInput(id, nasabahName) {
+    const amountInput = document.getElementById(`amount-${id}`);
+    const amount = amountInput.value;
+
+    if (amount && amount > 0) {
+        fetch(`/approvals/store`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ 
+                nasabah_name: nasabahName,
+                amount: amount
             })
-            .then(response => response.json())
-            .then(data => {
-                alert('Data berhasil disimpan!');
-                window.location.href = '/approvals'; // Redirect ke menu Persetujuan
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        } else {
-            alert('Masukkan jumlah penarikan terlebih dahulu!');
-        }
-        }
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Data berhasil disimpan!');
+            $(`#inputModal-${id}`).modal('hide');
+            window.location.href = '/approvals'; 
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Gagal menyimpan data. Silakan coba lagi.');
+        });
+    } else {
+        alert('Masukkan jumlah penarikan yang valid!');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Handler untuk zoomable image (tetap gunakan kode lama Anda di sini)
+    document.querySelectorAll('.img-zoomable').forEach(function(img) {
+        // ... kode zoom Anda ...
+    });
+});
 </script>
