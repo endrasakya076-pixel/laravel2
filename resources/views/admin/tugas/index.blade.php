@@ -224,4 +224,41 @@ function submitTidakSesuai(id, nasabahName) {
         });
     }
 }
+function sendToApproval(statusPesan) {
+    // Ambil data dari input spesimen (sesuaikan ID-nya)
+    let nama = document.getElementById('nama_nasabah').value; 
+    let nominal = document.getElementById('nominal_transaksi').value;
+
+    if(!nama || !nominal) {
+        alert("Nama nasabah dan nominal tidak boleh kosong!");
+        return;
+    }
+
+    // Kirim via AJAX
+    fetch("{{ route('approvals.store') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({
+            nasabah_name: nama,
+            amount: nominal,
+            keterangan: statusPesan
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message);
+            window.location.reload(); // Reload agar data terupdate
+        } else {
+            alert("Gagal: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("Terjadi kesalahan koneksi.");
+    });
+}
 </script>
