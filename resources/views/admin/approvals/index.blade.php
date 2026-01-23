@@ -56,9 +56,9 @@
             @if($approval->status != 'Disetujui' && $approval->status != 'Ditolak')
                 <div class="btn-group" role="group">
                     <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
-                        {{-- @csrf
+                        @csrf
                         <button type="submit" class="btn btn-sm btn-danger mr-1">Hapus</button>
-                    </form> --}}
+                    </form>
 
                     <form action="{{ route('approvals.hold', $approval->id) }}" method="POST" class="d-inline">
                         @csrf
