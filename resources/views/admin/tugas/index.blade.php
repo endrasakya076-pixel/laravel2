@@ -158,29 +158,44 @@ function konfirmasiSesuai(id) {
 // Fungsi untuk menyimpan data ke server
 function submitInput(id, nasabahName) {
     const amountInput = document.getElementById(`amount-${id}`);
-    const amount = amountInput.value;
+    // Bersihkan titik agar menjadi angka murni (misal: 1.000.000 jadi 1000000)
+    const rawAmount = amountInput.value.replace(/\./g, ''); 
+    const amount = parseInt(rawAmount);
 
     if (amount && amount > 0) {
+        // Tampilkan loading sederhana pada tombol
+        const btn = event.target;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+
         fetch(`/approvals/store`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json' // Tambahkan ini agar Laravel merespon JSON jika error
             },
             body: JSON.stringify({ 
                 nasabah_name: nasabahName,
-                amount: amount
+                amount: rawAmount, // Kirim angka bersih
+                keterangan: 'Data Pembanding Sesuai'
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) throw response;
+            return response.json();
+        })
         .then(data => {
-            alert('Data berhasil disimpan!');
+            alert('Data berhasil dikirim ke antrean otorisasi!');
             $(`#inputModal-${id}`).modal('hide');
             window.location.href = '/approvals'; 
         })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Gagal menyimpan data. Silakan coba lagi.');
+        .catch(async (error) => {
+            const errData = await error.json();
+            console.error('Error Detail:', errData);
+            alert('Gagal: ' + (errData.message || 'Terjadi kesalahan sistem'));
+            btn.disabled = false;
+            btn.innerHTML = 'Simpan';
         });
     } else {
         alert('Masukkan jumlah penarikan yang valid!');
@@ -222,6 +237,13 @@ function submitTidakSesuai(id, nasabahName) {
             console.error('Error:', error);
             alert('Gagal mengirim data.');
         });
+    }
+}
+function formatRupiah(input) {
+    let value = input.value.replace(/[^0-9]/g, '');
+    if (value) {
+        let formatted = new Intl.NumberFormat('id-ID').format(value);
+        input.value = formatted;
     }
 }
 </script>
