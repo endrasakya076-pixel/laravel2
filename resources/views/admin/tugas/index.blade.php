@@ -80,7 +80,7 @@
                                                 <i class="fas fa-times-circle"></i> Data Pembanding Tidak Sesuai
                                                 </button>
                                                 </form>
-                                                <button type="button" class="btn btn-success btn-lg mx-2" data-toggle="modal" data-target="#inputModal" onclick="return confirm('Yakin data pembanding sesuai?')">
+                                                <button type="button" class="btn btn-success btn-lg mx-2" data-toggle="modal" data-target="#inputModal-{{ $item->id }}" onclick="return confirm('Yakin data pembanding sesuai?')">
                                                     <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
                                                 </button>
                                          </div>
@@ -99,6 +99,32 @@
                             @include('admin/tugas/modal')
                         </td>
                     </tr>
+
+                    <!-- Modal untuk inputan angka -->
+                    <div class="modal fade" id="inputModal-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="inputModalLabel">Input Jumlah Penarikan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="inputForm-{{ $item->id }}">
+                                        <div class="form-group">
+                                            <label for="amount">Jumlah Penarikan</label>
+                                            <input type="number" class="form-control" id="amount-{{ $item->id }}" name="amount" placeholder="Masukkan jumlah penarikan">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                    <button type="button" class="btn btn-primary" onclick="submitInput({{ $item->id }}, '{{ $item->nama }}')">Simpan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
                 </tbody>
             </table>
@@ -106,31 +132,6 @@
     </div>
 </div>
 
-<!-- Modal untuk inputan angka -->
-<div class="modal fade" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="inputModalLabel">Input Jumlah Penarikan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="inputForm">
-                    <div class="form-group">
-                        <label for="amount">Jumlah Penarikan</label>
-                        <input type="number" class="form-control" id="amount" name="amount" placeholder="Masukkan jumlah penarikan">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-primary" onclick="submitInput()">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 <script>
@@ -147,12 +148,28 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function submitInput() {
-        const amount = document.getElementById('amount').value;
+function submitInput(id, nasabahName) {
+        const amount = document.getElementById(`amount-${id}`).value;
         if (amount) {
-            // Lakukan logika penyimpanan data di sini
-            alert(`Jumlah penarikan ${amount} berhasil disimpan!`);
-            $('#inputModal').modal('hide');
+            fetch(`/approvals/store`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ 
+                    nasabah_name: nasabahName,
+                    amount: amount
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Data berhasil disimpan!');
+                $(`#inputModal-${id}`).modal('hide');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         } else {
             alert('Masukkan jumlah penarikan terlebih dahulu!');
         }
