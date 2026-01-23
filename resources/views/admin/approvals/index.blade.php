@@ -43,24 +43,41 @@
                                     <span class="badge badge-danger p-2">Ditolak</span>
                                 @endif
                             </td>
-                            <td class="text-center">
-                                @if($approval->status == 'pending')
-                                <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button class="btn btn-sm btn-success" onclick="return confirm('Setujui penarikan ini?')">
-                                        <i class="fas fa-check"></i> Setujui
-                                    </button>
-                                </form>
-                                <form action="{{ route('approvals.reject', $approval->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button class="btn btn-sm btn-danger" onclick="return confirm('Tolak penarikan ini?')">
-                                        <i class="fas fa-times"></i> Tolak
-                                    </button>
-                                </form>
-                                @else
-                                <span class="text-muted small">Sudah Diproses</span>
-                                @endif
-                            </td>
+                           <td class="text-center">
+    {{-- Cek apakah user yang login adalah Admin 1 (Supervisor) --}}
+    {{-- Ganti 'admin1' dengan field role/level yang Anda gunakan di database --}}
+    @if(auth()->user()->role == 'admin1') 
+        
+        @if($approval->status == 'pending')
+            <div class="btn-group" role="group">
+                <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-sm btn-success mx-1" onclick="return confirm('Apakah Anda yakin menyetujui penarikan ini?')">
+                        <i class="fas fa-check-circle"></i> Setujui
+                    </button>
+                </form>
+
+                <form action="{{ route('approvals.reject', $approval->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-sm btn-danger mx-1" onclick="return confirm('Apakah Anda yakin menolak penarikan ini?')">
+                        <i class="fas fa-times-circle"></i> Tolak
+                    </button>
+                </form>
+            </div>
+        @else
+            {{-- Jika sudah diproses, tampilkan badge keterangan --}}
+            <span class="text-muted small">
+                <i class="fas fa-lock"></i> Selesai diproses
+            </span>
+        @endif
+
+    @else
+        {{-- Jika yang login bukan Admin 1 (misal: Teller), tampilkan pesan saja --}}
+        <span class="badge badge-secondary">
+            <i class="fas fa-info-circle"></i> Menunggu Otorisasi Admin 1
+        </span>
+    @endif
+</td>
                         </tr>
                         @empty
                         <tr>
