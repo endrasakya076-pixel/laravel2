@@ -81,6 +81,7 @@ class ApprovalController extends Controller
             'keterangan' => $request->keterangan ?? 'Data Pembanding Sesuai',
             'is_approved' => false,
             'status' => 'Baru Masuk',
+           'user_id' => auth()->id()
         ]);
 
         return response()->json(['message' => 'Data berhasil masuk ke Persetujuan']);
