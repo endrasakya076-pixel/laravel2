@@ -49,7 +49,10 @@
                     <option value="Supervisor 2">Supervisor 2</option>
                     <option value="Supervisor 3">Supervisor 3</option>
                     <option value="Supervisor 4">Supervisor 4</option>
-                    <option value="Supervisor 5">Supervisor 5</option> 
+                    <option value="Supervisor 5">Supervisor 5</option>
+                    <option value="Kepala Cabang Gerung">Kepala Cabang Gerung</option>
+                    <option value="Kepala Cabang Pancor">Kepala Cabang Pancor</option>
+                    <option value="Kepala Cabang Tanjung">Kepala Cabang Tanjung</option> 
                     <option value="Kabag TI">Kabag TI</option>
                     <option value="Staff TI">Staff TI</option>
                     <option value="Kabag SKAI">Kabag SKAI</option>

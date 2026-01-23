@@ -57,6 +57,15 @@
                                             @elseif ($item->jabatan == 'Supervisor 5')
                                                 <span class="badge badge-secondary">
                                                     {{ $item->jabatan }}
+                                              @elseif ($item->jabatan == 'Kepala Cabang Gerung')
+                                                <span class="badge badge-secondary">
+                                                    {{ $item->jabatan }}
+                                              @elseif ($item->jabatan == 'Kepala Cabang Pancor')
+                                                <span class="badge badge-secondary">
+                                                    {{ $item->jabatan }}
+                                              @elseif ($item->jabatan == 'Kepala Cabang Tanjung')
+                                                <span class="badge badge-secondary">
+                                                    {{ $item->jabatan }}
                                             @elseif ($item->jabatan == 'Kabag TI')
                                                 <span class="badge badge-secondary">
                                                     {{ $item->jabatan }}
