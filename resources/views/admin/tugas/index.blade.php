@@ -133,7 +133,7 @@
 </div>
 
 @endsection
-
+{{-- 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const zoomableImages = document.querySelectorAll('.img-zoomable');
@@ -185,4 +185,4 @@
             });
         });
     });
-</script>
+</script> --}}
