@@ -77,8 +77,8 @@
 
                 <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
                     @csrf
-                    {{-- <button type="submit" class="btn btn-sm btn-danger shadow-sm" title="Hapus Data" onclick="return confirm('Hapus data ini dari daftar?')">
-                        <i class="fas fa-trash"></i> Hapus --}}
+                    <button type="submit" class="btn btn-sm btn-danger shadow-sm" title="Hapus Data" onclick="return confirm('Hapus data ini dari daftar?')">
+                        <i class="fas fa-trash"></i> Hapus
                     </button>
                 </form>
             </div>

@@ -85,4 +85,22 @@ class ApprovalController extends Controller
 
         return response()->json(['message' => 'Data berhasil masuk ke Persetujuan']);
     }
+
+    public function hold($id)
+    {
+        $approval = Approval::findOrFail($id);
+        $user = Auth::user(); 
+
+        if (!$this->hasAuthority($user)) {
+            return redirect()->back()->with('error', 'Otoritas ditolak.');
+        }
+
+        $approval->update([
+            'status' => 'Setuju',
+            'is_approved' => true, 
+            'approved_by' => $user->id,
+        ]);
+
+        return redirect()->back()->with('info', 'Data berhasil ditandai sebagai Setuju.');
+    }
 }
