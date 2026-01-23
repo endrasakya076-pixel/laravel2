@@ -88,7 +88,20 @@
                                 </div>
                             </div>
                         </td>
-                                            <div class="modal fade" id="inputModal-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
+                        <td>{{ $item->cif }}</td>
+                        <td>{{ $item->no_rekening }}</td>
+                        <td>{{ $item->nama }}</td>
+                        <td>{{ $item->alamat }}</td>
+                        <td>{{ $item->nama_ibu }}</td>
+                        <td class="text-center">
+                            <a href="{{ route('tugasEdit', $item->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{ $item->id }}"><i class="fas fa-trash"></i></button>
+                            @include('admin/tugas/modal')
+                        </td>
+                    </tr>
+
+                    <!-- Modal untuk inputan angka -->
+                    <div class="modal fade" id="inputModal-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -112,20 +125,6 @@
                             </div>
                         </div>
                     </div>
-                        <td>{{ $item->cif }}</td>
-                        <td>{{ $item->no_rekening }}</td>
-                        <td>{{ $item->nama }}</td>
-                        <td>{{ $item->alamat }}</td>
-                        <td>{{ $item->nama_ibu }}</td>
-                        <td class="text-center">
-                            <a href="{{ route('tugasEdit', $item->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-                            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{ $item->id }}"><i class="fas fa-trash"></i></button>
-                            @include('admin/tugas/modal')
-                        </td>
-                    </tr>
-
-                    <!-- Modal untuk inputan angka -->
-
                     @endforeach
                 </tbody>
             </table>
@@ -134,56 +133,62 @@
 </div>
 
 @endsection
-{{-- 
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const zoomableImages = document.querySelectorAll('.img-zoomable');
+document.addEventListener('DOMContentLoaded', function() {
+    // Menangani semua elemen dengan class 'img-zoomable'
+    document.querySelectorAll('.img-zoomable').forEach(function(img) {
+        const container = img.parentElement;
+        let scale = 1;
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
 
-        zoomableImages.forEach(img => {
-            let scale = 1;
-            let isDragging = false;
-            let startX, startY, originX = 0, originY = 0;
-
-            img.addEventListener('wheel', function (e) {
-                e.preventDefault();
-                const wrapper = document.getElementById('wrapper' + img.dataset.id);
-                const rect = img.getBoundingClientRect();
-                const offsetX = e.clientX - rect.left;
-                const offsetY = e.clientY - rect.top;
-
-                if (e.deltaY < 0) {
-                    scale += 0.1;
-                } else {
-                    scale = Math.max(1, scale - 0.1);
-                }
-
-                originX = (offsetX / scale) + originX - (offsetX / (scale - (e.deltaY < 0 ? 0.1 : -0.1)));
-                originY = (offsetY / scale) + originY - (offsetY / (scale - (e.deltaY < 0 ? 0.1 : -0.1)));
-
-                img.style.transformOrigin = `${originX}px ${originY}px`;
-                img.style.transform = `scale(${scale})`;
-            });
-
-            img.addEventListener('mousedown', function (e) {
-                isDragging = true;
-                startX = e.clientX - originX;
-                startY = e.clientY - originY;
-                img.style.cursor = 'grabbing';
-            });
-
-            document.addEventListener('mouseup', function () {
-                isDragging = false;
-                img.style.cursor = 'zoom-in';
-            });
-
-            document.addEventListener('mousemove', function (e) {
-                if (isDragging) {
-                    originX = e.clientX - startX;
-                    originY = e.clientY - startY;
-                    img.style.transformOrigin = `${originX}px ${originY}px`;
-                    img.style.transform = `scale(${scale})`;
-                }
-            });
-        });
+        // Fungsi Zoom dan Drag diletakkan di sini (Gunakan kode JS yang saya berikan sebelumnya)
+        // ...
     });
-</script> --}}
+});
+function submitInput(id, nasabahName) {
+        const amount = document.getElementById(`amount-${id}`).value;
+        if (amount) {
+            fetch(`/approvals/store`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ 
+                    nasabah_name: nasabahName,
+                    amount: amount
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Input Jumlah Penarikan berhasil disimpan!');
+                $(`#inputModal-${id}`).modal('hide');
+                setTimeout(() => {
+                    const imageModal = document.getElementById(`imageModal-${id}`);
+                    if (imageModal) {
+                        imageModal.style.display = 'block';
+                        imageModal.style.zIndex = 1050;
+                    }
+                }, 300);
+                window.location.href = '/approvals';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        } else {
+            alert('Masukkan jumlah penarikan terlebih dahulu!');
+        }
+        function openInputModal(id) {
+    if (confirm('Yakin data pembanding sesuai?')) {
+        // 1. Tutup modal gambar yang sedang terbuka
+        $(`#imageModal${id}`).modal('hide');
+
+        // 2. Beri jeda sedikit agar animasi penutupan selesai, lalu buka modal input
+        setTimeout(function() {
+            $(`#inputModal-${id}`).modal('show');
+        }, 400); 
+    }
+    }
+</script>
