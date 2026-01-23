@@ -29,12 +29,19 @@
     <td>{{ $index + 1 }}</td>
     <td>{{ $approval->nasabah_name }}</td>
     <td>Rp {{ number_format($approval->amount, 0, ',', '.') }}</td>
-    <td>
-        <span class="text-danger font-italic">
-            <i class="fas fa-comment-dots mr-1"></i> 
+    <td class="align-middle">
+    @if(str_contains($approval->keterangan, 'Tidak Sesuai'))
+        <span class="text-danger font-weight-bold">
+            <i class="fas fa-exclamation-triangle mr-1"></i> 
+            {{ $approval->keterangan }}
+        </span>
+    @else
+        <span class="text-info font-italic">
+            <i class="fas fa-check-circle mr-1"></i> 
             {{ $approval->keterangan ?? 'Data Pembanding Sesuai' }}
         </span>
-    </td>
+    @endif
+</td>
 
    <td class="text-center">
     @php
