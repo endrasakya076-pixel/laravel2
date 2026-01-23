@@ -30,7 +30,7 @@
     <td>{{ $approval->nasabah_name }}</td>
     <td>Rp {{ number_format($approval->amount, 0, ',', '.') }}</td>
     <td>
-        <span class="text-info font-italic">
+        <span class="text-danger font-italic">
             <i class="fas fa-comment-dots mr-1"></i> 
             {{ $approval->keterangan ?? 'Data Pembanding Sesuai' }}
         </span>
