@@ -224,25 +224,4 @@ function submitTidakSesuai(id, nasabahName) {
         });
     }
 }
-/ Contoh fungsi saat tombol diklik
-function kirimKePersetujuan(statusKlik) {
-    let data = {
-        _token: "{{ csrf_token() }}", // WAJIB ADA
-        nasabah_name: $("#nama_nasabah").val(), // Sesuaikan ID element
-        amount: $("#nominal").val(),           // Sesuaikan ID element
-        keterangan: statusKlik                 // "Data Pembanding Sesuai" atau "Tidak Sesuai"
-    };
-    $.ajax({
-        url: "{{ route('approvals.store') }}", // Pastikan Route Name benar
-        type: "POST",
-        data: data,
-        success: function(response) {
-            alert(response.message);
-            // Opsional: Refresh atau pindah halaman
-        },
-        error: function(xhr) {
-            alert("Gagal: " + xhr.responseJSON.message);
-        }
-    });
-}
 </script>
