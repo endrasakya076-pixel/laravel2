@@ -38,12 +38,12 @@
     </td>
 
     <td class="text-center">
-        @if($approval->status == 'Disetujui')
-            <span class="badge badge-success"><i class="fas fa-check-circle"></i> Disetujui</span>
+        @if($approval->status == 'Hapus')
+            <span class="badge badge-success"><i class="fas fa-check-circle"></i> Hapus</span>
         @elseif($approval->status == 'Ditolak')
             <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Ditolak</span>
-        @elseif($approval->status == 'Menunggu')
-            <span class="badge badge-warning text-dark"><i class="fas fa-pause-circle"></i> Menunggu</span>
+        @elseif($approval->status == 'Setuju')
+            <span class="badge badge-warning text-dark"><i class="fas fa-pause-circle"></i> Setuju</span>
         @else
             <span class="badge badge-secondary">Baru Masuk</span>
         @endif

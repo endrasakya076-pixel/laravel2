@@ -28,12 +28,12 @@ class ApprovalController extends Controller
     }
 
     $approval->update([
-        'status' => 'Disetujui', // Nilai ini yang akan masuk ke kolom Status
+        'status' => 'Hapus', // Nilai ini yang akan masuk ke kolom Status
         'is_approved' => true,
         'approved_by' => Auth::id(),
     ]);
 
-    return redirect()->back()->with('success', 'Status diperbarui: Disetujui');
+    return redirect()->back()->with('success', 'Status dihapus: Dihapus');
     }
 
     public function reject($id)
@@ -92,7 +92,7 @@ class ApprovalController extends Controller
             'approved_by' => $user->id, // Menggunakan ID dari user yang sedang login
         ]);
 
-        return redirect()->back()->with('info', 'Data berhasil ditandai sebagai Menunggu.');
+        return redirect()->back()->with('info', 'Data berhasil ditandai sebagai Setuju.');
     }
     
 }
