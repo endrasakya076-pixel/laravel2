@@ -164,10 +164,14 @@ function submitInput(id, nasabahName) {
             })
             .then(response => response.json())
             .then(data => {
+                alert('Data berhasil disimpan!');
                 $(`#inputModal-${id}`).modal('hide');
                 setTimeout(() => {
-                    document.getElementById(`imageModal-${id}`).style.zIndex = 1050; // Pastikan modal gambar spesimen tampil di depan
-                    alert('Data berhasil disimpan!');
+                    const imageModal = document.getElementById(`imageModal-${id}`);
+                    if (imageModal) {
+                        imageModal.style.display = 'block'; // Pastikan modal gambar tetap tampil
+                        imageModal.style.zIndex = 1050; // Pastikan modal gambar spesimen tampil di depan
+                    }
                 }, 300);
                 window.location.href = '/approvals'; // Redirect ke menu Persetujuan
             })
