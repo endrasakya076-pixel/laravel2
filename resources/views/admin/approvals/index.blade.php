@@ -11,6 +11,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th>No.</th>
                 <th>Nama Nasabah</th>
                 <th>Jumlah Penarikan</th>
                 <th>Keterangan</th>
@@ -19,8 +20,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($approvals as $approval)
+            @foreach($approvals as $index => $approval)
             <tr>
+                <td>{{ $index + 1 }}</td>
                 <td>{{ $approval->nasabah_name }}</td>
                 <td>{{ $approval->amount }}</td>
                 <td>{{ $approval->keterangan }}</td>
