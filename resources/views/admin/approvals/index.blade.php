@@ -30,7 +30,12 @@
     <td>{{ $index + 1 }}</td>
     <td>{{ $approval->nasabah_name }}</td>
     <td>Rp {{ number_format($approval->amount, 0, ',', '.') }}</td>
-    <td>{{ $approval->keterangan }}</td>
+    <td>
+        <span class="text-info font-italic">
+            <i class="fas fa-comment-dots mr-1"></i> 
+            {{ $approval->keterangan ?? 'Data Pembanding Sesuai' }}
+        </span>
+    </td>
 
     <td class="text-center">
         @if($approval->status == 'Disetujui')
