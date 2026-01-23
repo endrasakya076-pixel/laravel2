@@ -42,6 +42,21 @@
                                                 <span class="badge badge-primary">
                                                     {{ $item->jabatan }}
                                                 </span>
+                                            @elseif ($item->jabatan == 'Supervisor 1')
+                                                <span class="badge badge-secondary">
+                                                    {{ $item->jabatan }}
+                                            @elseif ($item->jabatan == 'Supervisor 2')
+                                                <span class="badge badge-secondary">
+                                                    {{ $item->jabatan }}
+                                            @elseif ($item->jabatan == 'Supervisor 3')
+                                                <span class="badge badge-secondary">
+                                                    {{ $item->jabatan }}
+                                            @elseif ($item->jabatan == 'Supervisor 4')
+                                                <span class="badge badge-secondary">
+                                                    {{ $item->jabatan }}
+                                            @elseif ($item->jabatan == 'Supervisor 5')
+                                                <span class="badge badge-secondary">
+                                                    {{ $item->jabatan }}
                                             @elseif ($item->jabatan == 'Kabag TI')
                                                 <span class="badge badge-secondary">
                                                     {{ $item->jabatan }}

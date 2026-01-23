@@ -41,7 +41,7 @@
                         <select name="jabatan" class="form-control @error('jabatan') is-invalid @enderror">
                             <option disabled>--Pilih Jabatan--</option>
                             @php
-                                $roles = ['Admin', 'Kabag TI', 'Staff TI', 'Kabag SKAI', 'Head Teller', 'Teller', 'CS'];
+                                $roles = ['Admin','Supervisor 1', 'Supervisor 2', 'Supervisor 3', 'Supervisor 4', 'Supervisor 5', 'Kabag TI', 'Staff TI', 'Kabag SKAI', 'Head Teller', 'Teller', 'CS'];
                             @endphp
                             @foreach($roles as $role)
                                 <option value="{{ $role }}" {{ $user->jabatan == $role ? 'selected' : '' }}>{{ $role }}</option>
