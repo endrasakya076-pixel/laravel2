@@ -43,39 +43,28 @@
                                     <span class="badge badge-danger p-2">Ditolak</span>
                                 @endif
                             </td>
-                           <td class="text-center">
-    {{-- Cek apakah user yang login adalah Admin 1 (Supervisor) --}}
-    {{-- Ganti 'admin1' dengan field role/level yang Anda gunakan di database --}}
-    @if(auth()->user()->role == 'admin1') 
+ <td class="text-center">
+    {{-- Cek apakah yang login adalah Hendra Sakya Permana --}}
+    @if(Auth::user()->nama == 'Hendra Sakya Permana' || Auth::user()->role == 'admin1')
         
-        @if($approval->status == 'pending')
-            <div class="btn-group" role="group">
-                <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
+        @if($approval->status == 'pending' || $approval->status == '')
+            <div class="btn-group">
+                <form action="{{ route('approvals.approve', $approval->id) }}" method="POST">
                     @csrf
-                    <button type="submit" class="btn btn-sm btn-success mx-1" onclick="return confirm('Apakah Anda yakin menyetujui penarikan ini?')">
-                        <i class="fas fa-check-circle"></i> Setujui
-                    </button>
+                    <button type="submit" class="btn btn-sm btn-success mr-1">Setujui</button>
                 </form>
-
-                <form action="{{ route('approvals.reject', $approval->id) }}" method="POST" class="d-inline">
+                
+                <form action="{{ route('approvals.reject', $approval->id) }}" method="POST">
                     @csrf
-                    <button type="submit" class="btn btn-sm btn-danger mx-1" onclick="return confirm('Apakah Anda yakin menolak penarikan ini?')">
-                        <i class="fas fa-times-circle"></i> Tolak
-                    </button>
+                    <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
                 </form>
             </div>
         @else
-            {{-- Jika sudah diproses, tampilkan badge keterangan --}}
-            <span class="text-muted small">
-                <i class="fas fa-lock"></i> Selesai diproses
-            </span>
+            <span class="text-muted small">Tindakan Selesai</span>
         @endif
 
     @else
-        {{-- Jika yang login bukan Admin 1 (misal: Teller), tampilkan pesan saja --}}
-        <span class="badge badge-secondary">
-            <i class="fas fa-info-circle"></i> Menunggu Otorisasi Admin 1
-        </span>
+        <small class="text-muted">Menunggu Otorisasi Hendra (Admin 1)</small>
     @endif
 </td>
                         </tr>

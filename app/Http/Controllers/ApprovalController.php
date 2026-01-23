@@ -20,37 +20,40 @@ class ApprovalController extends Controller
 
     public function approve($id)
     {
-       // 1. Proteksi Keamanan
-        if (Auth::user()->role !== 'admin1') {
-            return redirect()->back()->with('error', 'Anda tidak memiliki akses otorisasi!');
+       $approval = Approval::findOrFail($id);
+        
+        // Proteksi: Hanya user bernama 'Hendra Sakya Permana' atau role 'admin1'
+        if (Auth::user()->nama !== 'Hendra Sakya Permana' && Auth::user()->role !== 'admin1') {
+            return redirect()->back()->with('error', 'Anda tidak memiliki otoritas Admin 1!');
         }
 
-        // 2. Eksekusi Perubahan Status
-        $approval = Approval::findOrFail($id);
         $approval->update([
-            'status' => 'Disetujui', // Sesuaikan dengan kata yang ingin tampil di tabel
+            'status'      => 'Disetujui',
             'is_approved' => true,
-            'approved_by' => Auth::id()
+            'approved_by' => Auth::id(),
         ]);
 
-        return redirect()->back()->with('success', 'Penarikan berhasil disetujui.');
+        return redirect()->back()->with('success', 'Penarikan berhasil disetujui oleh Admin 1.');
     }
-    
+
     public function reject($id)
     {
-        // Cari data persetujuan berdasarkan ID
         $approval = Approval::findOrFail($id);
 
-        // Update status penolakan
-        $approval->is_approved = false;
-        $approval->approved_by = Auth::id();
-        $approval->status = 'Ditolak'; // Kembalikan keterangan menjadi 'Ditolak' jika tombol Tidak Setuju ditekan
-        $approval->save();
+        if (Auth::user()->nama !== 'Hendra Sakya Permana' && Auth::user()->role !== 'admin1') {
+            return redirect()->back()->with('error', 'Anda tidak memiliki otoritas Admin 1!');
+        }
 
-        // Redirect kembali ke halaman daftar persetujuan
-        return redirect()->route('admin.approvals.index')->with('success', 'Persetujuan ditolak!');
+        $approval->update([
+            'status'      => 'Ditolak',
+            'is_approved' => false,
+            'approved_by' => Auth::id(),
+        ]);
+
+        return redirect()->back()->with('error', 'Penarikan ditolak oleh Admin 1.');
+    
     }
-
+    
     public function store(Request $request)
     {
         // Validasi data
