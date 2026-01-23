@@ -25,6 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse($approvals as $index => $approval)
                         @foreach($approvals as $index => $approval)
 <tr>
     <td>{{ $index + 1 }}</td>
@@ -66,11 +67,6 @@
     </td>
 </tr>
 @endforeach
-                        @empty
-                        <tr>
-                            <td colspan="6" class="text-center">Tidak ada data persetujuan.</td>
-                        </tr>
-                        @endforelse
                     </tbody>
                 </table>
             </div>
