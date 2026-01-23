@@ -31,37 +31,19 @@
                             <td class="align-middle text-dark">Rp {{ number_format($approval->amount, 0, ',', '.') }}</td>
                             
                             <td class="align-middle">
-    @if(str_contains($approval->keterangan, 'Tidak Sesuai'))
-        <div class="text-danger font-weight-bold">
-            <i class="fas fa-exclamation-triangle mr-1"></i> 
-            {{ Str::before($approval->keterangan, '(') }} {{-- Mengambil teks sebelum tanda kurung log --}}
-        </div>
-    @else
-        <div class="text-info font-italic">
-            <i class="fas fa-check-circle mr-1"></i> 
-            {{ $approval->keterangan ?? 'Data Pembanding Sesuai' }}
-        </div>
-    @endif
-
-    @if($approval->approved_by)
-        <div class="mt-1 pt-1 border-top" style="font-size: 0.75rem;">
-            <span class="text-muted">Diproses oleh:</span><br>
-            <span class="text-dark font-weight-bold">
-                <i class="fas fa-user-shield fa-sm"></i> {{ $approval->user_approver->nama ?? 'Pejabat Terdaftar' }}
-            </span>
-            <br>
-            <span class="badge badge-light border text-muted" style="font-size: 0.65rem;">
-                {{ $approval->user_approver->jabatan ?? '-' }}
-            </span>
-        </div>
-    @else
-        <div class="mt-1" style="font-size: 0.75rem;">
-            <span class="badge badge-light text-muted font-italic">
-                <i class="fas fa-clock fa-spin"></i> Menunggu Otorisasi...
-            </span>
-        </div>
-    @endif
-</td>
+                                <div class="mb-1">
+                                    @if(str_contains($approval->keterangan, 'Tidak Sesuai'))
+                                        <span class="text-danger font-weight-bold">
+                                            <i class="fas fa-exclamation-triangle mr-1"></i> 
+                                            {{ $approval->keterangan }}
+                                        </span>
+                                    @else
+                                        <span class="text-info font-italic">
+                                            <i class="fas fa-check-circle mr-1"></i> 
+                                            {{ $approval->keterangan ?? 'Data Pembanding Sesuai' }}
+                                        </span>
+                                    @endif
+                                </div>
 
                                 <div class="border-top pt-1 mt-1" style="font-size: 0.75rem;">
                                     <span class="text-muted">
