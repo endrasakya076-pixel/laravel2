@@ -39,7 +39,7 @@
 
     <td class="text-center">
         @if($approval->status == 'Hapus')
-            <span class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</span>
+            {{-- <span class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</span> --}}
         @elseif($approval->status == 'Ditolak')
             <span class="badge badge-warning"><i class="fas fa-times-circle"></i> Ditolak</span>
         @elseif($approval->status == 'Setuju')
@@ -57,7 +57,7 @@
                 <div class="btn-group" role="group">
                     <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
                         @csrf
-                        <button type="submit" class="btn btn-sm btn-danger mr-1" onclick="return confirm('Hapus data ini?')">Hapus</button>
+                        {{-- <button type="submit" class="btn btn-sm btn-danger mr-1" onclick="return confirm('Hapus data ini?')">Hapus</button> --}}
                     </form>
 
                     <form action="{{ route('approvals.hold', $approval->id) }}" method="POST" class="d-inline">
