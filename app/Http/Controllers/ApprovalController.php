@@ -37,46 +37,42 @@ class ApprovalController extends Controller
      * STORE: Dipicu oleh Teller dari Menu Spesimen
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'nasabah_name' => 'required|string',
-        'amount'       => 'required',
-        'keterangan'   => 'nullable|string'
-    ]);
-
-    try {
-        DB::beginTransaction();
-        $user = Auth::user();
-
-        // Membersihkan titik/koma agar menjadi angka murni
-        $cleanAmount = preg_replace('/[^0-9]/', '', $request->amount);
-
-        $approval = Approval::create([
-            'nasabah_name' => $request->nasabah_name,
-            'amount'       => $cleanAmount,
-            'keterangan'   => $request->keterangan ?? 'Data Pembanding Sesuai',
-            'is_approved'  => false,
-            'status'       => 'Baru Masuk',
-            'user_id'      => $user->id,
+    {
+        $request->validate([
+            'nasabah_name' => 'required|string',
+            'amount'       => 'required',
+            'keterangan'   => 'nullable|string'
         ]);
 
-        // Catat di Audit Log
-        ActivityLog::create([
-            'user_id'    => $user->id,
-            'aktivitas'  => 'Input Persetujuan',
-            'keterangan' => "Teller [{$user->nama}] mengirim data nasabah {$request->nasabah_name} senilai Rp " . number_format($cleanAmount, 0, ',', '.'),
-            'ip_address' => $request->ip(),
-            'browser'    => $request->userAgent(),
-        ]);
+        try {
+            DB::beginTransaction();
+            $user = Auth::user();
 
-        DB::commit();
-        return response()->json(['status' => 'success', 'message' => 'Berhasil dikirim ke antrean otorisasi.']);
-    } catch (\Exception $e) {
-        DB::rollback();
-        // Berikan pesan error yang jelas agar Anda tahu kenapa gagal
-        return response()->json(['status' => 'error', 'message' => 'Gagal simpan: ' . $e->getMessage()], 500);
+            $approval = Approval::create([
+                'nasabah_name' => $request->nasabah_name,
+                'amount'       => str_replace(['.', ','], '', $request->amount),
+                'keterangan'   => $request->keterangan ?? 'Data Pembanding Sesuai',
+                'is_approved'  => false,
+                'status'       => 'Baru Masuk', // Ini yang memicu status "Menunggu" di mata Teller
+                'user_id'      => $user->id,
+            ]);
+
+            ActivityLog::create([
+                'user_id'    => $user->id,
+                'aktivitas'  => 'Input Persetujuan',
+                'keterangan' => "Teller [{$user->nama}] mengirim data nasabah {$request->nasabah_name} untuk diotorisasi.",
+                'ip_address' => $request->ip(),
+                'browser'    => $request->userAgent(),
+            ]);
+
+            DB::commit();
+            return response()->json(['message' => 'Berhasil dikirim ke antrean otorisasi.']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['message' => 'Gagal: ' . $e->getMessage()], 500);
+        }
     }
-}
+
     /**
      * HOLD/APPROVE: Digunakan oleh Supervisor/Kacab untuk Setuju
      */
