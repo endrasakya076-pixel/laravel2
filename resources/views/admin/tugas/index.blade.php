@@ -195,6 +195,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 function kembaliKeSpesimen() {
     // Arahkan kembali ke halaman daftar tugas spesimen
-    window.location.href = "{{ route('tugasSpesimen') }}";
+    window.location.href = "{{ route('tugas.index') }}";
 }
 </script>
