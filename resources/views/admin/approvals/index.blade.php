@@ -15,8 +15,7 @@
                 <th>Nama Nasabah</th>
                 <th>Jumlah Penarikan</th>
                 <th>Keterangan</th>
-                <th>Persetujuan</th>
-                <th>Aksi</th>
+                <th>Keterangan</th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +25,6 @@
                 <td>{{ $approval->nasabah_name }}</td>
                 <td>{{ $approval->amount }}</td>
                 <td>{{ $approval->keterangan }}</td>
-                <td>{{ $approval->status }}</td>
                 <td>
                     <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" style="display:inline;">
                         @csrf
@@ -34,7 +32,7 @@
                     </form>
                     <form action="{{ route('approvals.reject', $approval->id) }}" method="POST" style="display:inline;">
                         @csrf
-                        <button class="btn btn-danger">Tidak Setuju</button>
+                        <button class="btn btn-danger">Tidak Setujui</button>
                     </form>
                 </td>
             </tr>
