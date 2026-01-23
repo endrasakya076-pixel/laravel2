@@ -164,10 +164,10 @@ function submitInput(id, nasabahName) {
             })
             .then(response => response.json())
             .then(data => {
-                alert('Data berhasil disimpan!');
                 $(`#inputModal-${id}`).modal('hide');
                 setTimeout(() => {
                     document.getElementById(`imageModal-${id}`).style.zIndex = 1050; // Pastikan modal gambar spesimen tampil di depan
+                    alert('Data berhasil disimpan!');
                 }, 300);
                 window.location.href = '/approvals'; // Redirect ke menu Persetujuan
             })
