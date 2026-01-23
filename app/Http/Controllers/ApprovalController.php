@@ -49,24 +49,6 @@ class ApprovalController extends Controller
 
         return redirect()->back()->with('success', 'Data berhasil dihapus dari antrean.');
     }
-
-    public function reject($id)
-    {
-        $approval = Approval::findOrFail($id);
-
-        if (!$this->hasAuthority(Auth::user())) {
-            return redirect()->back()->with('error', 'Anda tidak memiliki otoritas!');
-        }
-
-        $approval->update([
-            'status' => 'Ditolak', 
-            'is_approved' => false,
-            'approved_by' => Auth::id(),
-        ]);
-
-        return redirect()->back()->with('error', 'Status diperbarui: Ditolak');
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -87,20 +69,45 @@ class ApprovalController extends Controller
     }
 
     public function hold($id)
-    {
-        $approval = Approval::findOrFail($id);
-        $user = Auth::user(); 
+{
+    $approval = Approval::findOrFail($id);
+    $user = Auth::user(); 
 
-        if (!$this->hasAuthority($user)) {
-            return redirect()->back()->with('error', 'Otoritas ditolak.');
-        }
-
-        $approval->update([
-            'status' => 'Setuju',
-            'is_approved' => true, 
-            'approved_by' => $user->id,
-        ]);
-
-        return redirect()->back()->with('info', 'Data berhasil ditandai sebagai Setuju.');
+    if (!$this->hasAuthority($user)) {
+        return redirect()->back()->with('error', 'Otoritas ditolak.');
     }
+
+    // Menambahkan catatan ke Audit Log
+    $logEntry = "\n[SETUJU: " . now()->format('d/m/Y H:i') . " oleh " . $user->nama . " (" . $user->jabatan . ")]";
+
+    $approval->update([
+        'status' => 'Setuju',
+        'is_approved' => true,
+        'approved_by' => $user->id,
+        'keterangan' => $approval->keterangan . $logEntry // Menyimpan history di keterangan
+    ]);
+
+    return redirect()->back()->with('info', 'Transaksi Disetujui.');
+}
+
+public function reject($id)
+{
+    $approval = Approval::findOrFail($id);
+    $user = Auth::user();
+
+    if (!$this->hasAuthority($user)) {
+        return redirect()->back()->with('error', 'Otoritas ditolak!');
+    }
+
+    $logEntry = "\n[TOLAK: " . now()->format('d/m/Y H:i') . " oleh " . $user->nama . " (" . $user->jabatan . ")]";
+
+    $approval->update([
+        'status' => 'Ditolak', 
+        'is_approved' => false,
+        'approved_by' => $user->id,
+        'keterangan' => $approval->keterangan . $logEntry
+    ]);
+
+    return redirect()->back()->with('error', 'Transaksi Ditolak.');
+}
 }
