@@ -47,4 +47,22 @@ class ApprovalController extends Controller
         // Redirect kembali ke halaman daftar persetujuan
         return redirect()->route('admin.approvals.index')->with('success', 'Persetujuan ditolak!');
     }
+
+    public function store(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'nasabah_name' => 'required|string|max:255',
+            'amount' => 'required|numeric|min:0',
+        ]);
+
+        // Simpan data ke tabel approvals
+        Approval::create([
+            'nasabah_name' => $request->nasabah_name,
+            'amount' => $request->amount,
+            'is_approved' => false, // Default belum disetujui
+        ]);
+
+        return response()->json(['message' => 'Data berhasil disimpan!']);
+    }
 }

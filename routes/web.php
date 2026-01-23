@@ -90,4 +90,5 @@ use App\Http\Controllers\ApprovalController;
     Route::get('/approvals', [ApprovalController::class, 'index'])->name('approvals.index');
     Route::post('/approvals/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.approve');
     Route::post('/approvals/{id}/reject', [ApprovalController::class, 'reject'])->name('approvals.reject');
+    Route::post('/approvals/store', [ApprovalController::class, 'store'])->name('approvals.store');
  });
