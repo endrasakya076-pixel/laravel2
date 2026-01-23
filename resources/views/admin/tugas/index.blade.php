@@ -164,7 +164,7 @@ function submitInput(id, nasabahName) {
             .then(response => response.json())
             .then(data => {
                 alert('Input Jumlah Penarikan berhasil disimpan!');
-                $(`#inputModal-${id}`).modal('hide');
+                $(`#inputModal-${id}`);
                 setTimeout(() => {
                     const imageModal = document.getElementById(`imageModal-${id}`);
                     if (imageModal) {
