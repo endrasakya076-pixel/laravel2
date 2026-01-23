@@ -139,101 +139,89 @@
 @endsection
 
 <script>
-// 1. Fungsi Format Rupiah (Penting agar input angka rapi)
-function formatRupiah(element) {
-    let value = element.value.replace(/[^,\d]/g, '').toString();
-    let split = value.split(',');
-    let sisa  = split[0].length % 3;
-    let rupiah = split[0].substr(0, sisa);
-    let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-    if (ribuan) {
-        let separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-    }
-    element.value = rupiah;
-}
-
-// 2. Fungsi Konfirmasi Sesuai (Pindah Modal)
+// Fungsi untuk menangani transisi antar modal
 function konfirmasiSesuai(id) {
+    // 1. Munculkan alert konfirmasi
     if (confirm('Apakah Anda yakin data pembanding ini sesuai?')) {
-        // Tutup modal spesimen
+        
+        // 2. Tutup Modal Gambar terlebih dahulu
         $(`#imageModal${id}`).modal('hide');
 
-        // Tunggu modal benar-benar tertutup sebelum buka modal input
+        // 3. Beri jeda 500ms agar modal pertama benar-benar hilang dari layar
+        // baru kemudian buka modal input penarikan
         setTimeout(function() {
             $(`#inputModal-${id}`).modal('show');
         }, 500);
     }
 }
 
-// 3. Fungsi Submit Input (Simpan ke Approvals)
+// Fungsi untuk menyimpan data ke server
 function submitInput(id, nasabahName) {
     const amountInput = document.getElementById(`amount-${id}`);
-    const rawAmount = amountInput.value;
-    
-    // Bersihkan titik agar jadi angka murni
-    const cleanAmount = rawAmount.replace(/\./g, '');
+    const amount = amountInput.value;
 
-    if (cleanAmount && parseInt(cleanAmount) > 0) {
+    if (amount && amount > 0) {
         fetch(`/approvals/store`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Accept': 'application/json'
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             body: JSON.stringify({ 
                 nasabah_name: nasabahName,
-                amount: cleanAmount,
-                keterangan: 'Data Pembanding Sesuai'
+                amount: amount
             })
         })
         .then(response => response.json())
         .then(data => {
-            if(data.status === 'success' || data.message) {
-                alert('Data berhasil dikirim ke Persetujuan!');
-                $(`#inputModal-${id}`).modal('hide');
-                window.location.href = '/approvals'; 
-            } else {
-                alert('Gagal: ' + (data.message || 'Terjadi kesalahan.'));
-            }
+            alert('Data berhasil disimpan!');
+            $(`#inputModal-${id}`).modal('hide');
+            window.location.href = '/approvals'; 
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Gagal menyimpan data. Pastikan route /approvals/store tersedia.');
+            alert('Gagal menyimpan data. Silakan coba lagi.');
         });
     } else {
         alert('Masukkan jumlah penarikan yang valid!');
     }
 }
 
-// 4. Fungsi Submit Tidak Sesuai
+document.addEventListener('DOMContentLoaded', function() {
+    // Handler untuk zoomable image (tetap gunakan kode lama Anda di sini)
+    document.querySelectorAll('.img-zoomable').forEach(function(img) {
+        // ... kode zoom Anda ...
+    });
+});
+function kembaliKeSpesimen() {
+    // Arahkan kembali ke halaman daftar tugas spesimen
+    window.location.href = "{{ route('tugas') }}";
+}
+// Fungsi untuk mengirim data "Tidak Sesuai" ke tabel Approvals
 function submitTidakSesuai(id, nasabahName) {
-    if (confirm('Yakin data pembanding tidak sesuai?')) {
+    if (confirm('Yakin data pembanding tidak sesuai? Data akan langsung dikirim ke Menu Persetujuan.')) {
         fetch(`/approvals/store`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Accept': 'application/json'
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             body: JSON.stringify({ 
                 nasabah_name: nasabahName,
-                amount: 0,
-                keterangan: 'Data Pembanding Tidak Sesuai'
+                amount: 0, // Nilai 0 karena data tidak sesuai
+                keterangan: 'Data Pembanding Tidak Sesuai' // Keterangan otomatis
             })
         })
         .then(response => response.json())
         .then(data => {
-            alert('Laporan ketidaksesuaian berhasil dikirim.');
-            window.location.href = '/approvals';
+            alert('Laporan ketidaksesuaian berhasil dikirim ke Menu Persetujuan.');
+            $(`#imageModal${id}`).modal('hide');
+            window.location.href = '/approvals'; // Langsung ke menu Persetujuan
         })
-        .catch(error => alert('Gagal mengirim data.'));
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Gagal mengirim data.');
+        });
     }
-}
-
-function kembaliKeSpesimen() {
-    window.location.reload(); 
 }
 </script>
