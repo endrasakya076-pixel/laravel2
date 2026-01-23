@@ -42,59 +42,57 @@ class ApprovalController extends Controller
     public function store(Request $request)
     {
         // 1. Validasi Input
-        $request->validate([
-            'nasabah_name' => 'required|string',
-            'amount'       => 'required',
-            'keterangan'   => 'nullable|string'
+    $request->validate([
+        'nasabah_name' => 'required|string',
+        'amount'       => 'required',
+        'keterangan'   => 'nullable|string'
+    ]);
+
+    if (!Auth::check()) {
+        return response()->json(['status' => 'error', 'message' => 'Sesi berakhir, silakan login kembali.'], 401);
+    }
+
+    try {
+        DB::beginTransaction();
+        $user = Auth::user();
+
+        // 2. Bersihkan nominal (Hanya ambil angka)
+        // Contoh: "Rp. 1.000.000" menjadi "1000000"
+        $cleanAmount = preg_replace('/[^0-9]/', '', $request->amount);
+
+        // 3. Proses Simpan
+        $approval = Approval::create([
+            'nasabah_name' => $request->nasabah_name,
+            'amount'       => (int) $cleanAmount,
+            'keterangan'   => $request->keterangan ?? 'Data Pembanding Sesuai',
+            'is_approved'  => false,
+            'status'       => 'Baru Masuk',
+            'user_id'      => $user->id,
         ]);
 
-        // 2. Cek apakah User Login (Sangat Penting untuk user_id)
-        if (!Auth::check()) {
-            return response()->json(['message' => 'Sesi berakhir, silakan login kembali.'], 401);
-        }
+        // 4. Catat Log
+        ActivityLog::create([
+            'user_id'    => $user->id,
+            'aktivitas'  => 'Input Persetujuan',
+            'keterangan' => "Teller [{$user->nama}] mengirim data nasabah {$request->nasabah_name} ke antrean.",
+            'ip_address' => $request->ip(),
+            'browser'    => $request->userAgent(),
+        ]);
 
-        try {
-            DB::beginTransaction();
-            $user = Auth::user();
+        DB::commit();
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Data Berhasil dikirim ke Menu Persetujuan.'
+        ]);
 
-            // 3. Bersihkan nominal (Menghapus titik/koma agar menjadi integer)
-            $cleanAmount = preg_replace('/[^0-9]/', '', $request->amount);
-
-            // 4. Proses Simpan ke Tabel Approvals
-            $approval = Approval::create([
-                'nasabah_name' => $request->nasabah_name,
-                'amount'       => $cleanAmount,
-                'keterangan'   => $request->keterangan ?? 'Data Pembanding Sesuai',
-                'is_approved'  => false,
-                'status'       => 'Baru Masuk',
-                'user_id'      => $user->id, // Pastikan kolom ini sudah ada di DB
-            ]);
-
-            // 5. Catat ke Audit Log
-            ActivityLog::create([
-                'user_id'    => $user->id,
-                'aktivitas'  => 'Input Persetujuan',
-                'keterangan' => "Teller [{$user->nama}] mengirim data nasabah {$request->nasabah_name} untuk diotorisasi.",
-                'ip_address' => $request->ip(),
-                'browser'    => $request->userAgent(),
-            ]);
-
-            DB::commit();
-            return response()->json([
-                'status'  => 'success',
-                'message' => 'Berhasil dikirim ke antrean otorisasi.'
-            ]);
-
-        } catch (\Exception $e) {
-            DB::rollback();
-            // Mencatat error asli ke file log (storage/logs/laravel.log) untuk pelacakan
-            Log::error('Gagal Simpan Persetujuan: ' . $e->getMessage());
-            
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
-            ], 500);
-        }
+    } catch (\Exception $e) {
+        DB::rollback();
+        Log::error('Error Approval Store: ' . $e->getMessage());
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'Gagal menyimpan: ' . $e->getMessage()
+        ], 500);
+    }
     }
 
     /**
