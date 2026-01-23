@@ -146,8 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Fungsi Zoom dan Drag diletakkan di sini (Gunakan kode JS yang saya berikan sebelumnya)
         // ...
     });
-});
-function submitInput(id, nasabahName) {
+    });
+    function submitInput(id, nasabahName) {
         const amount = document.getElementById(`amount-${id}`).value;
         if (amount) {
             fetch(`/approvals/store`, {
@@ -168,7 +168,6 @@ function submitInput(id, nasabahName) {
                 setTimeout(() => {
                     const imageModal = document.getElementById(`imageModal-${id}`);
                     if (imageModal) {
-                        imageModal.style.display = 'block'; // Pastikan modal gambar tetap tampil
                         imageModal.style.zIndex = 1050; // Pastikan modal gambar spesimen tampil di depan
                     }
                 }, 300);
@@ -180,5 +179,5 @@ function submitInput(id, nasabahName) {
         } else {
             alert('Masukkan jumlah penarikan terlebih dahulu!');
         }
-    }
+        }
 </script>
