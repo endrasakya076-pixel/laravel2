@@ -72,15 +72,18 @@
                                                 {{-- Scroll untuk Zoom | Drag untuk Geser --}}
                                             </div>
                                         </div>
-<div class="modal-footer justify-content-center" style="background: #f8f9fa; border-top: 1px solid #dee2e6;">
-    <button type="button" class="btn btn-danger btn-lg mx-2 shadow-sm" onclick="submitTidakSesuai({{ $item->id }}, '{{ $item->nama }}')">
-        <i class="fas fa-times-circle"></i> Data Tidak Sesuai
-    </button>
-    
-    <button type="button" class="btn btn-success btn-lg mx-2 shadow-sm" onclick="konfirmasiSesuai({{ $item->id }})">
-        <i class="fas fa-check-circle"></i> Data Sesuai
-    </button>
-</div>
+                                        <div class="modal-footer justify-content-center" style="background: #f8f9fa; border-top: 1px solid #dee2e6;">
+                                        <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                             <input type="hidden" name="status" value="gagal">
+                                                 <button type="button" class="btn btn-danger btn-lg mx-2" onclick="submitTidakSesuai({{ $item->id }}, '{{ $item->nama }}')">
+                                                <i class="fas fa-times-circle"></i> Data Pembanding Tidak Sesuai
+                                                </button>
+                                                </form>
+                                                <button type="button" class="btn btn-success btn-lg mx-2" onclick="konfirmasiSesuai({{ $item->id }})">
+                                                <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
+                                                </button>
+                                         </div>
                                     </div>
                                 </div>
                             </div>
@@ -155,44 +158,29 @@ function konfirmasiSesuai(id) {
 // Fungsi untuk menyimpan data ke server
 function submitInput(id, nasabahName) {
     const amountInput = document.getElementById(`amount-${id}`);
-    // Bersihkan titik agar menjadi angka murni (misal: 1.000.000 jadi 1000000)
-    const rawAmount = amountInput.value.replace(/\./g, ''); 
-    const amount = parseInt(rawAmount);
+    const amount = amountInput.value;
 
     if (amount && amount > 0) {
-        // Tampilkan loading sederhana pada tombol
-        const btn = event.target;
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
-
         fetch(`/approvals/store`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Accept': 'application/json' // Tambahkan ini agar Laravel merespon JSON jika error
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             body: JSON.stringify({ 
                 nasabah_name: nasabahName,
-                amount: rawAmount, // Kirim angka bersih
-                keterangan: 'Data Pembanding Sesuai'
+                amount: amount
             })
         })
-        .then(response => {
-            if (!response.ok) throw response;
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-            alert('Data berhasil dikirim ke antrean otorisasi!');
+            alert('Data berhasil disimpan!');
             $(`#inputModal-${id}`).modal('hide');
             window.location.href = '/approvals'; 
         })
-        .catch(async (error) => {
-            const errData = await error.json();
-            console.error('Error Detail:', errData);
-            alert('Gagal: ' + (errData.message || 'Terjadi kesalahan sistem'));
-            btn.disabled = false;
-            btn.innerHTML = 'Simpan';
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Gagal menyimpan data. Silakan coba lagi.');
         });
     } else {
         alert('Masukkan jumlah penarikan yang valid!');
@@ -234,13 +222,6 @@ function submitTidakSesuai(id, nasabahName) {
             console.error('Error:', error);
             alert('Gagal mengirim data.');
         });
-    }
-}
-function formatRupiah(input) {
-    let value = input.value.replace(/[^0-9]/g, '');
-    if (value) {
-        let formatted = new Intl.NumberFormat('id-ID').format(value);
-        input.value = formatted;
     }
 }
 </script>
