@@ -57,7 +57,7 @@
                 <div class="btn-group" role="group">
                     <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
                         @csrf
-                        <button type="submit" class="btn btn-sm btn-danger mr-1">Hapus</button>
+                        {{-- <button type="submit" class="btn btn-sm btn-danger mr-1">Hapus</button> --}}
                     </form>
 
                     <form action="{{ route('approvals.hold', $approval->id) }}" method="POST" class="d-inline">
