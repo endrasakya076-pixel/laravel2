@@ -80,8 +80,8 @@
                                                 <i class="fas fa-times-circle"></i> Data Pembanding Tidak Sesuai
                                                 </button>
                                                 </form>
-                                               <button type="button" class="btn btn-success btn-lg mx-2" onclick="openInputModal({{ $item->id }})">
-                                                <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
+                                                <button type="button" class="btn btn-success btn-lg mx-2" data-toggle="modal" data-target="#inputModal-{{ $item->id }}" onclick="return confirm('Yakin data pembanding sesuai?')">
+                                                    <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
                                                 </button>
                                          </div>
                                     </div>
@@ -148,37 +148,44 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 function submitInput(id, nasabahName) {
-        const amount = document.getElementById(`amount-${id}`).value;
-        if (amount) {
-            fetch(`/approvals/store`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ 
-                    nasabah_name: nasabahName,
-                    amount: amount
-                })
+    const amount = document.getElementById(`amount-${id}`).value;
+    if (amount) {
+        fetch(`/approvals/store`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ 
+                nasabah_name: nasabahName,
+                amount: amount
             })
-            .then(response => response.json())
-            .then(data => {
-                alert('Input Jumlah Penarikan berhasil disimpan!');
-                $(`#inputModal-${id}`).modal('hide');
-                setTimeout(() => {
-                    const imageModal = document.getElementById(`imageModal-${id}`);
-                    if (imageModal) {
-                        imageModal.style.display = 'block';
-                        imageModal.style.zIndex = 1050;
-                    }
-                }, 300);
-                window.location.href = '/approvals';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        } else {
-            alert('Masukkan jumlah penarikan terlebih dahulu!');
-        }
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Input Jumlah Penarikan berhasil disimpan!');
+            $(`#inputModal-${id}`).modal('hide');
+            
+            // Langsung redirect ke halaman approvals
+            window.location.href = '/approvals';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat menyimpan data.');
+        });
+    } else {
+        alert('Masukkan jumlah penarikan terlebih dahulu!');
+    }
+}
+        function openInputModal(id) {
+    if (confirm('Yakin data pembanding sesuai?')) {
+        // 1. Tutup modal gambar yang sedang terbuka
+        $(`#imageModal${id}`).modal('hide');
+
+        // 2. Beri jeda sedikit agar animasi penutupan selesai, lalu buka modal input
+        setTimeout(function() {
+            $(`#inputModal-${id}`).modal('show');
+        }, 400); 
+    }
     }
 </script>
