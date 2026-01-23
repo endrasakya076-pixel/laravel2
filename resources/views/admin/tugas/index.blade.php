@@ -80,11 +80,9 @@
                                                 <i class="fas fa-times-circle"></i> Data Pembanding Tidak Sesuai
                                                 </button>
                                                 </form>
-                                                <form action="{{ route('approvals.index') }}" method="GET" class="d-inline">
-                                                    <button type="submit" class="btn btn-success btn-lg mx-2" onclick="return confirm('Yakin data pembanding sesuai?')">
-                                                        <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
-                                                    </button>
-                                                </form>
+                                                <button type="button" class="btn btn-success btn-lg mx-2" data-toggle="modal" data-target="#inputModal" onclick="return confirm('Yakin data pembanding sesuai?')">
+                                                    <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
+                                                </button>
                                          </div>
                                     </div>
                                 </div>
@@ -107,6 +105,32 @@
         </div>
     </div>
 </div>
+
+<!-- Modal untuk inputan angka -->
+<div class="modal fade" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inputModalLabel">Input Jumlah Penarikan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="inputForm">
+                    <div class="form-group">
+                        <label for="amount">Jumlah Penarikan</label>
+                        <input type="number" class="form-control" id="amount" name="amount" placeholder="Masukkan jumlah penarikan">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" onclick="submitInput()">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 <script>
@@ -122,4 +146,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // ...
     });
 });
+
+function submitInput() {
+        const amount = document.getElementById('amount').value;
+        if (amount) {
+            // Lakukan logika penyimpanan data di sini
+            alert(`Jumlah penarikan ${amount} berhasil disimpan!`);
+            $('#inputModal').modal('hide');
+        } else {
+            alert('Masukkan jumlah penarikan terlebih dahulu!');
+        }
+    }
 </script>
