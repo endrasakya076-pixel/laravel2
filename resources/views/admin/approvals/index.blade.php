@@ -26,45 +26,50 @@
                     </thead>
                     <tbody>
                         @forelse($approvals as $index => $approval)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td class="font-weight-bold">{{ $approval->nasabah_name }}</td>
-                            <td>Rp {{ number_format($approval->amount, 0, ',', '.') }}</td>
-                            <td>
-                                <small class="text-muted d-block">Catatan Teller:</small>
-                                <span>{{ $approval->keterangan ?? 'Data Pembanding Sesuai' }}</span>
-                            </td>
-                            <td class="text-center">
-                                @if($approval->status == 'pending')
-                                    <span class="badge badge-warning p-2">Menunggu</span>
-                                @elseif($approval->status == 'approved')
-                                    <span class="badge badge-success p-2">Disetujui</span>
-                                @else
-                                    <span class="badge badge-danger p-2">Ditolak</span>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if($approval->status == 'pending')
-                                <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button class="btn btn-sm btn-success" onclick="return confirm('Setujui penarikan ini?')">
-                                        <i class="fas fa-check"></i> Setujui
-                                    </button>
-                                </form>
-                                <form action="{{ route('approvals.reject', $approval->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button class="btn btn-sm btn-danger" onclick="return confirm('Tolak penarikan ini?')">
-                                        <i class="fas fa-times"></i> Tolak
-                                    </button>
-                                </form>
-                                @else
-                                <span class="text-muted small">Sudah Diproses</span>
-                                @endif
-                            </td>
-                        </tr>
+                        @foreach($approvals as $index => $approval)
+<tr>
+    <td>{{ $index + 1 }}</td>
+    <td>{{ $approval->nasabah_name }}</td>
+    <td>Rp {{ number_format($approval->amount, 0, ',', '.') }}</td>
+    <td>{{ $approval->keterangan }}</td>
+    
+    <td class="text-center">
+        @if($approval->status == 'pending')
+            <span class="badge badge-warning text-dark"><i class="fas fa-clock"></i> Menunggu Otorisasi</span>
+        @elseif($approval->status == 'approved')
+            <span class="badge badge-success"><i class="fas fa-check-circle"></i> Disetujui</span>
+        @elseif($approval->status == 'rejected')
+            <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Ditolak</span>
+        @endif
+    </td>
+
+    <td class="text-center">
+        @if(auth()->user()->role == 'admin1' && $approval->status == 'pending')
+            <div class="btn-group">
+                <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button class="btn btn-sm btn-success mr-1" onclick="return confirm('Setujui data ini?')">
+                        Setujui
+                    </button>
+                </form>
+                <form action="{{ route('approvals.reject', $approval->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button class="btn btn-sm btn-danger" onclick="return confirm('Tolak data ini?')">
+                        Tolak
+                    </button>
+                </form>
+            </div>
+        @elseif($approval->status != 'pending')
+            <small class="text-muted font-italic">Tindakan Selesai</small>
+        @else
+            <small class="text-muted">Bukan Otoritas Anda</small>
+        @endif
+    </td>
+</tr>
+@endforeach
                         @empty
                         <tr>
-                            <td colspan="6" class="text-center italic">Belum ada data persetujuan masuk.</td>
+                            <td colspan="6" class="text-center">Tidak ada data persetujuan.</td>
                         </tr>
                         @endforelse
                     </tbody>
