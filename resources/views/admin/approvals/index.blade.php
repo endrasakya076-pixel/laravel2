@@ -38,8 +38,8 @@
     </td>
 
     <td class="text-center">
-        {{-- @if($approval->status == 'Hapus')
-            <span class="badge badge-danger"><i class="fas fa-check-circle"></i> Hapus</span> --}}
+        @if($approval->status == 'Hapus')
+            <span class="badge badge-danger"><i class="fas fa-check-circle"></i> Hapus</span>
         @elseif($approval->status == 'Ditolak')
             <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Ditolak</span>
         @elseif($approval->status == 'Setuju')
