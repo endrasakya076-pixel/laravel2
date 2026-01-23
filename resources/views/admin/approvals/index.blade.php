@@ -21,7 +21,6 @@
                             <th>Jumlah Penarikan</th>
                             <th>Keterangan</th>
                             <th width="10%">Status</th>
-                            <th width="20%" class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
