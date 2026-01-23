@@ -23,6 +23,6 @@ class Approval extends Model
     public function user()
 {
     // 'user_id' adalah kolom di tabel approvals yang menyimpan ID pengirim/teller
-    return $this->belongsTo(User::class, 'user_id');
+    return $this->belongsTo(\App\Models\User::class, 'user_id');
 }
 }
