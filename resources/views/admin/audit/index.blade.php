@@ -84,16 +84,33 @@
                                 <strong>{{ $log->user->nama ?? 'System' }}</strong><br>
                                 <small class="text-muted">{{ $log->user->jabatan ?? '-' }}</small>
                             </td>
-                            <td>
-                                @php
-                                    $badgeColor = 'badge-info';
-                                    if(str_contains(strtolower($log->aktivitas), 'hapus')) $badgeColor = 'badge-danger';
-                                    if(str_contains(strtolower($log->aktivitas), 'tambah')) $badgeColor = 'badge-success';
-                                    if(str_contains(strtolower($log->aktivitas), 'edit') || str_contains(strtolower($log->aktivitas), 'update')) $badgeColor = 'badge-warning';
-                                    if(str_contains(strtolower($log->aktivitas), 'berhasil')) $badgeColor = 'badge-success';
-                                @endphp
-                                <span class="badge {{ $badgeColor }}">{{ $log->aktivitas }}</span>
-                            </td>
+<td>
+    @php
+        $aktivitas = strtolower($log->aktivitas);
+        $badgeColor = 'badge-info'; // Warna default (biru muda)
+
+        // Deteksi Bahaya / Penghapusan
+        if(str_contains($aktivitas, 'hapus')) {
+            $badgeColor = 'badge-danger'; 
+        }
+        // Deteksi Penambahan / Keberhasilan / Persetujuan
+        elseif(str_contains($aktivitas, 'tambah') || str_contains($aktivitas, 'berhasil') || str_contains($aktivitas, 'disetujui')) {
+            $badgeColor = 'badge-success';
+        }
+        // Deteksi Perubahan / Penolakan
+        elseif(str_contains($aktivitas, 'edit') || str_contains($aktivitas, 'update') || str_contains($aktivitas, 'ditolak')) {
+            $badgeColor = 'badge-warning';
+        }
+        // Deteksi Verifikasi Spesimen (Warna Biru Utama)
+        elseif(str_contains($aktivitas, 'sesuai')) {
+            $badgeColor = 'badge-primary';
+        }
+    @endphp
+    <span class="badge {{ $badgeColor }} px-2 py-1 shadow-sm">
+        <i class="fas {{ str_contains($aktivitas, 'hapus') ? 'fa-trash' : (str_contains($aktivitas, 'sesuai') ? 'fa-check-double' : 'fa-info-circle') }} mr-1"></i>
+        {{ $log->aktivitas }}
+    </span>
+</td>
                             <td>{{ $log->keterangan }}</td>
                             <td><code class="text-primary">{{ $log->ip_address }}</code></td>
                             <td><small class="text-muted">{{ $log->browser }}</small></td>

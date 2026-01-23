@@ -89,18 +89,40 @@ class ApprovalController extends Controller
     public function hold($id)
     {
         $approval = Approval::findOrFail($id);
-        $user = Auth::user(); 
+    $user = Auth::user();
 
-        if (!$this->hasAuthority($user)) {
-            return redirect()->back()->with('error', 'Otoritas ditolak.');
-        }
+    // 1. Cek Otoritas TERLEBIH DAHULU sebelum melakukan perubahan apa pun
+    if (!$this->hasAuthority($user)) {
+        return redirect()->back()->with('error', 'Otoritas ditolak. Anda tidak memiliki izin untuk menyetujui.');
+    }
 
+    try {
+        \Illuminate\Support\Facades\DB::beginTransaction();
+
+        // 2. Update status persetujuan
         $approval->update([
             'status' => 'Setuju',
             'is_approved' => true, 
             'approved_by' => $user->id,
         ]);
 
-        return redirect()->back()->with('info', 'Data berhasil ditandai sebagai Setuju.');
+        // 3. SIMPAN KE MENU AUDIT LOG (ActivityLog)
+        \App\Models\ActivityLog::create([
+            'user_id'    => $user->id,
+            'aktivitas'  => 'Otorisasi Disetujui',
+            'keterangan' => "Pejabat [" . $user->nama . "] MENYETUJUI penarikan nasabah " . $approval->nasabah_name . " sebesar Rp " . number_format($approval->amount, 0, ',', '.'),
+            'ip_address' => request()->ip(),
+            'browser'    => request()->userAgent(),
+        ]);
+
+        \Illuminate\Support\Facades\DB::commit();
+
+        return redirect()->back()->with('info', 'Data berhasil ditandai sebagai Setuju dan tercatat di Audit Log.');
+
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\DB::rollback();
+        return redirect()->back()->with('error', 'Terjadi kesalahan sistem: ' . $e->getMessage());
     }
+    } 
+    
 }
