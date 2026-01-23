@@ -76,12 +76,12 @@
                                         <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
                                         @csrf
                                              <input type="hidden" name="status" value="gagal">
-                                                 <button type="button" class="btn btn-danger btn-lg mx-2" onclick="submitTidakSesuai({{ $item->id }}, '{{ $item->nama }}')">
-                                                <i class="fas fa-times-circle"></i> Data Pembanding Tidak Sesuai
+                                                 <button type="button" class="btn btn-success" onclick="sendToApproval('Data Pembanding Sesuai')">
+                                                    Data Pembanding Sesuai
                                                 </button>
-                                                </form>
-                                                <button type="button" class="btn btn-success btn-lg mx-2" onclick="konfirmasiSesuai({{ $item->id }})">
-                                                <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
+                                                </form>      
+                                                <button type="button" class="btn btn-danger" onclick="sendToApproval('Data Pembanding Tidak Sesuai')">
+                                                Data Pembanding Tidak Sesuai
                                                 </button>
                                          </div>
                                     </div>
