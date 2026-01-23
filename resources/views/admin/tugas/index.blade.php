@@ -76,12 +76,12 @@
                                         <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
                                         @csrf
                                              <input type="hidden" name="status" value="gagal">
-                                                 <button type="button" class="btn btn-success" onclick="sendToApproval('Data Pembanding Sesuai')">
-                                                    Data Pembanding Sesuai
+                                                 <button type="button" class="btn btn-danger btn-lg mx-2" onclick="submitTidakSesuai({{ $item->id }}, '{{ $item->nama }}')">
+                                                <i class="fas fa-times-circle"></i> Data Pembanding Tidak Sesuai
                                                 </button>
-                                                </form>      
-                                                <button type="button" class="btn btn-danger" onclick="sendToApproval('Data Pembanding Tidak Sesuai')">
-                                                Data Pembanding Tidak Sesuai
+                                                </form>
+                                                <button type="button" class="btn btn-success btn-lg mx-2" onclick="konfirmasiSesuai({{ $item->id }})">
+                                                <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
                                                 </button>
                                          </div>
                                     </div>
@@ -223,42 +223,5 @@ function submitTidakSesuai(id, nasabahName) {
             alert('Gagal mengirim data.');
         });
     }
-}
-function sendToApproval(statusPesan) {
-    // Ambil data dari input spesimen (sesuaikan ID-nya)
-    let nama = document.getElementById('nama_nasabah').value; 
-    let nominal = document.getElementById('nominal_transaksi').value;
-
-    if(!nama || !nominal) {
-        alert("Nama nasabah dan nominal tidak boleh kosong!");
-        return;
-    }
-
-    // Kirim via AJAX
-    fetch("{{ route('approvals.store') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: JSON.stringify({
-            nasabah_name: nama,
-            amount: nominal,
-            keterangan: statusPesan
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            alert(data.message);
-            window.location.reload(); // Reload agar data terupdate
-        } else {
-            alert("Gagal: " + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert("Terjadi kesalahan koneksi.");
-    });
 }
 </script>
