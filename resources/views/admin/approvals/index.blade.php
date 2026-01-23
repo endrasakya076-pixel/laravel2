@@ -25,54 +25,45 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($approvals as $index => $approval)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td class="font-weight-bold">{{ $approval->nasabah_name }}</td>
-                            <td>Rp {{ number_format($approval->amount, 0, ',', '.') }}</td>
-                            <td>
-                                <small class="text-muted d-block">Catatan Teller:</small>
-                                <span>{{ $approval->keterangan ?? 'Data Pembanding Sesuai' }}</span>
-                            </td>
-                            <td class="text-center">
-                                @if($approval->status == 'pending')
-                                    <span class="badge badge-warning p-2">Menunggu</span>
-                                @elseif($approval->status == 'approved')
-                                    <span class="badge badge-success p-2">Disetujui</span>
-                                @else
-                                    <span class="badge badge-danger p-2">Ditolak</span>
-                                @endif
-                            </td>
- <td class="text-center">
-    {{-- Cek apakah yang login adalah Hendra Sakya Permana --}}
-    @if(Auth::user()->nama == 'Hendra Sakya Permana' || Auth::user()->role == 'admin1')
-        
-        @if($approval->status == 'pending' || $approval->status == '')
-            <div class="btn-group">
-                <form action="{{ route('approvals.approve', $approval->id) }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-sm btn-success mr-1">Setujui</button>
-                </form>
-                
-                <form action="{{ route('approvals.reject', $approval->id) }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
-                </form>
-            </div>
-        @else
-            <span class="text-muted small">Tindakan Selesai</span>
-        @endif
+ @foreach($approvals as $index => $approval)
+<tr>
+    <td>{{ $index + 1 }}</td>
+    <td>{{ $approval->nasabah_name }}</td>
+    <td>Rp {{ number_format($approval->amount, 0, ',', '.') }}</td>
+    <td>{{ $approval->keterangan }}</td>
 
-    @else
-        <small class="text-muted">Menunggu Otorisasi Hendra (Admin 1)</small>
-    @endif
-</td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="6" class="text-center italic">Belum ada data persetujuan masuk.</td>
-                        </tr>
-                        @endforelse
+    <td class="text-center">
+        @if($approval->status == 'Disetujui')
+            <span class="badge badge-success"><i class="fas fa-check-circle"></i> Disetujui</span>
+        @elseif($approval->status == 'Ditolak')
+            <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Ditolak</span>
+        @else
+            <span class="badge badge-warning text-dark"><i class="fas fa-clock"></i> Pending</span>
+        @endif
+    </td>
+
+    <td class="text-center">
+        @if(Auth::user()->nama == 'Hendra Sakya Permana' || Auth::user()->role == 'admin1')
+            @if($approval->status != 'Disetujui' && $approval->status != 'Ditolak')
+                <div class="btn-group">
+                    <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-success mr-1">Setujui</button>
+                    </form>
+                    <form action="{{ route('approvals.reject', $approval->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-danger">Tolak</button>
+                    </form>
+                </div>
+            @else
+                <span class="text-muted small"><i class="fas fa-lock"></i> Selesai</span>
+            @endif
+        @else
+            <small class="text-muted">Otoritas Hendra</small>
+        @endif
+    </td>
+</tr>
+@endforeach
                     </tbody>
                 </table>
             </div>

@@ -20,40 +20,39 @@ class ApprovalController extends Controller
 
     public function approve($id)
     {
-       $approval = Approval::findOrFail($id);
-        
-        // Proteksi: Hanya user bernama 'Hendra Sakya Permana' atau role 'admin1'
-        if (Auth::user()->nama !== 'Hendra Sakya Permana' && Auth::user()->role !== 'admin1') {
-            return redirect()->back()->with('error', 'Anda tidak memiliki otoritas Admin 1!');
-        }
-
-        $approval->update([
-            'status'      => 'Disetujui',
-            'is_approved' => true,
-            'approved_by' => Auth::id(),
-        ]);
-
-        return redirect()->back()->with('success', 'Penarikan berhasil disetujui oleh Admin 1.');
+     $approval = Approval::findOrFail($id);
+    
+    // Validasi Otoritas Hendra
+    if (Auth::user()->nama !== 'Hendra Sakya Permana' && Auth::user()->role !== 'admin1') {
+        return redirect()->back()->with('error', 'Anda tidak memiliki otoritas!');
     }
 
-    public function reject($id)
-    {
-        $approval = Approval::findOrFail($id);
+    $approval->update([
+        'status' => 'Disetujui', // Nilai ini yang akan masuk ke kolom Status
+        'is_approved' => true,
+        'approved_by' => Auth::id(),
+    ]);
 
-        if (Auth::user()->nama !== 'Hendra Sakya Permana' && Auth::user()->role !== 'admin1') {
-            return redirect()->back()->with('error', 'Anda tidak memiliki otoritas Admin 1!');
-        }
+    return redirect()->back()->with('success', 'Status diperbarui: Disetujui');
+}
 
-        $approval->update([
-            'status'      => 'Ditolak',
-            'is_approved' => false,
-            'approved_by' => Auth::id(),
-        ]);
+public function reject($id)
+{
+    $approval = Approval::findOrFail($id);
 
-        return redirect()->back()->with('error', 'Penarikan ditolak oleh Admin 1.');
-    
+    if (Auth::user()->nama !== 'Hendra Sakya Permana' && Auth::user()->role !== 'admin1') {
+        return redirect()->back()->with('error', 'Anda tidak memiliki otoritas!');
     }
-    
+
+    $approval->update([
+        'status' => 'Ditolak', // Nilai ini yang akan masuk ke kolom Status
+        'is_approved' => false,
+        'approved_by' => Auth::id(),
+    ]);
+
+    return redirect()->back()->with('error', 'Status diperbarui: Ditolak');
+}
+
     public function store(Request $request)
     {
         // Validasi data
