@@ -25,7 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
- @foreach($approvals as $index => $approval)
+@foreach($approvals as $index => $approval)
 <tr>
     <td>{{ $index + 1 }}</td>
     <td>{{ $approval->nasabah_name }}</td>
@@ -39,9 +39,9 @@
 
     <td class="text-center">
         @if($approval->status == 'Hapus')
-            <span class="badge badge-danger"><i class="fas fa-check-circle"></i> Hapus</span>
+            <span class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</span>
         @elseif($approval->status == 'Ditolak')
-            <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Ditolak</span>
+            <span class="badge badge-warning"><i class="fas fa-times-circle"></i> Ditolak</span>
         @elseif($approval->status == 'Setuju')
             <span class="badge badge-success"><i class="fas fa-check-circle"></i> Setuju</span>
         @else
@@ -52,12 +52,12 @@
     <td class="text-center">
         @if(auth()->user()->nama == 'Hendra Sakya Permana' || auth()->user()->role == 'admin1')
             
-            {{-- Tombol muncul jika status belum Disetujui/Ditolak --}}
-            @if($approval->status != 'Disetujui' && $approval->status != 'Ditolak')
+            {{-- Tombol hanya muncul jika status belum diproses (masih 'Baru Masuk' atau pending) --}}
+            @if($approval->status == 'Baru Masuk' || $approval->status == '')
                 <div class="btn-group" role="group">
                     <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
                         @csrf
-                        <button type="submit" class="btn btn-sm btn-danger mr-1">Hapus</button>
+                        <button type="submit" class="btn btn-sm btn-danger mr-1" onclick="return confirm('Hapus data ini?')">Hapus</button>
                     </form>
 
                     <form action="{{ route('approvals.hold', $approval->id) }}" method="POST" class="d-inline">
@@ -71,15 +71,16 @@
                     </form>
                 </div>
             @else
-                <span class="text-muted small"><i class="fas fa-lock"></i> Tindakan Selesai</span>
+                <small class="text-muted"><i class="fas fa-check-double"></i> Selesai di Otorisasi</small>
             @endif
 
         @else
-            <small class="text-muted">Otoritas Admin 1</small>
+            <small class="text-muted">Menunggu Admin 1</small>
         @endif
     </td>
 </tr>
-@endforeach        </tbody>
+@endforeach    
+                    </tbody>
                 </table>
             </div>
         </div>
