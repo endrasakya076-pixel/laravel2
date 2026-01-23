@@ -112,13 +112,13 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                    <button type="button" class="btn btn-secondary" onclick="kembaliKeSpesimen()">Tutup</button>
                                     <button type="button" class="btn btn-primary" onclick="submitInput({{ $item->id }}, '{{ $item->nama }}')">Simpan</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                        <td>{{ $item->cif }}</td>
+                        <td>{{ $item->cif }}</td>   
                         <td>{{ $item->no_rekening }}</td>
                         <td>{{ $item->nama }}</td>
                         <td>{{ $item->alamat }}</td>
@@ -193,4 +193,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // ... kode zoom Anda ...
     });
 });
+function kembaliKeSpesimen() {
+    // Arahkan kembali ke halaman daftar tugas spesimen
+    window.location.href = "{{ route('tugasSpesimen') }}";
+}
 </script>
