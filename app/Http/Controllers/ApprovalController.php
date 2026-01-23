@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ApprovalController extends Controller
 {
-    /**
+   /**
      * Fungsi Privat untuk mengecek otoritas (Helper)
      * Agar tidak mengulang kode yang sama di setiap function
      */
@@ -103,5 +103,4 @@ class ApprovalController extends Controller
 
         return redirect()->back()->with('info', 'Data berhasil ditandai sebagai Setuju.');
     }
-
 }
