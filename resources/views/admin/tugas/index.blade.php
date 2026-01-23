@@ -88,20 +88,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td>{{ $item->cif }}</td>
-                        <td>{{ $item->no_rekening }}</td>
-                        <td>{{ $item->nama }}</td>
-                        <td>{{ $item->alamat }}</td>
-                        <td>{{ $item->nama_ibu }}</td>
-                        <td class="text-center">
-                            <a href="{{ route('tugasEdit', $item->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-                            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{ $item->id }}"><i class="fas fa-trash"></i></button>
-                            @include('admin/tugas/modal')
-                        </td>
-                    </tr>
-
-                    <!-- Modal untuk inputan angka -->
-                    <div class="modal fade" id="inputModal-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="inputModal-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -125,6 +112,20 @@
                             </div>
                         </div>
                     </div>
+                        <td>{{ $item->cif }}</td>
+                        <td>{{ $item->no_rekening }}</td>
+                        <td>{{ $item->nama }}</td>
+                        <td>{{ $item->alamat }}</td>
+                        <td>{{ $item->nama_ibu }}</td>
+                        <td class="text-center">
+                            <a href="{{ route('tugasEdit', $item->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{ $item->id }}"><i class="fas fa-trash"></i></button>
+                            @include('admin/tugas/modal')
+                        </td>
+                    </tr>
+
+                    <!-- Modal untuk inputan angka -->
+
                     @endforeach
                 </tbody>
             </table>
