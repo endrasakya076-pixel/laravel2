@@ -8,36 +8,22 @@ use Illuminate\Support\Facades\Auth;
 
 class ApprovalController extends Controller
 {
-   /**
-     * Fungsi Privat untuk mengecek otoritas (Helper)
-     * Agar tidak mengulang kode yang sama di setiap function
-     */
-    private function hasAuthority($user)
-    {
-        // Daftar Jabatan yang diizinkan
-        $authorizedPositions = [
-            'Supervisor 1', 'Supervisor 2', 'Supervisor 3', 'Supervisor 4', 'Supervisor 5',
-            'Kepala Cabang Gerung', 'Kepala Cabang Pancor', 'Kepala Cabang Tanjung'
-        ];
-
-        // Cek Nama Spesifik (Hendra) ATAU Role Admin1 ATAU Jabatan dalam daftar
-        return $user->nama === 'Hendra Sakya Permana' || 
-               $user->role === 'admin1' || 
-               in_array($user->jabatan, $authorizedPositions);
-    }
-
-    public function index()
+   public function index()
     {
         $title = 'Persetujuan';
+        // Mengambil semua data, yang terbaru muncul di atas
         $approvals = Approval::orderBy('created_at', 'desc')->get();
+
         return view('admin.approvals.index', compact('approvals', 'title'));
     }
 
+    // Aksi untuk tombol "Hapus" (Hanya Hendra/Admin1)
     public function approve($id)
     {
         $approval = Approval::findOrFail($id);
     
-        if (!$this->hasAuthority(Auth::user())) {
+        // Validasi Otoritas menggunakan kolom 'nama' sesuai database Anda
+        if (Auth::user()->nama !== 'Hendra Sakya Permana' && Auth::user()->role !== 'admin1') {
             return redirect()->back()->with('error', 'Anda tidak memiliki otoritas!');
         }
 
@@ -50,11 +36,12 @@ class ApprovalController extends Controller
         return redirect()->back()->with('success', 'Data berhasil dihapus dari antrean.');
     }
 
+    // Aksi untuk tombol "Tolak" (Hanya Hendra/Admin1)
     public function reject($id)
     {
         $approval = Approval::findOrFail($id);
 
-        if (!$this->hasAuthority(Auth::user())) {
+        if (Auth::user()->nama !== 'Hendra Sakya Permana' && Auth::user()->role !== 'admin1') {
             return redirect()->back()->with('error', 'Anda tidak memiliki otoritas!');
         }
 
@@ -67,6 +54,7 @@ class ApprovalController extends Controller
         return redirect()->back()->with('error', 'Status diperbarui: Ditolak');
     }
 
+    // Menerima input dari Teller (Sesuai maupun Tidak Sesuai)
     public function store(Request $request)
     {
         $request->validate([
@@ -75,6 +63,8 @@ class ApprovalController extends Controller
             'keterangan' => 'nullable|string'
         ]);
 
+        // Logika: Jika keterangan dikirim (Tidak Sesuai), gunakan itu. 
+        // Jika null (Sesuai), gunakan default.
         Approval::create([
             'nasabah_name' => $request->nasabah_name,
             'amount' => $request->amount,
@@ -86,12 +76,13 @@ class ApprovalController extends Controller
         return response()->json(['message' => 'Data berhasil masuk ke Persetujuan']);
     }
 
+    // Aksi untuk tombol "Setuju" (Hanya Hendra/Admin1)
     public function hold($id)
     {
         $approval = Approval::findOrFail($id);
         $user = Auth::user(); 
 
-        if (!$this->hasAuthority($user)) {
+        if ($user->nama !== 'Hendra Sakya Permana' && $user->role !== 'admin1') {
             return redirect()->back()->with('error', 'Otoritas ditolak.');
         }
 
