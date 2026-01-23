@@ -39,8 +39,7 @@
                         <th>Nama</th>
                         <th>Alamat</th>
                         <th>Nama Ibu Kandung</th>
-                        <th>Jumlah Penarikan</th>
-                        <th>Aksi</th>
+                        <th><i class="fas fa-cog"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -96,12 +95,6 @@
                         <td>{{ $item->nama }}</td>
                         <td>{{ $item->alamat }}</td>
                         <td>{{ $item->nama_ibu }}</td>
-                        <td>
-                            <input type="number" class="form-control" id="amount-{{ $item->id }}" placeholder="Masukkan jumlah">
-                        </td>
-                        <td>
-                            <button class="btn btn-success" onclick="submitAmount({{ $item->id }})">Simpan</button>
-                        </td>
                         <td class="text-center">
                             <a href="{{ route('tugasEdit', $item->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                             <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{ $item->id }}"><i class="fas fa-trash"></i></button>
@@ -129,30 +122,4 @@ document.addEventListener('DOMContentLoaded', function() {
         // ...
     });
 });
-
-function submitAmount(id) {
-        const amount = document.getElementById(`amount-${id}`).value;
-        if (amount) {
-            fetch(`/approvals/${id}/update-amount`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ 
-                    amount, 
-                    nasabah_name: document.querySelector(`#nama-${id}`).innerText // Ambil nama nasabah dari tabel
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Jumlah penarikan berhasil disimpan!');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        } else {
-            alert('Masukkan jumlah penarikan terlebih dahulu!');
-        }
-    }
 </script>
