@@ -147,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // ...
     });
 });
-
 function submitInput(id, nasabahName) {
         const amount = document.getElementById(`amount-${id}`).value;
         if (amount) {
@@ -164,16 +163,16 @@ function submitInput(id, nasabahName) {
             })
             .then(response => response.json())
             .then(data => {
-                alert('Data berhasil disimpan!');
+                alert('Input Jumlah Penarikan berhasil disimpan!');
                 $(`#inputModal-${id}`).modal('hide');
                 setTimeout(() => {
                     const imageModal = document.getElementById(`imageModal-${id}`);
                     if (imageModal) {
-                        imageModal.style.display = 'block'; // Pastikan modal gambar tetap tampil
-                        imageModal.style.zIndex = 1050; // Pastikan modal gambar spesimen tampil di depan
+                        imageModal.style.display = 'block';
+                        imageModal.style.zIndex = 1050;
                     }
                 }, 300);
-                window.location.href = '/approvals'; // Redirect ke menu Persetujuan
+                window.location.href = '/approvals';
             })
             .catch(error => {
                 console.error('Error:', error);
