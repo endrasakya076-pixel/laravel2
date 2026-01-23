@@ -166,6 +166,7 @@ function submitInput(id, nasabahName) {
             .then(data => {
                 alert('Data berhasil disimpan!');
                 $(`#inputModal-${id}`).modal('hide');
+                window.location.href = '/approvals'; // Redirect ke menu Persetujuan
             })
             .catch(error => {
                 console.error('Error:', error);
