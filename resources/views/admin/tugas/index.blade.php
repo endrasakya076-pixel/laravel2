@@ -80,8 +80,8 @@
                                                 <i class="fas fa-times-circle"></i> Data Pembanding Tidak Sesuai
                                                 </button>
                                                 </form>
-                                                <button type="button" class="btn btn-success btn-lg mx-2" data-toggle="modal" data-target="#inputModal-{{ $item->id }}" onclick="return confirm('Yakin data pembanding sesuai?')">
-                                                    <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
+                                               <button type="button" class="btn btn-success btn-lg mx-2" onclick="openInputModal({{ $item->id }})">
+                                                <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
                                                 </button>
                                          </div>
                                     </div>
@@ -135,18 +135,18 @@
 @endsection
 
 <script>
-// document.addEventListener('DOMContentLoaded', function() {
-//     // Menangani semua elemen dengan class 'img-zoomable'
-//     document.querySelectorAll('.img-zoomable').forEach(function(img) {
-//         const container = img.parentElement;
-//         let scale = 1;
-//         let isDragging = false;
-//         let startX, startY, translateX = 0, translateY = 0;
+document.addEventListener('DOMContentLoaded', function() {
+    // Menangani semua elemen dengan class 'img-zoomable'
+    document.querySelectorAll('.img-zoomable').forEach(function(img) {
+        const container = img.parentElement;
+        let scale = 1;
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
 
-//         // Fungsi Zoom dan Drag diletakkan di sini (Gunakan kode JS yang saya berikan sebelumnya)
-//         // ...
-//     });
-// });
+        // Fungsi Zoom dan Drag diletakkan di sini (Gunakan kode JS yang saya berikan sebelumnya)
+        // ...
+    });
+});
 function submitInput(id, nasabahName) {
         const amount = document.getElementById(`amount-${id}`).value;
         if (amount) {
