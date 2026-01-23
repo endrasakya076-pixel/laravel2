@@ -54,6 +54,10 @@
                         @csrf
                         <button class="btn btn-sm btn-danger">Tolak</button>
                     </form>
+                    <form action="{{ route('approvals.reject', $approval->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-danger">Ya</button>
+                    </form>
                 </div>
             @else
                 <span class="text-muted small"><i class="fas fa-lock"></i> Selesai</span>
