@@ -34,10 +34,10 @@ class ApprovalController extends Controller
     ]);
 
     return redirect()->back()->with('success', 'Status diperbarui: Disetujui');
-}
+    }
 
-public function reject($id)
-{
+    public function reject($id)
+    {
     $approval = Approval::findOrFail($id);
 
     if (Auth::user()->nama !== 'Hendra Sakya Permana' && Auth::user()->role !== 'admin1') {
@@ -51,7 +51,7 @@ public function reject($id)
     ]);
 
     return redirect()->back()->with('error', 'Status diperbarui: Ditolak');
-}
+    }
 
     public function store(Request $request)
     {
