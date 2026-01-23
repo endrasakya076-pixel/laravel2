@@ -87,7 +87,7 @@ class ApprovalController extends Controller
 
         // 4. Update status menjadi Menunggu
         $approval->update([
-            'status' => 'Menunggu',
+            'status' => 'Setuju',
             'is_approved' => false,
             'approved_by' => $user->id, // Menggunakan ID dari user yang sedang login
         ]);
