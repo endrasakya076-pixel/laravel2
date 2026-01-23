@@ -72,18 +72,15 @@
                                                 {{-- Scroll untuk Zoom | Drag untuk Geser --}}
                                             </div>
                                         </div>
-                                        <div class="modal-footer justify-content-center" style="background: #f8f9fa; border-top: 1px solid #dee2e6;">
-                                        <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                             <input type="hidden" name="status" value="gagal">
-                                                 <button type="button" class="btn btn-danger btn-lg mx-2" onclick="submitTidakSesuai({{ $item->id }}, '{{ $item->nama }}')">
-                                                <i class="fas fa-times-circle"></i> Data Pembanding Tidak Sesuai
-                                                </button>
-                                                </form>
-                                                <button type="button" class="btn btn-success btn-lg mx-2" onclick="konfirmasiSesuai({{ $item->id }})">
-                                                <i class="fas fa-check-circle"></i> Data Pembanding Sesuai
-                                                </button>
-                                         </div>
+<div class="modal-footer justify-content-center" style="background: #f8f9fa; border-top: 1px solid #dee2e6;">
+    <button type="button" class="btn btn-danger btn-lg mx-2 shadow-sm" onclick="submitTidakSesuai({{ $item->id }}, '{{ $item->nama }}')">
+        <i class="fas fa-times-circle"></i> Data Tidak Sesuai
+    </button>
+    
+    <button type="button" class="btn btn-success btn-lg mx-2 shadow-sm" onclick="konfirmasiSesuai({{ $item->id }})">
+        <i class="fas fa-check-circle"></i> Data Sesuai
+    </button>
+</div>
                                     </div>
                                 </div>
                             </div>
