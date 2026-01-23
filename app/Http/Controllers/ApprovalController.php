@@ -67,25 +67,22 @@ class ApprovalController extends Controller
         return redirect()->back()->with('error', 'Status diperbarui: Ditolak');
     }
 
-   public function store(Request $request)
-{
-    $request->validate([
-        'nasabah_name' => 'required|string',
-        'amount' => 'required',
-        'keterangan' => 'nullable|string'
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nasabah_name' => 'required|string',
+            'amount' => 'required',
+            'keterangan' => 'nullable|string'
+        ]);
 
-    Approval::create([
-        'nasabah_name' => $request->nasabah_name,
-        'amount' => $request->amount,
-        'keterangan' => $request->keterangan ?? 'Data Pembanding Sesuai',
-        'is_approved' => false,
-        'status' => 'Baru Masuk',
-        // TAMBAHKAN BARIS INI:
-        'user_id' => auth()->id(), 
-    ]);
+        Approval::create([
+            'nasabah_name' => $request->nasabah_name,
+            'amount' => $request->amount,
+            'keterangan' => $request->keterangan ?? 'Data Pembanding Sesuai',
+            'is_approved' => false,
+            'status' => 'Baru Masuk',
+        ]);
 
-    return response()->json(['message' => 'Data berhasil masuk ke Persetujuan']);
-
-}
+        return response()->json(['message' => 'Data berhasil masuk ke Persetujuan']);
+    }
 }
