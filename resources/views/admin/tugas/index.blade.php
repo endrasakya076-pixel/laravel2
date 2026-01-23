@@ -164,12 +164,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 alert('Data berhasil disimpan!');
-                $(`#inputModal-${id}`).modal('hide');
                 setTimeout(() => {
-                    const imageModal = document.getElementById(`imageModal-${id}`);
-                    if (imageModal) {
-                        imageModal.style.zIndex = 1050; // Pastikan modal gambar spesimen tampil di depan
-                    }
+                    $('#inputModal-' + id).modal('hide');
                 }, 300);
                 window.location.href = '/approvals'; // Redirect ke menu Persetujuan
             })
