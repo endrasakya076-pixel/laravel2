@@ -26,9 +26,25 @@ class ApprovalController extends Controller
         // Update status persetujuan
         $approval->is_approved = true;
         $approval->approved_by = Auth::id();
+        $approval->status = 'Disetujui'; // Atur status menjadi Disetujui jika tombol Setujui ditekan
         $approval->save();
 
         // Redirect kembali ke halaman daftar persetujuan
         return redirect()->route('admin.approvals.index')->with('success', 'Persetujuan berhasil!');
+    }
+    
+    public function reject($id)
+    {
+        // Cari data persetujuan berdasarkan ID
+        $approval = Approval::findOrFail($id);
+
+        // Update status penolakan
+        $approval->is_approved = false;
+        $approval->approved_by = Auth::id();
+        $approval->status = 'Ditolak'; // Kembalikan keterangan menjadi 'Ditolak' jika tombol Tidak Setuju ditekan
+        $approval->save();
+
+        // Redirect kembali ke halaman daftar persetujuan
+        return redirect()->route('admin.approvals.index')->with('success', 'Persetujuan ditolak!');
     }
 }

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->decimal('amount', 10, 2);
             $table->boolean('is_approved')->default(false);
             $table->unsignedBigInteger('approved_by')->nullable();
+            $table->string('keterangan')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
 
             $table->foreign('approved_by')->references('id')->on('users')->onDelete('set null');
