@@ -93,36 +93,6 @@
         </span>
     @endif
 </td>
-
-    <td class="text-center">
-        @if(auth()->user()->nama == 'Hendra Sakya Permana' || auth()->user()->role == 'admin1')
-            
-            {{-- Tombol hanya muncul jika status belum diproses (masih 'Baru Masuk' atau pending) --}}
-            @if($approval->status == 'Baru Masuk' || $approval->status == '')
-                <div class="btn-group" role="group">
-                    <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        {{-- <button type="submit" class="btn btn-sm btn-danger mr-1" onclick="return confirm('Hapus data ini?')">Hapus</button> --}}
-                    </form>
-
-                    <form action="{{ route('approvals.hold', $approval->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        <button type="submit" class="btn btn-sm btn-success mr-1">Setuju</button>
-                    </form>
-                    
-                    <form action="{{ route('approvals.reject', $approval->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
-                    </form>
-                </div>
-            @else
-                <small class="text-muted"><i class="fas fa-check-double"></i> Selesai di Otorisasi</small>
-            @endif
-
-        @else
-            <small class="text-muted">Menunggu Admin 1</small>
-        @endif
-    </td>
 </tr>
 @endforeach    
                     </tbody>
