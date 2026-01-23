@@ -25,7 +25,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($approvals as $index => $approval)
                         @foreach($approvals as $index => $approval)
 <tr>
     <td>{{ $index + 1 }}</td>
