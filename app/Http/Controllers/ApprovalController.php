@@ -10,59 +10,60 @@ class ApprovalController extends Controller
 {
     public function index()
     {
-        $title = 'Persetujuan';
-        
-        // JANGAN memfilter 'is_approved' false saja jika ingin data yang ditolak/disetujui tetap tampil di tabel
-        // Kita ambil semua data agar Admin bisa melihat riwayat statusnya
-        $approvals = Approval::orderBy('created_at', 'desc')->get();
+        $title = 'Persetujuan'; // Menambahkan variabel $title untuk view
+        // Ambil data persetujuan yang belum disetujui
+        $approvals = Approval::where('is_approved', false)->get();
 
+        // Tampilkan view dengan data persetujuan
         return view('admin.approvals.index', compact('approvals', 'title'));
     }
 
     public function approve($id)
     {
+        // Cari data persetujuan berdasarkan ID
         $approval = Approval::findOrFail($id);
 
-        // Update status sesuai permintaan Anda
+        // Update status persetujuan
         $approval->is_approved = true;
         $approval->approved_by = Auth::id();
-        $approval->status = 'Disetujui'; // Kolom status terisi otomatis
+        $approval->status = 'Disetujui'; // Atur status menjadi Disetujui jika tombol Setujui ditekan
         $approval->save();
 
-        return redirect()->route('admin.approvals.index')->with('success', 'Data penarikan berhasil disetujui!');
+        // Redirect kembali ke halaman daftar persetujuan
+        return redirect()->route('admin.approvals.index')->with('success', 'Persetujuan berhasil!');
     }
     
     public function reject($id)
     {
+        // Cari data persetujuan berdasarkan ID
         $approval = Approval::findOrFail($id);
 
-        // Tetap false karena tidak disetujui, tapi status berubah menjadi 'Ditolak'
-        $approval->is_approved = false; 
+        // Update status penolakan
+        $approval->is_approved = false;
         $approval->approved_by = Auth::id();
-        $approval->status = 'Ditolak'; // Kolom status terisi otomatis
+        $approval->status = 'Ditolak'; // Kembalikan keterangan menjadi 'Ditolak' jika tombol Tidak Setuju ditekan
         $approval->save();
 
-        return redirect()->route('admin.approvals.index')->with('error', 'Data penarikan telah ditolak!');
+        // Redirect kembali ke halaman daftar persetujuan
+        return redirect()->route('admin.approvals.index')->with('success', 'Persetujuan ditolak!');
     }
 
     public function store(Request $request)
     {
-        // Validasi data (tambahkan 'keterangan' karena kita membutuhkannya dari modal teller)
+        // Validasi data
         $request->validate([
             'nasabah_name' => 'required|string|max:255',
             'amount' => 'required|numeric|min:0',
-            'keterangan' => 'nullable|string'
         ]);
 
-        // Simpan data ke tabel approvals dengan status default 'pending'
+        // Simpan data ke tabel approvals
         Approval::create([
             'nasabah_name' => $request->nasabah_name,
             'amount' => $request->amount,
-            'keterangan' => $request->keterangan ?? 'Data Pembanding Sesuai', // Default dari input teller
-            'is_approved' => false, 
-            'status' => 'pending', // Status awal sebelum diolah Admin 1
+            'is_approved' => false, // Default belum disetujui
         ]);
 
-        return response()->json(['message' => 'Data berhasil dikirim ke Admin 1!']);
+        return response()->json(['message' => 'Data berhasil disimpan!']);
     }
+    
 }
