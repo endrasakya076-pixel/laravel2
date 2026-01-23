@@ -199,7 +199,7 @@ function kembaliKeSpesimen() {
 }
 // Fungsi untuk mengirim data "Tidak Sesuai" ke tabel Approvals
 function submitTidakSesuai(id, nasabahName) {
-    if (confirm('Yakin data pembanding tidak sesuai? Data akan langsung dikirim ke Menu Persetujuan.')) {
+    if (confirm('Yakin data pembanding tidak sesuai? Data akan langsung dikirim ke Persetujuan.')) {
         fetch(`/approvals/store`, {
             method: 'POST',
             headers: {
@@ -214,7 +214,7 @@ function submitTidakSesuai(id, nasabahName) {
         })
         .then(response => response.json())
         .then(data => {
-            alert('Laporan ketidaksesuaian berhasil dikirim ke Menu Persetujuan.');
+            alert('Laporan ketidaksesuaian berhasil dikirim ke Admin 1!');
             $(`#imageModal${id}`).modal('hide');
             window.location.href = '/approvals'; // Langsung ke menu Persetujuan
         })

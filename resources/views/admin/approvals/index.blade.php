@@ -57,7 +57,7 @@
                                 </div>
                             </td>
 
-<td class="text-center align-middle">
+                            <td class="text-center align-middle">
     @php
         $authorizedPositions = [
             'Supervisor 1', 'Supervisor 2', 'Supervisor 3', 'Supervisor 4', 'Supervisor 5',
