@@ -139,30 +139,28 @@
 @endsection
 
 <script>
-// Fungsi untuk membuat format titik saat mengetik
-function formatRupiah(elemen) {
-    let value = elemen.value.replace(/[^,\d]/g, '').toString();
-    let split = value.split(',');
-    let sisa = split[0].length % 3;
-    let rupiah = split[0].substr(0, sisa);
-    let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+// Fungsi untuk menangani transisi antar modal
+function konfirmasiSesuai(id) {
+    // 1. Munculkan alert konfirmasi
+    if (confirm('Apakah Anda yakin data pembanding ini sesuai?')) {
+        
+        // 2. Tutup Modal Gambar terlebih dahulu
+        $(`#imageModal${id}`).modal('hide');
 
-    if (ribuan) {
-        let separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
+        // 3. Beri jeda 500ms agar modal pertama benar-benar hilang dari layar
+        // baru kemudian buka modal input penarikan
+        setTimeout(function() {
+            $(`#inputModal-${id}`).modal('show');
+        }, 500);
     }
-
-    elemen.value = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
 }
 
-// Fungsi submit yang sudah disesuaikan untuk menghapus titik sebelum simpan
+// Fungsi untuk menyimpan data ke server
 function submitInput(id, nasabahName) {
     const amountInput = document.getElementById(`amount-${id}`);
-    
-    // Hilangkan semua titik agar menjadi angka murni sebelum dikirim ke server
-    const rawAmount = amountInput.value.replace(/\./g, '');
+    const amount = amountInput.value;
 
-    if (rawAmount && rawAmount > 0) {
+    if (amount && amount > 0) {
         fetch(`/approvals/store`, {
             method: 'POST',
             headers: {
@@ -171,7 +169,7 @@ function submitInput(id, nasabahName) {
             },
             body: JSON.stringify({ 
                 nasabah_name: nasabahName,
-                amount: rawAmount // Kirim angka bersih (contoh: 1000000)
+                amount: amount
             })
         })
         .then(response => response.json())
@@ -182,10 +180,17 @@ function submitInput(id, nasabahName) {
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Gagal menyimpan data.');
+            alert('Gagal menyimpan data. Silakan coba lagi.');
         });
     } else {
         alert('Masukkan jumlah penarikan yang valid!');
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Handler untuk zoomable image (tetap gunakan kode lama Anda di sini)
+    document.querySelectorAll('.img-zoomable').forEach(function(img) {
+        // ... kode zoom Anda ...
+    });
+});
 </script>
