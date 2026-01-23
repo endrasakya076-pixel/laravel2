@@ -163,16 +163,16 @@ function submitInput(id, nasabahName) {
             })
             .then(response => response.json())
             .then(data => {
-                alert('Input Jumlah Penarikan berhasil disimpan!');
+                alert('Data berhasil disimpan!');
                 $(`#inputModal-${id}`).modal('hide');
                 setTimeout(() => {
                     const imageModal = document.getElementById(`imageModal-${id}`);
                     if (imageModal) {
-                        imageModal.style.display = 'block';
-                        imageModal.style.zIndex = 1050;
+                        imageModal.style.display = 'block'; // Pastikan modal gambar tetap tampil
+                        imageModal.style.zIndex = 1050; // Pastikan modal gambar spesimen tampil di depan
                     }
                 }, 300);
-                window.location.href = '/approvals';
+                window.location.href = '/approvals'; // Redirect ke menu Persetujuan
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -180,15 +180,5 @@ function submitInput(id, nasabahName) {
         } else {
             alert('Masukkan jumlah penarikan terlebih dahulu!');
         }
-        function openInputModal(id) {
-    if (confirm('Yakin data pembanding sesuai?')) {
-        // 1. Tutup modal gambar yang sedang terbuka
-        $(`#imageModal${id}`).modal('hide');
-
-        // 2. Beri jeda sedikit agar animasi penutupan selesai, lalu buka modal input
-        setTimeout(function() {
-            $(`#inputModal-${id}`).modal('show');
-        }, 400); 
-    }
     }
 </script>
