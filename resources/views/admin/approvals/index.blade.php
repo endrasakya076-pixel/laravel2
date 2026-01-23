@@ -43,7 +43,7 @@
         @elseif($approval->status == 'Ditolak')
             <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Ditolak</span>
         @elseif($approval->status == 'Setuju')
-            <span class="badge badge-success"><i class="fas fa-pause-circle"></i> Setuju</span>
+            <span class="badge badge-success"><i class="fas fa-check-circle"></i> Setuju</span>
         @else
             <span class="badge badge-secondary">Baru Masuk</span>
         @endif
