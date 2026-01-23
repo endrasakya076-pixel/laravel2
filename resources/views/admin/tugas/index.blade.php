@@ -199,7 +199,7 @@ function kembaliKeSpesimen() {
 }
 // Fungsi untuk mengirim data "Tidak Sesuai" ke tabel Approvals
 function submitTidakSesuai(id, nasabahName) {
-    if (confirm('Yakin data pembanding tidak sesuai? Data akan langsung dikirim ke Persetujuan.')) {
+    if (confirm('Yakin data pembanding tidak sesuai? Data akan langsung dikirim ke Menu Persetujuan.')) {
         fetch(`/approvals/store`, {
             method: 'POST',
             headers: {
@@ -214,7 +214,7 @@ function submitTidakSesuai(id, nasabahName) {
         })
         .then(response => response.json())
         .then(data => {
-            alert('Laporan ketidaksesuaian berhasil dikirim ke Admin 1!');
+            alert('Laporan ketidaksesuaian berhasil dikirim ke Menu Persetujuan.');
             $(`#imageModal${id}`).modal('hide');
             window.location.href = '/approvals'; // Langsung ke menu Persetujuan
         })
@@ -223,5 +223,26 @@ function submitTidakSesuai(id, nasabahName) {
             alert('Gagal mengirim data.');
         });
     }
+}
+/ Contoh fungsi saat tombol diklik
+function kirimKePersetujuan(statusKlik) {
+    let data = {
+        _token: "{{ csrf_token() }}", // WAJIB ADA
+        nasabah_name: $("#nama_nasabah").val(), // Sesuaikan ID element
+        amount: $("#nominal").val(),           // Sesuaikan ID element
+        keterangan: statusKlik                 // "Data Pembanding Sesuai" atau "Tidak Sesuai"
+    };
+    $.ajax({
+        url: "{{ route('approvals.store') }}", // Pastikan Route Name benar
+        type: "POST",
+        data: data,
+        success: function(response) {
+            alert(response.message);
+            // Opsional: Refresh atau pindah halaman
+        },
+        error: function(xhr) {
+            alert("Gagal: " + xhr.responseJSON.message);
+        }
+    });
 }
 </script>
