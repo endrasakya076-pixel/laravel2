@@ -30,7 +30,7 @@
                             <td class="align-middle font-weight-bold">{{ $approval->nasabah_name }}</td>
                             <td class="align-middle text-dark">Rp {{ number_format($approval->amount, 0, ',', '.') }}</td>
                             
-<td class="align-middle">
+                           <td class="align-middle">
     @if(str_contains($approval->keterangan, 'Tidak Sesuai'))
         <span class="text-danger font-weight-bold">
             <i class="fas fa-exclamation-triangle mr-1"></i> 
@@ -43,18 +43,6 @@
         </span>
     @endif
 </td>
-
-                                <div class="border-top pt-1 mt-1" style="font-size: 0.75rem;">
-                                    <span class="text-muted">
-                                        <i class="fas fa-user-edit"></i> Pengirim: 
-                                        <span class="text-dark font-weight-bold">{{ $approval->user->nama ?? 'Teller Terdaftar' }}</span>
-                                    </span>
-                                    <span class="text-muted ml-3">
-                                        <i class="fas fa-clock"></i> 
-                                        {{ \Carbon\Carbon::parse($approval->created_at)->translatedFormat('H:i') }} WITA
-                                    </span>
-                                </div>
-                            </td>
 
 <td class="text-center align-middle">
     @php
