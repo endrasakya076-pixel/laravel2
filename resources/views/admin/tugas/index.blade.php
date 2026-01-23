@@ -164,9 +164,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 alert('Data berhasil disimpan!');
-                setTimeout(() => {
-                    $('#inputModal-' + id).modal('hide');
-                }, 300);
                 window.location.href = '/approvals'; // Redirect ke menu Persetujuan
             })
             .catch(error => {
