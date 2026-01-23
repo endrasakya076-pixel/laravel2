@@ -1,77 +1,253 @@
 <?php
 
+
+
 namespace App\Http\Controllers;
 
+
+
 use Illuminate\Http\Request;
+
 use App\Models\Approval;
-use App\Models\ActivityLog;
+
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+
+
 
 class ApprovalController extends Controller
+
 {
+
+   /**
+
+     * Fungsi Privat untuk mengecek otoritas (Helper)
+
+     * Agar tidak mengulang kode yang sama di setiap function
+
+     */
+
     private function hasAuthority($user)
+
     {
+
+        // Daftar Jabatan yang diizinkan
+
         $authorizedPositions = [
+
             'Supervisor 1', 'Supervisor 2', 'Supervisor 3', 'Supervisor 4', 'Supervisor 5',
+
             'Kepala Cabang Gerung', 'Kepala Cabang Pancor', 'Kepala Cabang Tanjung'
+
         ];
-        return $user->nama === 'Hendra Sakya Permana' || 
-               $user->role === 'admin1' || 
+
+
+
+        // Cek Nama Spesifik (Hendra) ATAU Role Admin1 ATAU Jabatan dalam daftar
+
+        return $user->nama === 'Hendra Sakya Permana' ||
+
+               $user->role === 'admin1' ||
+
                in_array($user->jabatan, $authorizedPositions);
+
     }
+
+
 
     public function index()
+
     {
+
         $title = 'Persetujuan';
-        // Menggunakan with('user') agar loading data lebih cepat
-        $approvals = Approval::with('user')->orderBy('created_at', 'desc')->get();
+
+        $approvals = Approval::orderBy('created_at', 'desc')->get();
+
         return view('admin.approvals.index', compact('approvals', 'title'));
+
     }
 
-    public function store(Request $request)
+
+
+    public function approve($id)
+
     {
-        $request->validate([
-            'nasabah_name' => 'required|string',
-            'amount'       => 'required',
-            'keterangan'   => 'nullable|string'
+
+        $approval = Approval::findOrFail($id);
+
+   
+
+        if (!$this->hasAuthority(Auth::user())) {
+
+            return redirect()->back()->with('error', 'Anda tidak memiliki otoritas!');
+
+        }
+
+
+
+        $approval->update([
+
+            'status' => 'Hapus',
+
+            'is_approved' => true,
+
+            'approved_by' => Auth::id(),
+
         ]);
 
-        if (!Auth::check()) {
-            return response()->json(['status' => 'error', 'message' => 'Sesi berakhir, silakan login kembali.'], 401);
-        }
 
-        try {
-            DB::beginTransaction();
-            $user = Auth::user();
-            $cleanAmount = preg_replace('/[^0-9]/', '', $request->amount);
 
-            // SIMPAN DATA
-            $approval = Approval::create([
-                'nasabah_name' => $request->nasabah_name,
-                'amount'       => $cleanAmount,
-                'keterangan'   => $request->keterangan ?? 'Data Pembanding Sesuai',
-                'is_approved'  => false,
-                'status'       => 'Baru Masuk',
-                'user_id'      => $user->id,
-            ]);
+        return redirect()->back()->with('success', 'Data berhasil dihapus dari antrean.');
 
-            // CATAT AUDIT LOG
-            ActivityLog::create([
-                'user_id'    => $user->id,
-                'aktivitas'  => 'Input Persetujuan',
-                'keterangan' => "Teller [{$user->nama}] mengirim nasabah {$request->nasabah_name} senilai Rp " . number_format($cleanAmount, 0, ',', '.'),
-                'ip_address' => $request->ip(),
-                'browser'    => $request->userAgent(),
-            ]);
-
-            DB::commit();
-            return response()->json(['status' => 'success', 'message' => 'Data masuk antrean otorisasi.']);
-        } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json(['status' => 'error', 'message' => 'Gagal: ' . $e->getMessage()], 500);
-        }
     }
 
-    // Fungsi hold & reject sudah aman sesuai kode sebelumnya...
+
+
+    public function reject($id)
+
+    {
+
+        $approval = Approval::findOrFail($id);
+
+
+
+        if (!$this->hasAuthority(Auth::user())) {
+
+            return redirect()->back()->with('error', 'Anda tidak memiliki otoritas!');
+
+        }
+
+
+
+        $approval->update([
+
+            'status' => 'Ditolak',
+
+            'is_approved' => false,
+
+            'approved_by' => Auth::id(),
+
+        ]);
+
+
+
+        return redirect()->back()->with('error', 'Status diperbarui: Ditolak');
+
+    }
+
+
+
+    public function store(Request $request)
+
+    {
+
+        $request->validate([
+
+            'nasabah_name' => 'required|string',
+
+            'amount' => 'required',
+
+            'keterangan' => 'nullable|string'
+
+        ]);
+
+
+
+        Approval::create([
+
+            'nasabah_name' => $request->nasabah_name,
+
+            'amount' => $request->amount,
+
+            'keterangan' => $request->keterangan ?? 'Data Pembanding Sesuai',
+
+            'is_approved' => false,
+
+            'status' => 'Baru Masuk',
+
+        ]);
+
+
+
+        return response()->json(['message' => 'Data berhasil masuk ke Persetujuan']);
+
+    }
+
+
+
+    public function hold($id)
+
+    {
+
+        $approval = Approval::findOrFail($id);
+
+    $user = Auth::user();
+
+
+
+    // 1. Cek Otoritas TERLEBIH DAHULU sebelum melakukan perubahan apa pun
+
+    if (!$this->hasAuthority($user)) {
+
+        return redirect()->back()->with('error', 'Otoritas ditolak. Anda tidak memiliki izin untuk menyetujui.');
+
+    }
+
+
+
+    try {
+
+        \Illuminate\Support\Facades\DB::beginTransaction();
+
+
+
+        // 2. Update status persetujuan
+
+        $approval->update([
+
+            'status' => 'Setuju',
+
+            'is_approved' => true,
+
+            'approved_by' => $user->id,
+
+        ]);
+
+
+
+        // 3. SIMPAN KE MENU AUDIT LOG (ActivityLog)
+
+        \App\Models\ActivityLog::create([
+
+            'user_id'    => $user->id,
+
+            'aktivitas'  => 'Otorisasi Disetujui',
+
+            'keterangan' => "Pejabat [" . $user->nama . "] MENYETUJUI penarikan nasabah " . $approval->nasabah_name . " sebesar Rp " . number_format($approval->amount, 0, ',', '.'),
+
+            'ip_address' => request()->ip(),
+
+            'browser'    => request()->userAgent(),
+
+        ]);
+
+
+
+        \Illuminate\Support\Facades\DB::commit();
+
+
+
+        return redirect()->back()->with('info', 'Data berhasil ditandai sebagai Setuju dan tercatat di Audit Log.');
+
+
+
+    } catch (\Exception $e) {
+
+        \Illuminate\Support\Facades\DB::rollback();
+
+        return redirect()->back()->with('error', 'Terjadi kesalahan sistem: ' . $e->getMessage());
+
+    }
+
+    }
+
 }
