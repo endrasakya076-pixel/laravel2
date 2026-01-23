@@ -4,20 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Approval;
-use App\Models\ActivityLog;
+use App\Models\ActivityLog; // Pastikan Model ini di-import
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class ApprovalController extends Controller
 {
     /**
-     * Helper Otoritas: Mengecek izin user
+     * Helper untuk mengecek otoritas Jabatan
      */
     private function hasAuthority($user)
     {
-        if (!$user) return false;
-
         $authorizedPositions = [
             'Supervisor 1', 'Supervisor 2', 'Supervisor 3', 'Supervisor 4', 'Supervisor 5',
             'Kepala Cabang Gerung', 'Kepala Cabang Pancor', 'Kepala Cabang Tanjung'
@@ -30,73 +27,62 @@ class ApprovalController extends Controller
 
     public function index()
     {
-        $title = 'Daftar Persetujuan';
-        // Eager loading 'user' untuk performa
-        $approvals = Approval::with('user')->orderBy('created_at', 'desc')->get();
+        $title = 'Persetujuan';
+        $approvals = Approval::orderBy('created_at', 'desc')->get();
         return view('admin.approvals.index', compact('approvals', 'title'));
     }
 
     /**
-     * STORE: Menyimpan data dari Menu Spesimen ke Tabel Approvals
+     * Fungsi STORE: Saat Teller klik "Sesuai" atau "Tidak Sesuai" di Menu Spesimen
      */
     public function store(Request $request)
     {
-        // 1. Validasi Input
         $request->validate([
-            'nasabah_name' => 'required|string|max:255',
+            'nasabah_name' => 'required|string',
             'amount'       => 'required',
             'keterangan'   => 'nullable|string'
         ]);
 
-        if (!Auth::check()) {
-            return response()->json(['status' => 'error', 'message' => 'Sesi berakhir, silakan login kembali.'], 401);
-        }
-
         try {
             DB::beginTransaction();
+
             $user = Auth::user();
+            $jam = now()->format('H:i');
+            
+            // Tentukan status untuk Audit Log berdasarkan keterangan dari JavaScript
+            $isSesuai = !str_contains(strtolower($request->keterangan), 'tidak sesuai');
+            $aktivitasLog = $isSesuai ? 'Data Pembanding Sesuai' : 'Data Pembanding Tidak Sesuai';
 
-            // 2. Bersihkan nominal (Hanya angka)
-            $cleanAmount = preg_replace('/[^0-9]/', '', $request->amount);
-
-            // 3. Simpan ke Tabel Approvals
+            // 1. Simpan ke Tabel Approvals
             $approval = Approval::create([
                 'nasabah_name' => $request->nasabah_name,
-                'amount'       => (int) $cleanAmount,
-                'keterangan'   => $request->keterangan ?? 'Data Pembanding Sesuai',
+                'amount'       => str_replace(['.', ','], '', $request->amount), // Bersihkan format rupiah
+                'keterangan'   => ($request->keterangan ?? 'Data Pembanding Sesuai') . " (Oleh: {$user->nama} jam {$jam})",
                 'is_approved'  => false,
                 'status'       => 'Baru Masuk',
                 'user_id'      => $user->id,
             ]);
 
-            // 4. Catat ke Audit Log
+            // 2. Simpan ke Audit Log (PENTING)
             ActivityLog::create([
                 'user_id'    => $user->id,
-                'aktivitas'  => 'Input Persetujuan',
-                'keterangan' => "Teller [{$user->nama}] mengirim data nasabah {$request->nasabah_name} status: {$approval->keterangan}",
+                'aktivitas'  => $aktivitasLog,
+                'keterangan' => "Petugas mengirim verifikasi nasabah [" . $request->nasabah_name . "] hasil: " . $aktivitasLog,
                 'ip_address' => $request->ip(),
                 'browser'    => $request->userAgent(),
             ]);
 
             DB::commit();
-            return response()->json([
-                'status'  => 'success',
-                'message' => 'Berhasil! Data telah dikirim ke antrean otorisasi.'
-            ]);
+            return response()->json(['message' => 'Berhasil dikirim ke Persetujuan & Audit Log']);
 
         } catch (\Exception $e) {
             DB::rollback();
-            Log::error('Gagal Simpan Persetujuan: ' . $e->getMessage());
-            
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'Gagal menyimpan data ke sistem persetujuan.'
-            ], 500);
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         }
     }
 
     /**
-     * HOLD: Proses Approval oleh Pejabat
+     * Fungsi HOLD: Saat Pejabat klik "SETUJU"
      */
     public function hold($id)
     {
@@ -104,7 +90,7 @@ class ApprovalController extends Controller
         $user = Auth::user();
 
         if (!$this->hasAuthority($user)) {
-            return redirect()->back()->with('error', 'Anda tidak memiliki hak akses otorisasi!');
+            return redirect()->back()->with('error', 'Otoritas ditolak!');
         }
 
         try {
@@ -119,21 +105,21 @@ class ApprovalController extends Controller
             ActivityLog::create([
                 'user_id'    => $user->id,
                 'aktivitas'  => 'Otorisasi Disetujui',
-                'keterangan' => "Pejabat [{$user->nama}] MENYETUJUI nasabah {$approval->nasabah_name} sebesar " . number_format($approval->amount, 0, ',', '.'),
+                'keterangan' => "Pejabat [" . $user->nama . "] MENYETUJUI penarikan nasabah " . $approval->nasabah_name . " sebesar Rp " . number_format($approval->amount, 0, ',', '.'),
                 'ip_address' => request()->ip(),
                 'browser'    => request()->userAgent(),
             ]);
 
             DB::commit();
-            return redirect()->back()->with('success', 'Transaksi Berhasil DISETUJUI.');
+            return redirect()->back()->with('info', 'Data disetujui & tercatat di Audit Log.');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('error', 'Gagal memproses persetujuan.');
+            return redirect()->back()->with('error', 'Gagal: ' . $e->getMessage());
         }
     }
 
     /**
-     * REJECT: Penolakan oleh Pejabat
+     * Fungsi REJECT: Saat Pejabat klik "TOLAK"
      */
     public function reject($id)
     {
@@ -141,7 +127,7 @@ class ApprovalController extends Controller
         $user = Auth::user();
 
         if (!$this->hasAuthority($user)) {
-            return redirect()->back()->with('error', 'Anda tidak memiliki hak akses otorisasi!');
+            return redirect()->back()->with('error', 'Otoritas ditolak!');
         }
 
         try {
@@ -156,16 +142,16 @@ class ApprovalController extends Controller
             ActivityLog::create([
                 'user_id'    => $user->id,
                 'aktivitas'  => 'Otorisasi Ditolak',
-                'keterangan' => "Pejabat [{$user->nama}] MENOLAK nasabah {$approval->nasabah_name}.",
+                'keterangan' => "Pejabat [" . $user->nama . "] MENOLAK penarikan nasabah " . $approval->nasabah_name,
                 'ip_address' => request()->ip(),
                 'browser'    => request()->userAgent(),
             ]);
 
             DB::commit();
-            return redirect()->back()->with('warning', 'Transaksi telah DITOLAK.');
+            return redirect()->back()->with('error', 'Status diperbarui: Ditolak & tercatat di Audit Log.');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('error', 'Gagal memproses penolakan.');
+            return redirect()->back()->with('error', 'Gagal: ' . $e->getMessage());
         }
     }
 }
