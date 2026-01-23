@@ -71,4 +71,28 @@ class ApprovalController extends Controller
         return response()->json(['message' => 'Data berhasil disimpan!']);
     }
     
+        public function hold($id)
+    {
+        // Mencari data berdasarkan ID
+        $approval = Approval::findOrFail($id);
+
+        // PERBAIKAN: Gunakan Auth::user() untuk mengambil objek user
+        $user = Auth::user(); 
+
+        // Proteksi Otoritas Hendra Sakya Permana
+        // Pastikan kolom di database Anda adalah 'name' atau 'nama'
+        if ($user->name !== 'Hendra Sakya Permana' && $user->role !== 'admin1') {
+            return redirect()->back()->with('error', 'Anda tidak memiliki otoritas!');
+        }
+
+        // PERBAIKAN: Gunakan Auth::id() untuk mengambil ID user yang login
+        $approval->update([
+            'status' => 'Menunggu',
+            'is_approved' => false,
+            'approved_by' => Auth::id(), 
+        ]);
+
+        return redirect()->back()->with('info', 'Data dipindahkan ke status Menunggu.');
+    }
+    
 }

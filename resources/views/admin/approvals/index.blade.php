@@ -37,38 +37,44 @@
             <span class="badge badge-success"><i class="fas fa-check-circle"></i> Disetujui</span>
         @elseif($approval->status == 'Ditolak')
             <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Ditolak</span>
+        @elseif($approval->status == 'Menunggu')
+            <span class="badge badge-warning text-dark"><i class="fas fa-pause-circle"></i> Menunggu</span>
         @else
-            <span class="badge badge-warning text-dark"><i class="fas fa-clock"></i> Pending</span>
+            <span class="badge badge-secondary">Baru Masuk</span>
         @endif
     </td>
 
     <td class="text-center">
-        @if(Auth::user()->nama == 'Hendra Sakya Permana' || Auth::user()->role == 'admin1')
+        @if(auth()->user()->nama == 'Hendra Sakya Permana' || auth()->user()->role == 'admin1')
+            
+            {{-- Tombol muncul jika status belum Disetujui/Ditolak --}}
             @if($approval->status != 'Disetujui' && $approval->status != 'Ditolak')
-                <div class="btn-group">
+                <div class="btn-group" role="group">
                     <form action="{{ route('approvals.approve', $approval->id) }}" method="POST" class="d-inline">
                         @csrf
-                        <button class="btn btn-sm btn-success mr-1">Setujui</button>
+                        <button type="submit" class="btn btn-sm btn-success mr-1">Setuju</button>
                     </form>
+
+                    <form action="{{ route('approvals.hold', $approval->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-warning mr-1">Tunggu</button>
+                    </form>
+                    
                     <form action="{{ route('approvals.reject', $approval->id) }}" method="POST" class="d-inline">
                         @csrf
-                        <button class="btn btn-sm btn-danger">Tolak</button>
-                    </form>
-                    <form action="{{ route('approvals.reject', $approval->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        <button class="btn btn-sm btn-danger">Ya</button>
+                        <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
                     </form>
                 </div>
             @else
-                <span class="text-muted small"><i class="fas fa-lock"></i> Selesai</span>
+                <span class="text-muted small"><i class="fas fa-lock"></i> Tindakan Selesai</span>
             @endif
+
         @else
-            <small class="text-muted">Otoritas Hendra</small>
+            <small class="text-muted">Otoritas Admin 1</small>
         @endif
     </td>
 </tr>
-@endforeach
-                    </tbody>
+@endforeach        </tbody>
                 </table>
             </div>
         </div>
