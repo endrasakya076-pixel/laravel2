@@ -81,7 +81,7 @@ class ApprovalController extends Controller
 
         // 3. Proteksi Spesifik untuk Hendra Sakya Permana
         // Pastikan pengecekan kolom 'name' sesuai dengan kolom di tabel users Anda
-        if ($user->name !== 'Hendra Sakya Permana' && $user->role !== 'admin1') {
+       if (Auth::user()->nama !== 'Hendra Sakya Permana' && Auth::user()->role !== 'admin1') {
             return redirect()->back()->with('error', 'Otoritas ditolak. Hanya Admin 1 yang bisa menunda proses.');
         }
 
