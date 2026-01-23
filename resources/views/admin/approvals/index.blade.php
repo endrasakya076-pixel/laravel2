@@ -41,7 +41,7 @@
         @if($approval->status == 'Hapus')
             {{-- <span class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</span> --}}
         @elseif($approval->status == 'Ditolak')
-            <span class="badge badge-warning"><i class="fas fa-times-circle"></i> Ditolak</span>
+            <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Ditolak</span>
         @elseif($approval->status == 'Setuju')
             <span class="badge badge-success"><i class="fas fa-check-circle"></i> Setuju</span>
         @else
@@ -67,7 +67,7 @@
                     
                     <form action="{{ route('approvals.reject', $approval->id) }}" method="POST" class="d-inline">
                         @csrf
-                        <button type="submit" class="btn btn-sm btn-warning">Tolak</button>
+                        <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
                     </form>
                 </div>
             @else
