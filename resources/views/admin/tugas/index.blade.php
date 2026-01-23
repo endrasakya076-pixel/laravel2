@@ -76,7 +76,7 @@
                                         <form action="{{ route('verifikasi.update', $item->id) }}" method="POST" class="d-inline">
                                         @csrf
                                              <input type="hidden" name="status" value="gagal">
-                                                 <button type="submit" class="btn btn-danger btn-lg mx-2" onclick="return confirm('Yakin data pembanding tidak sesuai?')">
+                                                 <button type="button" class="btn btn-danger btn-lg mx-2" onclick="submitTidakSesuai({{ $item->id }}, '{{ $item->nama }}')">
                                                 <i class="fas fa-times-circle"></i> Data Pembanding Tidak Sesuai
                                                 </button>
                                                 </form>
@@ -196,5 +196,32 @@ document.addEventListener('DOMContentLoaded', function() {
 function kembaliKeSpesimen() {
     // Arahkan kembali ke halaman daftar tugas spesimen
     window.location.href = "{{ route('tugas') }}";
+}
+// Fungsi untuk mengirim data "Tidak Sesuai" ke tabel Approvals
+function submitTidakSesuai(id, nasabahName) {
+    if (confirm('Yakin data pembanding tidak sesuai? Data akan langsung dikirim ke Persetujuan.')) {
+        fetch(`/approvals/store`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ 
+                nasabah_name: nasabahName,
+                amount: 0, // Nilai 0 karena data tidak sesuai
+                keterangan: 'Data Pembanding Tidak Sesuai' // Keterangan otomatis
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Laporan ketidaksesuaian berhasil dikirim ke Admin 1!');
+            $(`#imageModal${id}`).modal('hide');
+            window.location.href = '/approvals'; // Langsung ke menu Persetujuan
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Gagal mengirim data.');
+        });
+    }
 }
 </script>

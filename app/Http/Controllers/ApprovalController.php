@@ -54,21 +54,23 @@ class ApprovalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nasabah_name' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0',
-            'keterangan' => 'nullable|string'
-        ]);
+        'nasabah_name' => 'required|string',
+        'amount' => 'required',
+        'keterangan' => 'nullable|string' // Pastikan ini ada
+    ]);
 
-        Approval::create([
-            'nasabah_name' => $request->nasabah_name,
-            'amount' => $request->amount,
-            'keterangan' => $request->keterangan ?? 'Data Pembanding Sesuai',
-            'is_approved' => false,
-            'status' => 'Baru Masuk', // Status awal
-        ]);
+    Approval::create([
+        'nasabah_name' => $request->nasabah_name,
+        'amount' => $request->amount,
+        // Jika keterangan kosong (dari tombol Sesuai), isi default. 
+        // Jika ada isi (dari tombol Tidak Sesuai), gunakan isi tersebut.
+        'keterangan' => $request->keterangan ?? 'Data Pembanding Sesuai',
+        'is_approved' => false,
+        'status' => 'Baru Masuk',
+    ]);
 
-        return response()->json(['message' => 'Data berhasil disimpan!']);
-    }
+    return response()->json(['message' => 'Data berhasil masuk ke Persetujuan']);
+}
 
     public function hold($id)
     {
